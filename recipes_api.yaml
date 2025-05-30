@@ -1,3 +1,4 @@
+#!/usr/bin/env datasetd -debug
 host: localhost:8001
 htdocs: htdocs
 collections:
@@ -9,6 +10,6 @@ collections:
     delete: true
     query:
       list_recipes: |
-        selecet src
+        select src
         from recipes
-        order by name
+        order by src->>'name'

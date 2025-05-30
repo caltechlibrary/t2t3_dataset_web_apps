@@ -32,7 +32,7 @@ url: "https://caltechlibrary.github.io/dataset/presentation/presentation1.html"
 - How to create a JSON API using a simple YAML file and a simple SQL
 - How to enhance our HTML using Web Compents from [CL Web Components](https://github.com/caltechlibraryCL-web-components)
 
-Follow along at <https://caltechlibrary.github.com/t2t3_dataset_web_apps/presentation1.html>
+Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
 
 # Recipe for an application, Dataset and a Web Component
 
@@ -41,22 +41,22 @@ Follow along at <https://caltechlibrary.github.com/t2t3_dataset_web_apps/present
 ### You probably aready have this
 - Terminal application
 - [Text Editor](https://vscodium.com/)
-- [Web Browser](https://www.mozilla.org/en-US/firefox/new/)
+- [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
 
 ### You'll need to install this
 
 - [Dataset](https://caltechlibrary.github.io/dataset)
 
-NOTE: you need to be comfortable using the terminal application)
+NOTE: you need to be comfortable using the terminal application
 
 # Recipe for an application, Dataset and a Web Component
 
 ## Suggested
 
+I will use the following to show and test our JSON API.
+
 - [cURL](https://curl.se/docs/manpage.html) (for testing and debugging the JSON API)
 - [jq](https://jqlang.org)
-- [yq](https://mikefarah.gitbook.io/yq)
-- [htmlq](https://github.com/mgdm/htmlq)
 
 # Getting started, what are we creating?
 
@@ -73,36 +73,38 @@ A simple web application that lets us curate a list of recipes.
 
 (for purposes of this workshop)
 
-- A unique identifier (a.k.a a key)
+- A unique identifier as a "key"
 - A name
 - A URL where it was found
-- A list of ingredients and measures (table)
-- A description of the preparation process
+- A list of ingredients and measures (CSV data)
+- A description of the preparation process (free format text)
 
 # Getting started, strategy.
 
-- Mockup using HTML
-- Defining some behaviors
-- Setting up our web service
-- Wire up our human interface
+1. Mockup using HTML
+2. Defining some behaviors
+3. Setting up our web service
+4. Wire up and improve
 
-# Mockup, What would be needed from a web form?
+# Mockup, what does our metadata look like?
 
 name
-: `input` element
+: A line of text. Held by an`input` element
 
 url
-: `input` element
+: A URL. Held by an `input` element of type "url"
 
 ingredients
-: `textarea` or table?
+: A CSV table. Held by a `textarea` or for display a `table`.
 
 preparation
-: `textarea`
+: Free text. Held by a `textarea` element
 
-We need a submit button.
+We'll need a submit button to save a new or edited recipe.
 
 # Mockup, What would the web form look like?
+
+This is our edit page so it should be named [edit.html](htdics/edit.html) in the "htdocs" directory.
 
 ~~~html
 <!DOCTYPE html>
@@ -110,7 +112,7 @@ We need a submit button.
   <head>
     <title>A recipe collection</title>
     <link rel="style" href="css/style.css">
-    <script type="model" src="js/edit_recipe.js"></script>
+    <script type="module" src="modules/edit_recipe.js"></script>
   </head>
   <body>
     <nav>
@@ -120,29 +122,37 @@ We need a submit button.
     <form id="edit-recipe" method="" action="">
       <div>
         <label set="key">Key</label>
-        <input id="key" name="key" type="text" value="" title="Unique identfier for recipe" placeholder="lower case unique text" size="60">
+        <input id="key" name="key" type="text" 
+        value="" title="Unique identfier for recipe" 
+        placeholder="lower case unique text" size="60">
       </div>
 
       <div>
         <label set="name">Name</label>
-        <input id="name" name="name" type="text" value="" title="The common name for this recipe" placeholder="e.g. fry bread" size="60">
+        <input id="name" name="name" type="text" 
+        value="" title="The common name for this recipe" placeholder="e.g. fry bread" size="60">
       </div>
 
       <div>
         <label set="url">Source URL</label>
-        <input id="url" name="url" type="url" value="" title="The URL where the recipe was found" placeholder="e.g. https://cullanary.example.edu/fry-bread" size="80">
+        <input id="url" name="url" type="url"
+        value="" title="The URL where the recipe was found"
+        placeholder="e.g. https://cullanary.example.edu/fry-bread" size="80">
       </div>
 
       <div>
         <label set="ingredients">Ingredients</label>
-        <textarea id="ingredients" name="ingredients" title="ingredient,units (CSV data)" placeholder="flour,2 cups" cols="60"rows="5">
+        <textarea id="ingredients" name="ingredients"
+        title="ingredient,units (CSV data)" placeholder="flour,2 cups" cols="60"rows="5">
 ingredient,units
         </textarea>
       </div>
 
       <div>
         <label set="preparation">Preparation</label>
-        <textarea id="preparation" name="preparation" title="preparation steps as free text" placeholder="measure and pour flower in a bowl. Add egg ..." cols="60"rows="10">
+        <textarea id="preparation" name="preparation"
+        title="preparation steps as free text"
+        placeholder="measure and pour flower in a bowl. Add egg ..." cols="60"rows="10">
         </textarea>
       </div>
 
@@ -150,10 +160,8 @@ ingredient,units
     </form>
   </body>
 </html>
+
 ~~~
-
-
-This is our edit page so it should be named "edit.html" in the "htdocs" directory.
 
 # Mockup, What how about displaying our recipe?
 
@@ -165,7 +173,7 @@ We can use an UL list to list the recipe by name and link to the display page.
   <head>
     <title>A recipe collection</title>
     <link rel="style" href="css/style.css">
-    <script type="model" src="js/display_recipe.js"></script>
+    <script type="module" src="modules/display_recipe.js"></script>
   </head>
   <body>
     <nav>
@@ -178,6 +186,7 @@ We can use an UL list to list the recipe by name and link to the display page.
     <div id="preparation">preparation instructions goes here</div>
   </body>
 </html>
+
 ~~~
 
 This is our landing page so it should be named "recipe.html" in the "htdocs" directory.
@@ -192,6 +201,7 @@ We can use an UL list to list the recipe by name and link to the display page.
   <head>
     <title>A recipe collection</title>
     <link rel="style" href="css/style.css">
+    <script type="module" src="modules/list_recipes.js"></script>
   </head>
   <body>
     <h1>Available Recipes</h1>
@@ -200,6 +210,7 @@ We can use an UL list to list the recipe by name and link to the display page.
     </ul>
   </body>
 </html>
+
 ~~~
 
 This is our landing page so it should be named "index.html" in the "htdocs" directory.
@@ -214,13 +225,13 @@ This is our landing page so it should be named "index.html" in the "htdocs" dire
 - delete a recipe
 - query our collection of recipes
 
-# Behaviors, use JavaScript Luke
+# Behaviors, we can use JavaScript
 
 - retrieve and drop data into our HTML pages
 - handle form submission
 - to create web components to simplify our HTML and make it more user friendly
 
-# Behaviors, our web service provides our data source
+# Behaviors, our web service and JSON API provides our data source
 
 - `dataset` sets up our collection 
 - `datasetd` provides our web service
@@ -236,7 +247,7 @@ This will create our "recipes.ds" collection.
 dataset init recipes.ds
 ~~~
 
-Populate the collection with some test data, [download recipes.jsonl]().
+Populate the collection with some test data, [download recipes.jsonl](recipes.jsonl).
 
 ~~~shell
 dataset load recipes.ds <recipes.jsonl
@@ -246,9 +257,10 @@ dataset load recipes.ds <recipes.jsonl
 
 `datasetd` provides a turn key web service defined by a simple YAML file. It can host
 one or more dataset collections. It provides a static file service as well as a JSON API
-for each collection.
+for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml).
 
 ~~~yaml
+#!/usr/bin/env datasetd
 host: localhost:8001
 htdocs: htdocs
 collections:
@@ -260,32 +272,186 @@ collections:
     delete: true
     query:
       list_recipes: |
-        selecet src
+        select src
         from recipes
-        order by name
+        order by src->>'name'
 ~~~
 
-Let's call this "recipes_api.yaml".
+# Wiring things up, start "recipes_api.yaml"
 
-# Wiring thingss up, start "recipes_api.yaml"
-
-In one terminal windows use the following command.
+In your terminal window enter the following command
 
 ~~~shell
 datasetd recipes_api.yaml
 ~~~
 
-Point your web browser at browser at <http://localhost:8001> and you should see your HTML pages.
+or the fancy way (make your recipes_api.yaml executable, then run it)
 
-# Wiring up, we use JavaScript and the JSON API to populate our pages
+~~~shell
+chmod 775 recipes_api.yaml
+./recipes_api.yaml
+~~~
 
-We will create the following:
+# Wiring things up, checkout the web service with your web browser
 
-- [htdocs/js/edit_recipes.js](htdocs/js/edit_recipe.js)
-- [htdocs/js/display_recipe.js](htdocs/js/display_recipe.js)
-- [htdocs/js/list_recipes.js](htdocs/js/list_recipes.js)
+Fireup your web browser and try the following links.
+
+- <http://localhost:8001/index.html>
+- <http://localhost:8001/display_recipe.html>
+- <http://localhost:8001/edit_recipe.html>
+
+# Congradulations, you just implemented your application's web services
+
+**Hurray!!!**
+
+The web service half of your application is completed.
+
+# Remember your browser has "developer tools", given them a try
+
+- With Firefix look at the "hamberger menu", click "more tools", click "web developer tools"
+- Chrome, Safari have different menus, you'll need to find them
+
+# Wiring things up, we use JavaScript and the JSON API to populate our pages
+
+Create our "htdocs" and "htdocs/js" directories.
+
+~~~shell
+mkdir htdocs
+mkdir htdocs/js
+~~~
+
+We will be creating the following files.
+
+1. [htdocs/modules/list_recipes.js](htdocs/modules/list_recipes.js)
+2. [htdocs/modules/display_recipe.js](htdocs/modules/display_recipe.js)
+3. [htdocs/modules/edit_recipes.js](htdocs/modules/edit_recipe.js)
 
 You can download them from <https://github.com/caltechlibrary/t2t3_dataset_web_apps> if you're following along.
+
+# Wiring things up, No. 1a: List our recipes
+
+- Our recipes are provided by our JSON API using the "query" we defined in our "recipe_api.yaml". 
+- We can retrieve that using a JavaScript "fetch"
+- We can then use the results to populate our index page
+
+# Wiring things up. No. 1b: Our JSON API URL
+
+The query api call requires a POST action. The URL <http://localhost:8001/api/recipes.ds/query/list_recipes>. Here is the brakedown the the URL path.
+
+- `/api`, this indicates to our web service this is an API call
+- `/recipes.ds`, indicates the collection we're working with
+- `/query`, indicates we running a "query" (remember that from the YAML?)
+- `/list_recipes` is the query name to run, parameters would come next if it needed them
+
+# Wiring things up, No. 1c: Testing our JSON API
+
+I use cURL and jq to test the JSON API. cURL provides a easy way to express the HTTP action, GET, POST, PUT, DELETE used in [RESTful](https://en.wikipedia.org/wiki/REST) JSON API.
+
+~~~shell
+curl -X POST http://localhost:8001/api/recipes.ds/query/list_recipes | jq .
+~~~
+
+# Wiring things up, No. 1d: Creating list_recipes.js, using "fetch"
+
+We are going to create a JavaScript "module" caled "list_recipes.js". It's responsibilities are \--
+
+- After page is loaded, get the elem holding our UL list ("recipe-list")
+- then retrieve our list of recipes from the API
+- populate the UL list using the retrieved object
+
+See "modules" at [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+
+NOTE: The script element should be of type "module".
+
+# Wiring things up. No. 1e: 
+
+Here's what [list_recipes.js](htdocs/modules/list_recipes.js) looks like.
+
+~~~javascript
+/**
+ * list_recipes.js is a module that uses the Dataset JSON API for recipes_api.yaml to list
+ * the recipes in the recipes.ds collection.
+ */
+
+
+/**
+ * retrieveRecipesFromAPI shows the basic way to use "fetch" to retrieve results from 
+ * the query end of the JSON API provided by dastasetd.
+ */
+async function retrieveRecipesFromAPI() {
+  const apiURL = "http://localhost:8001/api/recipes.ds/query/list_recipes";
+  const method = "POST";
+
+  const response = await fetch(apiURL, { method: method });
+  if (!response.ok) {
+    throw new Error(`Response status: ${response.status}`);
+  }
+  const data = await response.json();
+
+  return data;
+}
+
+/**
+ * populateUL takes the results of the JSON API query and renders the LI for the UL list
+ */
+function populateUL(ul, data) {
+    ul.innerHTML = "";
+    for (const obj of data) {
+      if (
+        obj.key !== undefined && obj.key !== "" && obj.name !== undefined &&
+        obj.name !== ""
+      ) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        console.log(`DEBUG key: ${obj.key} -> ${obj.name}`);
+        a.href = `display_recipe.html?key=${obj.key}`;
+        a.innerHTML = obj.name;
+        console.log(a);
+        li.appendChild(a);
+        ul.appendChild(li);
+      }
+    }
+}
+
+/**
+ * listRecipes contacts the JSON API and populates the URL list identified using the id "recipe_list".
+ */
+async function listRecipes() {
+    const ul = document.getElementById("recipe-list");
+    // Clear our UL list
+    ul.innerHTML = "";
+    // Get our list
+    const data = await retrieveRecipesFromAPI();
+    // Now populate it with "data"
+    populateUL(ul, data);
+}
+
+/**
+ * Wait until the page is loaded before updating.
+ */
+document.addEventListener("DOMContentLoaded",  await listRecipes());
+~~~
+
+# Wiring things up, No. 2: "display_recipe.js" behavior
+
+- determine the record key from the URL parameters
+- retrieve the JSON object from the JSON API
+- update the display
+
+# Wiring things up, No. 3: "edit_recipe.js" behaviors
+
+- Needs to handle both "create" and "update"
+- Can uses URL path distinguish between "create" and "update"
+- For update will need to retrieve the current recipe to edit as JSON, then populate the form
+- Will need to handle gathering the form elements and sending them to the JSON API to "create" or "update" the recipe
+
+
+# Wiring things up, No. 3: "edit_recipe.js" behaviors
+
+- Needs to handle both "create" and "update"
+- Can uses URL path distinguish between "create" and "update"
+- For update will need to retrieve the current recipe to edit as JSON, then populate the form
+- Will need to handle gathering the form elements and sending them to the JSON API to "create" or "update" the recipe
 
 # Debugging
 
@@ -307,194 +473,12 @@ This is just the minimum prototpye
 
 We can retrieve the following from [CL-web-components](https://github.com/caltechlibrary/CL-web-components)
 
-- [a_to_z_ul.js]() -> htdocs/js/a_to_z_ul.js
-- [csvtextarea.js]() -> htdocs/js/csvtextarea.js
-- [sortable_table.js]() -> htdocs/js/sortable_table.js
+- [a_to_z_ul.js]() -> htdocs/modules/a_to_z_ul.js
+- [csvtextarea.js]() -> htdocs/modules/csvtextarea.js
+- [sortable_table.js]() -> htdocs/modules/sortable_table.js
 
 
-# Recipe for an application, Dataset and a Web Component
 
-- What is Dataset?
-- Simplification by dividing responsibilities
-- Software required and recommended
-- Defining a light weight metadata web service using YAML
-- Building a user interface with HTML, CSS and JavaScript
-- Conclusion
-
-# What is Dataset?
-
-- A JSON document (metadata) collection manager
-- A command line tool
-- A web service
-
-# Dividing responsibilities
-
-- a localhost web service implements metadata collection curation
-  - CRUD-Q: create, read, update, delete and query
-- browser side user interface using "static" content (HTML, CSS and JavaScript)
-- a front end web server can control access and authentication (example [COLD](https://apps.library.caltech.edu/cold)
-
-# How does Dataset simplify web applications?
-
-- Dataset provides your backend system
-  - Define it using a YAML document
-  - Run it on  "localhost" on a port of your choosing
-  - It provides static site hosting for testing and development
-- Implement the human interface in HTML, CSS and JavaScript
-  - runs browser side
-
-# Required Software
-
-- Text editor
-- Web Browser
-- Dataset
-
-# Recommended Software
-
-These are additional helpful software you may want to explore later
-
-- [SQLite3](https://sqlite.org)
-- [cURL](https://curl.se/download.html)
-- [jq](https://jqlang.org)
-- [yq](https://mikefarah.gitbook.io/yq)
-- [htmlq](https://github.com/mgdm/htmlq)
-- [Deno](https://deno.com) for formatting, linting JavaScript and TypeScript
-
-# Installing Dataset (Windows)
-
-- Open a Terminal running Powershell
-- Use the following to install Dataset
-
-~~~pswh
-irm https://caltechlibrary.github.io/dataset/installer.ps1 | iex
-~~~
-
-# Installing Dataset (macOS and Raspberry Pi OS)
-
-- Open a Terminal running Bash or zsh
-- Use the following to install Dataset
-
-~~~shell
-curl https://caltechlibrary.github.io/dataset/installer.sh | sh
-~~~
-
-# Building a light weight metadata repository
-
-- Setting up our Metadata service
-- Defining our web service
-- Working with client side JavaScript Modules (a.k.a ESM)
-
-# Step 1. Creating our Metadata collection
-
-- Initializing the Metadata collection with `dataset3`
-- Creating our htdocs directory
-
-~~~shell
-dataset3 init metadata.ds
-mkdir htdocs
-~~~
-
-# Step 2. Setting up our Metadata service
-
-- Assigning host and port in [metadata_api.yaml](metadata_api.yaml)
-- Assigning an htdocs directory
-- defining our collections, permissions and queries
-
-# Step 3. Defining the service port, htdocs and collections
-
-~~~yaml
-host: localhost:8010
-htdocs: htdocs
-collections
-  - dataset: metadata.ds
-~~~
-
-# Step 4. Adding our collection's permissions
-
-~~~yaml
-host: localhost:8010
-htdocs: htdocs
-collections
-  - dataset: metadata.ds
-    keys: true
-    create: true
-    read: true
-    update: true
-    delete: true
-~~~
-
-# Step 5. Defining our collection's queries
-
-~~~yaml
-host: localhost:8010
-htdocs: htdocs
-collections:
-  - dataset: metadata.ds
-    keys: true
-    create: true
-    read: true
-    update: true
-    query:
-      list_objects: |
-        select src
-        from metadata
-        order by _Key
-      list_recent: |
-        select src
-        from metadata
-        order by created desc
-        limit ?,?
-~~~
-
-# Step 6. Starting up our web service
-
-~~~shell
-dataset3d metadata_api.yaml
-~~~
-
-You can press Ctrl-C to quit the web service (we'll start it later)
-
-# Step 7. Testing our API
-
-- Creating some test data using [Datatools](https://caltechlibrary.github.io/datatools)
-- Or just download the examples [docs/recipes.jsonl](https://caltechlibary.github.io/dataset/docs/recipes.jsonl)
-- Testing the API with cURL
-- Web forms and the API
-- Viewing static side with your web browser
-
-# Step 8. Downloading and load recipes.jsonl
-
-~~~shell
-curl https://caltechlibrary.github.io/dataset/docs/recipes.jsonl
-dataset3 load metadata.ds <recipes.jsonl
-~~~
-
-# Step 9. Testing the API with cURL
-
-In one window start the web service
-
-~~~shell
-dataset3d metadata_api.yaml
-~~~
-
-Then in another test with cURL
-
-~~~shell
-curl http://localhost:8010/api/metadata.ds/keys
-curl http://localhost:8010/api/metadata.ds/object/blondie
-curl -X POST -d {} http://localhost:8010/api/metadata.ds/query/list_objects
-~~~
-
-# Step 10. Building the front end
-
-- Building or index page
-- CRUD operations with web forms
-- Queries supply lists
-
-# Step 11. Testing our application
-
-- Logged output
-- Web Browser development tools
 
 # Conclusion
 
