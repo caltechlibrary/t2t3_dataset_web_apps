@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="R. S. Doiel, rsdoiel@caltech.edu" />
+  <meta name="keywords" content="microservices, SQLite3, Deno, TypeScript, Dataset" />
+  <title>Recipe for an application, Dataset and CL Web Components</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Recipe for an application, Dataset and CL Web
+Components</h1>
+  <p class="author">
+R. S. Doiel, <a href="mailto:rsdoiel@caltech.edu"
+class="email">rsdoiel@caltech.edu</a>
+  </p>
+  <p class="institute">
+<p>Caltech Library, Digital Library Development</p>
+  </p>
+  <p class="date">TBD</p>
+</div>
+<div class="slide" id="TOC">
+
+</div>
+<div id="recipe-for-an-application-dataset-and-a-web-component"
+class="slide section level1">
+<h1>Recipe for an application, Dataset and a Web Component</h1>
+<h2 id="what-well-do">What we’ll do</h2>
+<ul>
+<li>We’ll build a web application for managing a list of recipes</li>
+<li>Work with HTML, a little JavaScript, JSON and YAML</li>
+</ul>
+<h2 id="what-well-learn">What we’ll learn</h2>
+<ul>
+<li>How to create a JSON API using a simple YAML and a little SQL</li>
+<li>How to use a Web Compent from CL Web Components</li>
+</ul>
+</div>
+<div id="recipe-for-an-application-dataset-and-a-web-component-1"
+class="slide section level1">
+<h1>Recipe for an application, Dataset and a Web Component</h1>
+<h2 id="required">Required</h2>
+<ul>
+<li><a href="https://caltechlibrary.github.io/dataset">Dataset</a></li>
+<li><a href="https://vscodium.com/">Text Editor</a></li>
+<li><a href="https://www.mozilla.org/en-US/firefox/new/">Web
+Browser</a></li>
+<li><a href="https://curl.se/docs/manpage.html">cURL</a> (for testing
+and debugging the JSON API)</li>
+<li>Terminal application</li>
+</ul>
+<p>Go to the websites, follow the install instructions if needed</p>
+</div>
+<div id="recipe-for-an-application-dataset-and-a-web-component-2"
+class="slide section level1">
+<h1>Recipe for an application, Dataset and a Web Component</h1>
+<h2 id="suggested">Suggested</h2>
+<ul>
+<li><a href="https://jqlang.org">jq</a></li>
+<li><a href="https://mikefarah.gitbook.io/yq">yq</a></li>
+<li><a href="https://github.com/mgdm/htmlq">htmlq</a></li>
+</ul>
+</div>
+<div id="getting-started-what-are-we-creating"
+class="slide section level1">
+<h1>Getting started, what are we creating?</h1>
+<p>A simple web application that lets us curate a list of recipes.</p>
+</div>
+<div id="getting-started-what-are-the-parts-of-our-application"
+class="slide section level1">
+<h1>Getting started, what are the parts of our application?</h1>
+<ol style="list-style-type: decimal">
+<li>A web form to adding or edit our recipes</li>
+<li>A page to display our recipe</li>
+<li>A way to browse recipes</li>
+<li>A web service for managing our recipe collection</li>
+</ol>
+</div>
+<div id="getting-started-what-is-a-recipe" class="slide section level1">
+<h1>Getting started, what is a recipe?</h1>
+<p>(for purposes of this workshop)</p>
+<ul>
+<li>A unique identifier (a.k.a a key)</li>
+<li>A name</li>
+<li>A URL where it was found</li>
+<li>A list of ingredients and measures (table)</li>
+<li>A description of the preparation process</li>
+</ul>
+</div>
+<div id="getting-started-strategy." class="slide section level1">
+<h1>Getting started, strategy.</h1>
+<ul>
+<li>Mockup using HTML</li>
+<li>Defining some behaviors</li>
+<li>Setting up our web service</li>
+<li>Wire up our human interface</li>
+</ul>
+</div>
+<div id="mockup-what-would-be-needed-from-a-web-form"
+class="slide section level1">
+<h1>Mockup, What would be needed from a web form?</h1>
+<dl>
+<dt>name</dt>
+<dd>
+<code>input</code> element
+</dd>
+<dt>url</dt>
+<dd>
+<code>input</code> element
+</dd>
+<dt>ingredients</dt>
+<dd>
+<code>textarea</code> or table?
+</dd>
+<dt>preparation</dt>
+<dd>
+<code>textarea</code>
+</dd>
+</dl>
+<p>We need a submit button.</p>
+</div>
+<div id="mockup-what-would-the-web-form-look-like"
+class="slide section level1">
+<h1>Mockup, What would the web form look like?</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;model&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;js/edit_recipe.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;list-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;./&quot;</span><span class="dt">&gt;</span>List Receipt<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;display-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;display.html&quot;</span><span class="dt">&gt;</span>Display<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;edit-recipe&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;key&quot;</span><span class="dt">&gt;</span>Key<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;key&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;key&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;Unique identfier for recipe&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;lower case unique text&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Name<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;The common name for this recipe&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;e.g. fry bread&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="dt">&gt;</span>Source URL<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;The URL where the recipe was found&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;e.g. https://cullanary.example.edu/fry-bread&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;80&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="dt">&gt;</span>Ingredients<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span><span class="ot"> cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;5&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>ingredient,units</span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="dt">&gt;</span>Preparation<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;preparation steps as free text&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;measure and pour flower in a bowl. Add egg ...&quot;</span><span class="ot"> cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;save&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;save&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Save Recipe&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cancel&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;cancel&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;reset&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Cancel&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>This is our edit page so it should be named “edit.html” in the
+“htdocs” directory.</p>
+</div>
+<div id="mockup-what-how-about-displaying-our-recipe"
+class="slide section level1">
+<h1>Mockup, What how about displaying our recipe?</h1>
+<p>We can use an UL list to list the recipe by name and link to the
+display page.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;model&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;js/display_recipe.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;list-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;./&quot;</span><span class="dt">&gt;</span>List Receipt<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;edit-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;edit.html&quot;</span><span class="dt">&gt;</span>Edit<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>recipe name goes here<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Ingredients<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="dt">&gt;</span>ingredients goes here<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Preparation<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="dt">&gt;</span>preparation instructions goes here<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>This is our landing page so it should be named “recipe.html” in the
+“htdocs” directory.</p>
+</div>
+<div id="mockup-what-about-browsing-our-recipes"
+class="slide section level1">
+<h1>Mockup, What about browsing our recipes?</h1>
+<p>We can use an UL list to list the recipe by name and link to the
+display page.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Available Recipes<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">ul</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;recipe-list&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;View recipe&quot;</span><span class="dt">&gt;</span>Recipe name goes here<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>This is our landing page so it should be named “index.html” in the
+“htdocs” directory.</p>
+</div>
+<div id="behaviors-what-actions-are-needed"
+class="slide section level1">
+<h1>Behaviors, what actions are needed?</h1>
+<h2 id="crud-q">CRUD-Q</h2>
+<ul>
+<li>create a recipe</li>
+<li>retrieve a recipe</li>
+<li>update a recipes</li>
+<li>delete a recipe</li>
+<li>query our collection of recipes</li>
+</ul>
+</div>
+<div id="behaviors-use-javascript-luke" class="slide section level1">
+<h1>Behaviors, use JavaScript Luke</h1>
+<ul>
+<li>retrieve and drop data into our HTML pages</li>
+<li>handle form submission</li>
+<li>to create web components to simplify our HTML and make it more user
+friendly</li>
+</ul>
+</div>
+<div id="behaviors-our-web-service-provides-our-data-source"
+class="slide section level1">
+<h1>Behaviors, our web service provides our data source</h1>
+<ul>
+<li><code>dataset</code> sets up our collection</li>
+<li><code>datasetd</code> provides our web service</li>
+<li>web service is defined using YAML</li>
+</ul>
+</div>
+<div id="behaviors-create-our-collection" class="slide section level1">
+<h1>Behaviors, create our collection</h1>
+<p><code>dataset</code> is a command line tool for interacting with
+collections of JSON documents.</p>
+<p>This will create our “recipes.ds” collection.</p>
+<pre class="shell"><code>dataset init recipes.ds</code></pre>
+<p>Populate the collection with some test data, <a href="">download
+recipes.jsonl</a>.</p>
+<pre class="shell"><code>dataset load recipes.ds &lt;recipes.jsonl</code></pre>
+</div>
+<div id="behaviors-setting-up-with-yaml" class="slide section level1">
+<h1>Behaviors, setting up with YAML</h1>
+<p><code>datasetd</code> provides a turn key web service defined by a
+simple YAML file. It can host one or more dataset collections. It
+provides a static file service as well as a JSON API for each
+collection.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>        selecet src</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>        from recipes</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>        order by name</span></code></pre></div>
+<p>Let’s call this “recipes_api.yaml”.</p>
+</div>
+<div id="wiring-thingss-up-start-recipes_api.yaml"
+class="slide section level1">
+<h1>Wiring thingss up, start “recipes_api.yaml”</h1>
+<p>In one terminal windows use the following command.</p>
+<pre class="shell"><code>datasetd recipes_api.yaml</code></pre>
+<p>Point your web browser at browser at <a href="http://localhost:8001"
+class="uri">http://localhost:8001</a> and you should see your HTML
+pages.</p>
+</div>
+<div
+id="wiring-up-we-use-javascript-and-the-json-api-to-populate-our-pages"
+class="slide section level1">
+<h1>Wiring up, we use JavaScript and the JSON API to populate our
+pages</h1>
+<p>We will create the following:</p>
+<ul>
+<li><a
+href="htdocs/js/edit_recipe.js">htdocs/js/edit_recipes.js</a></li>
+<li><a
+href="htdocs/js/display_recipe.js">htdocs/js/display_recipe.js</a></li>
+<li><a
+href="htdocs/js/list_recipes.js">htdocs/js/list_recipes.js</a></li>
+</ul>
+<p>You can download them from <a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps"
+class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps</a>
+if you’re following along.</p>
+</div>
+<div id="debugging" class="slide section level1">
+<h1>Debugging</h1>
+<p>Work as a group</p>
+</div>
+<div id="prototype" class="slide section level1">
+<h1>Prototype</h1>
+</div>
+<div id="wait-but-this-is-ugly" class="slide section level1">
+<h1>Wait but this is ugly!</h1>
+<p>This is just the minimum prototpye</p>
+</div>
+<div id="improving-our-application-vanilla-css"
+class="slide section level1">
+<h1>Improving our application, vanilla CSS</h1>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">/* Example CSS, how minimal can we be? */</span></span></code></pre></div>
+</div>
+<div id="improving-our-application-leveraging-web-components"
+class="slide section level1">
+<h1>Improving our application, leveraging web components</h1>
+<p>We can retrieve the following from <a
+href="https://github.com/caltechlibrary/CL-web-components">CL-web-components</a></p>
+<ul>
+<li><a href="">a_to_z_ul.js</a> -&gt; htdocs/js/a_to_z_ul.js</li>
+<li><a href="">csvtextarea.js</a> -&gt; htdocs/js/csvtextarea.js</li>
+<li><a href="">sortable_table.js</a> -&gt;
+htdocs/js/sortable_table.js</li>
+</ul>
+</div>
+<div id="recipe-for-an-application-dataset-and-a-web-component-3"
+class="slide section level1">
+<h1>Recipe for an application, Dataset and a Web Component</h1>
+<ul>
+<li>What is Dataset?</li>
+<li>Simplification by dividing responsibilities</li>
+<li>Software required and recommended</li>
+<li>Defining a light weight metadata web service using YAML</li>
+<li>Building a user interface with HTML, CSS and JavaScript</li>
+<li>Conclusion</li>
+</ul>
+</div>
+<div id="what-is-dataset" class="slide section level1">
+<h1>What is Dataset?</h1>
+<ul>
+<li>A JSON document (metadata) collection manager</li>
+<li>A command line tool</li>
+<li>A web service</li>
+</ul>
+</div>
+<div id="dividing-responsibilities" class="slide section level1">
+<h1>Dividing responsibilities</h1>
+<ul>
+<li>a localhost web service implements metadata collection curation
+<ul>
+<li>CRUD-Q: create, read, update, delete and query</li>
+</ul></li>
+<li>browser side user interface using “static” content (HTML, CSS and
+JavaScript)</li>
+<li>a front end web server can control access and authentication
+(example <a href="https://apps.library.caltech.edu/cold">COLD</a></li>
+</ul>
+</div>
+<div id="how-does-dataset-simplify-web-applications"
+class="slide section level1">
+<h1>How does Dataset simplify web applications?</h1>
+<ul>
+<li>Dataset provides your backend system
+<ul>
+<li>Define it using a YAML document</li>
+<li>Run it on “localhost” on a port of your choosing</li>
+<li>It provides static site hosting for testing and development</li>
+</ul></li>
+<li>Implement the human interface in HTML, CSS and JavaScript
+<ul>
+<li>runs browser side</li>
+</ul></li>
+</ul>
+</div>
+<div id="required-software" class="slide section level1">
+<h1>Required Software</h1>
+<ul>
+<li>Text editor</li>
+<li>Web Browser</li>
+<li>Dataset</li>
+</ul>
+</div>
+<div id="recommended-software" class="slide section level1">
+<h1>Recommended Software</h1>
+<p>These are additional helpful software you may want to explore
+later</p>
+<ul>
+<li><a href="https://sqlite.org">SQLite3</a></li>
+<li><a href="https://curl.se/download.html">cURL</a></li>
+<li><a href="https://jqlang.org">jq</a></li>
+<li><a href="https://mikefarah.gitbook.io/yq">yq</a></li>
+<li><a href="https://github.com/mgdm/htmlq">htmlq</a></li>
+<li><a href="https://deno.com">Deno</a> for formatting, linting
+JavaScript and TypeScript</li>
+</ul>
+</div>
+<div id="installing-dataset-windows" class="slide section level1">
+<h1>Installing Dataset (Windows)</h1>
+<ul>
+<li>Open a Terminal running Powershell</li>
+<li>Use the following to install Dataset</li>
+</ul>
+<pre class="pswh"><code>irm https://caltechlibrary.github.io/dataset/installer.ps1 | iex</code></pre>
+</div>
+<div id="installing-dataset-macos-and-raspberry-pi-os"
+class="slide section level1">
+<h1>Installing Dataset (macOS and Raspberry Pi OS)</h1>
+<ul>
+<li>Open a Terminal running Bash or zsh</li>
+<li>Use the following to install Dataset</li>
+</ul>
+<pre class="shell"><code>curl https://caltechlibrary.github.io/dataset/installer.sh | sh</code></pre>
+</div>
+<div id="building-a-light-weight-metadata-repository"
+class="slide section level1">
+<h1>Building a light weight metadata repository</h1>
+<ul>
+<li>Setting up our Metadata service</li>
+<li>Defining our web service</li>
+<li>Working with client side JavaScript Modules (a.k.a ESM)</li>
+</ul>
+</div>
+<div id="step-1.-creating-our-metadata-collection"
+class="slide section level1">
+<h1>Step 1. Creating our Metadata collection</h1>
+<ul>
+<li>Initializing the Metadata collection with <code>dataset3</code></li>
+<li>Creating our htdocs directory</li>
+</ul>
+<pre class="shell"><code>dataset3 init metadata.ds
+mkdir htdocs</code></pre>
+</div>
+<div id="step-2.-setting-up-our-metadata-service"
+class="slide section level1">
+<h1>Step 2. Setting up our Metadata service</h1>
+<ul>
+<li>Assigning host and port in <a
+href="metadata_api.yaml">metadata_api.yaml</a></li>
+<li>Assigning an htdocs directory</li>
+<li>defining our collections, permissions and queries</li>
+</ul>
+</div>
+<div id="step-3.-defining-the-service-port-htdocs-and-collections"
+class="slide section level1">
+<h1>Step 3. Defining the service port, htdocs and collections</h1>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8010</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="at">collections</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> metadata.ds</span></span></code></pre></div>
+</div>
+<div id="step-4.-adding-our-collections-permissions"
+class="slide section level1">
+<h1>Step 4. Adding our collection’s permissions</h1>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8010</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="at">collections</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> metadata.ds</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+</div>
+<div id="step-5.-defining-our-collections-queries"
+class="slide section level1">
+<h1>Step 5. Defining our collection’s queries</h1>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8010</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> metadata.ds</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="fu">      list_objects</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>        select src</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>        from metadata</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>        order by _Key</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="fu">      list_recent</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>        select src</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>        from metadata</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>        order by created desc</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>        limit ?,?</span></code></pre></div>
+</div>
+<div id="step-6.-starting-up-our-web-service"
+class="slide section level1">
+<h1>Step 6. Starting up our web service</h1>
+<pre class="shell"><code>dataset3d metadata_api.yaml</code></pre>
+<p>You can press Ctrl-C to quit the web service (we’ll start it
+later)</p>
+</div>
+<div id="step-7.-testing-our-api" class="slide section level1">
+<h1>Step 7. Testing our API</h1>
+<ul>
+<li>Creating some test data using <a
+href="https://caltechlibrary.github.io/datatools">Datatools</a></li>
+<li>Or just download the examples <a
+href="https://caltechlibary.github.io/dataset/docs/recipes.jsonl">docs/recipes.jsonl</a></li>
+<li>Testing the API with cURL</li>
+<li>Web forms and the API</li>
+<li>Viewing static side with your web browser</li>
+</ul>
+</div>
+<div id="step-8.-downloading-and-load-recipes.jsonl"
+class="slide section level1">
+<h1>Step 8. Downloading and load recipes.jsonl</h1>
+<pre class="shell"><code>curl https://caltechlibrary.github.io/dataset/docs/recipes.jsonl
+dataset3 load metadata.ds &lt;recipes.jsonl</code></pre>
+</div>
+<div id="step-9.-testing-the-api-with-curl"
+class="slide section level1">
+<h1>Step 9. Testing the API with cURL</h1>
+<p>In one window start the web service</p>
+<pre class="shell"><code>dataset3d metadata_api.yaml</code></pre>
+<p>Then in another test with cURL</p>
+<pre class="shell"><code>curl http://localhost:8010/api/metadata.ds/keys
+curl http://localhost:8010/api/metadata.ds/object/blondie
+curl -X POST -d {} http://localhost:8010/api/metadata.ds/query/list_objects</code></pre>
+</div>
+<div id="step-10.-building-the-front-end" class="slide section level1">
+<h1>Step 10. Building the front end</h1>
+<ul>
+<li>Building or index page</li>
+<li>CRUD operations with web forms</li>
+<li>Queries supply lists</li>
+</ul>
+</div>
+<div id="step-11.-testing-our-application" class="slide section level1">
+<h1>Step 11. Testing our application</h1>
+<ul>
+<li>Logged output</li>
+<li>Web Browser development tools</li>
+</ul>
+</div>
+<div id="conclusion" class="slide section level1">
+<h1>Conclusion</h1>
+<ul>
+<li>Build with the grain of the web
+<ul>
+<li>the building blocks are HTML, CSS and JavaScript</li>
+</ul></li>
+<li>Localhost services versus internet services
+<ul>
+<li>security concerns</li>
+</ul></li>
+</ul>
+</div>
+<div id="reference-dataset" class="slide section level1">
+<h1>Reference: Dataset</h1>
+<ul>
+<li><a href="https://caltechlibrary.github.io/dataset">Dataset
+Project</a></li>
+</ul>
+</div>
+<div id="reference-programming-languages" class="slide section level1">
+<h1>Reference: Programming Languages</h1>
+<ul>
+<li><a
+href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content">HTML5</a>,
+structured content</li>
+<li><a
+href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics">CSS</a>,
+layout and style</li>
+<li><a
+href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting">JavaScript</a>,
+behaviors and web components</li>
+<li><a href="https://sqlite.org">SQL</a>
+<ul>
+<li><a href="https://www.sqlitetutorial.net/">SQLite Tutorial</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="reference-data-formats" class="slide section level1">
+<h1>Reference: Data formats</h1>
+<ul>
+<li><a href="https://www.json.org">JSON</a></li>
+<li><a href="https://jsonlines.org">JSON Lines</a></li>
+<li><a href="https://yaml.org/">YAML</a></li>
+</ul>
+</div>
+</body>
+</html>

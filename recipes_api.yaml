@@ -1,0 +1,14 @@
+host: localhost:8001
+htdocs: htdocs
+collections:
+  - dataset: recipes.ds
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    query:
+      list_recipes: |
+        selecet src
+        from recipes
+        order by name
