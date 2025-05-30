@@ -42,7 +42,8 @@
     "curl",
     "jq",
     "yq",
-    "htmlq"
+    "htmlq",
+    "CMTools >= 0.0.29"
   ],
   "version": "0.0.1",
   "developmentStatus": "concept",
