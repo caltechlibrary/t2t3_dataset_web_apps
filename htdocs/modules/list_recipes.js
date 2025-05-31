@@ -6,7 +6,7 @@
 
 /**
  * retrieveRecipesFromAPI shows the basic way to use "fetch" to retrieve results from 
- * the query end of the JSON API provided by dastasetd.
+ * the query endpoint of the JSON API provided by dastasetd.
  */
 async function retrieveRecipesFromAPI() {
   const apiURL = "http://localhost:8001/api/recipes.ds/query/list_recipes";

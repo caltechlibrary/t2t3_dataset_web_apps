@@ -6,36 +6,49 @@
     <script type="module" src="modules/edit_recipe.js"></script>
   </head>
   <body>
-    <form id="edit-recipe" method="" action="">
-      <div>
-        <label set="key">Key</label>
-        <input id="key" name="key" type="text" value="" title="Unique identfier for recipe" placeholder="lower case unique text" size="60">
-      </div>
+    <nav>
+      <a id="list-recipe" href="./">List Receipt</a> <a id="display-recipe" href="display_recipe.html">View</a>
+    </nav>
+    <section id="content">
+      <form id="edit-recipe" autocomplete="off" accept-charset="utf-8">
+        <div>
+          <label set="key">Key</label>
+          <input id="key" name="key" type="text" value=""
+          title="Unique identfier for recipe" placeholder="lower case unique text" size="60">
+        </div>
 
-      <div>
-        <label set="name">Name</label>
-        <input id="name" name="name" type="text" value="" title="The common name for this recipe" placeholder="e.g. fry bread" size="60">
-      </div>
+        <div>
+          <label set="name">Name</label>
+          <input id="name" name="name" type="text" value=""
+          title="The common name for this recipe" placeholder="e.g. fry bread" size="60">
+        </div>
 
-      <div>
-        <label set="url">Source URL</label>
-        <input id="url" name="url" type="url" value="" title="The URL where the recipe was found" placeholder="e.g. https://cullanary.example.edu/fry-bread" size="80">
-      </div>
+        <div>
+          <label set="url">Source URL</label>
+          <input id="url" name="url" type="url" value=""
+          title="The URL where the recipe was found" placeholder="e.g. https://cullanary.example.edu/fry-bread" size="80">
+        </div>
 
-      <div>
-        <label set="ingredients">Ingredients</label>
-        <textarea id="ingredients" name="ingredients" title="ingredient,units (CSV data)" placeholder="flour,2 cups" cols="60"rows="5">
+        <div>
+          <label set="ingredients">Ingredients</label>
+          <textarea id="ingredients" name="ingredients"
+          title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+          cols="60"rows="10">
 ingredient,units
-        </textarea>
-      </div>
 
-      <div>
-        <label set="preparation">Preparation</label>
-        <textarea id="preparation" name="preparation" title="preparation steps as free text" placeholder="measure and pour flower in a bowl. Add egg ..." cols="60"rows="10">
-        </textarea>
-      </div>
+          </textarea>
+        </div>
 
-      <div><input id="save" name="save" type="submit" value="Save Recipe"> <input id="cancel" name="cancel" type="reset" value="Cancel"></div>
-    </form>
+        <div>
+          <label set="procedure">Procedure</label>
+          <textarea id="procedure" name="procedure"
+          title="procedure as free text" placeholder="measure and pour flower in a bowl. Add egg ..."
+          cols="60"rows="10">
+          </textarea>
+        </div>
+
+        <div><input id="save" name="save" type="submit" value="Save"> <input id="cancel" name="cancel" type="reset" value="Cancel"></div>
+      </form>
+    </section>
   </body>
 </html>

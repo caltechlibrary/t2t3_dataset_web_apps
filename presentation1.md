@@ -376,7 +376,7 @@ Here's what [list_recipes.js](htdocs/modules/list_recipes.js) looks like.
 
 /**
  * retrieveRecipesFromAPI shows the basic way to use "fetch" to retrieve results from 
- * the query end of the JSON API provided by dastasetd.
+ * the query endpoint of the JSON API provided by dastasetd.
  */
 async function retrieveRecipesFromAPI() {
   const apiURL = "http://localhost:8001/api/recipes.ds/query/list_recipes";
@@ -432,11 +432,23 @@ async function listRecipes() {
 document.addEventListener("DOMContentLoaded",  await listRecipes());
 ~~~
 
-# Wiring things up, No. 2: "display_recipe.js" behavior
+# Wiring things up, No. 2a: "display_recipe.js" behavior
 
-- determine the record key from the URL parameters
-- retrieve the JSON object from the JSON API
-- update the display
+We are going to create a JavaScript "module" caled "display_recipe.js". It's responsibilities are \--
+
+- After page is loaded, get the "key" from the URL paramters
+- then retrieve our recipe object from the API
+- populate the page and update the navigation (edit element)
+
+NOTE: We have more elements to adjust in the page otherwise the process is very similar to our index.html example.
+
+# Wiring things up, No. 2b: "display_recipe.js" behavior
+
+Here's what [display_recipes.js](htdocs/modules/display_recipe.js) looks like.
+
+~~~JavaScript
+~~~
+
 
 # Wiring things up, No. 3: "edit_recipe.js" behaviors
 
