@@ -75,7 +75,7 @@ function displayWebFrom(key, data) {
 
 /**
  */
-async sendFormData(key) {
+async function sendFormData(key) {
   console.log(`sendFormData(${key}) not implemented.`);
 }
 
