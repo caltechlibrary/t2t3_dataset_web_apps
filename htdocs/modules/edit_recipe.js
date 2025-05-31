@@ -50,6 +50,8 @@ function displayWebFrom(key, data) {
   if (key !== undefined && key !== '') {
     keyInput.value = key;
     keyInput.setAttribute('readonly', true);
+  } else {
+    keyInput.setAttribute('required', true);
   }
   if (data['name']) {
     nameInput.value = data['name'];
@@ -76,7 +78,52 @@ function displayWebFrom(key, data) {
 /**
  */
 async function sendFormData(key) {
-  console.log(`sendFormData(${key}) not implemented.`);
+  const apiURL = `http://localhost:8001/api/recipes.ds/object/${key}`;
+  const method = "POST";
+
+  const keyInput = document.getElementById('key');
+  const nameInput = document.getElementById('name');
+  const urlInput = document.getElementById('url');
+  const ingredientsTextarea = document.getElementById('ingredients');
+  const procedureTextarea = document.getElementById('procedure');
+
+  let data = {};
+  if (keyInput.value) {
+    data['key'] = keyInput.value;
+  }
+  if (nameInput.value) {
+    data['name'] = nameInput.value;
+  }
+  if (urlInput.value) {
+    data['url'] = urlInput.value;
+  }
+  if (ingredientsTextarea.innerHTML) {
+    const lines = ingredientsTextarea.innerHTML.split("\n");
+    const ingredientList = {};
+    // NOTE: This is a very nieve CSV parse, you really want to use something like Papa parse or @std/csv from jsr.io ...
+    for (const line of lines) {
+      if (line.indexOf(',') > -1) {
+        const parts = lines.split(/,/, 2);
+        if (parts.length > 1) {
+          ingredientList[parts[0]] = parts[1];
+        } else {
+          ingredientList[line] = '';
+        }
+      }
+    }
+    data['ingredients'] = ingredientList;
+  }
+  if (procedureTextarea.innerHTML) {
+    data['procedure'] = procedureTextarea.innerHTML;
+  }
+  // NOTE!!!!!!: You really need to validate this object before sending it ...
+  return await fetch (apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
 }
 
 /**
@@ -88,8 +135,10 @@ async function handleSubmission(key) {
   saveButton.addEventListener('click', async (evt) => {
     const response = await sendFormData(key);
     if (response.ok) {
-      window.location.href = `display_recipe.html?key=${key}`
+      window.location.href = `display_recipe.html?key=${key}`;
+      return;
     }
+    alert(`form failed to submit ${response.status}`);
   });
 
   cancelButton.addEventListen('click', function (evt) {

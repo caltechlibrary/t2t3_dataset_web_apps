@@ -57,12 +57,12 @@ function populatePage(key, data) {
   const headerTr = document.createElement("tr");
   const th1 = document.createElement("th");
   const th2 = document.createElement("th");
+
   th1.innerHTML = "Ingredients";
   th2.innerHTML = "Units";
   headerTr.appendChild(th1);
   headerTr.appendChild(th2);
   tableHeader.appendChild(headerTr);
-  table.appendChild(tableHeader);
   if (data['ingredients']) {// !== undefined && data['ingredients'] !== null) {
     for (const key of Object.keys(data['ingredients'])) {
       const val = data['ingredients'][key];
@@ -76,9 +76,12 @@ function populatePage(key, data) {
       tableBody.appendChild(tr);
     }
   }
+  table.appendChild(tableHeader);
   table.appendChild(tableBody);
+  ingredientsElem.style.visibility = 'hidden';
   ingredientsElem.innerHTML = '';
   ingredientsElem.appendChild(table);
+  ingredientsElem.style.visibility = 'visible';
   if (data['procedure']) {
     procedureElem.innerHTML = data['procedure'].trim().replaceAll(/\n/g,'<p>');
   }
