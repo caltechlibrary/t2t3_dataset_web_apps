@@ -136,7 +136,7 @@ class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1
 class="slide section level1">
 <h1>Recipe for an application, Dataset and a Web Component</h1>
 <h2 id="required">Required</h2>
-<h3 id="you-probably-aready-have-this">You probably aready have
+<h3 id="you-probably-already-have-this">You probably already have
 this</h3>
 <ul>
 <li>Terminal application</li>
@@ -180,9 +180,9 @@ class="slide section level1">
 <h1>Getting started, what is a recipe?</h1>
 <p>(for purposes of this workshop)</p>
 <ul>
-<li>A unique identifier as a “key”</li>
+<li>A unique identifier or “key”</li>
 <li>A name</li>
-<li>A URL where it was found</li>
+<li>A URL if taken from the web</li>
 <li>A list of ingredients and measures (CSV data)</li>
 <li>A description of the preparation process (free format text)</li>
 </ul>
@@ -190,15 +190,17 @@ class="slide section level1">
 <div id="getting-started-strategy." class="slide section level1">
 <h1>Getting started, strategy.</h1>
 <ol style="list-style-type: decimal">
-<li>Mockup using HTML</li>
+<li>Mock up using HTML</li>
 <li>Defining some behaviors</li>
 <li>Setting up our web service</li>
 <li>Wire up and improve</li>
 </ol>
+<p>NOTE: feed free to enhance the display via CSS in <a
+href="htdocs/css/styles.css">htdocs/css/styles.css</a></p>
 </div>
-<div id="mockup-what-does-our-metadata-look-like"
+<div id="mock-up-what-does-our-metadata-look-like"
 class="slide section level1">
-<h1>Mockup, what does our metadata look like?</h1>
+<h1>Mock up, what does our metadata look like?</h1>
 <dl>
 <dt>name</dt>
 <dd>
@@ -213,133 +215,54 @@ A URL. Held by an <code>input</code> element of type “url”
 A CSV table. Held by a <code>textarea</code> or for display a
 <code>table</code>.
 </dd>
-<dt>preparation</dt>
+<dt>procedure</dt>
 <dd>
-Free text. Held by a <code>textarea</code> element
+Free text describing how to prepare the dish. Held by a
+<code>textarea</code> element
 </dd>
 </dl>
 <p>We’ll need a submit button to save a new or edited recipe.</p>
 </div>
-<div id="mockup-what-would-the-web-form-look-like"
+<div id="mock-up-what-about-browsing-our-recipes"
 class="slide section level1">
-<h1>Mockup, What would the web form look like?</h1>
-<p>This is our edit page so it should be named <a
-href="htdics/edit.html">edit.html</a> in the “htdocs” directory.</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/edit_recipe.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;list-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;./&quot;</span><span class="dt">&gt;</span>List Receipt<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;display-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;display.html&quot;</span><span class="dt">&gt;</span>Display<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">form</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;edit-recipe&quot;</span><span class="ot"> method</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> action</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;key&quot;</span><span class="dt">&gt;</span>Key<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;key&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;key&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> </span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="ot">        value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;Unique identfier for recipe&quot;</span><span class="ot"> </span></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="ot">        placeholder</span><span class="op">=</span><span class="st">&quot;lower case unique text&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Name<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> </span></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="ot">        value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;The common name for this recipe&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;e.g. fry bread&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="dt">&gt;</span>Source URL<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;url&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;url&quot;</span></span>
-<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="ot">        value</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;The URL where the recipe was found&quot;</span></span>
-<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="ot">        placeholder</span><span class="op">=</span><span class="st">&quot;e.g. https://cullanary.example.edu/fry-bread&quot;</span><span class="ot"> size</span><span class="op">=</span><span class="st">&quot;80&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="dt">&gt;</span>Ingredients<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span></span>
-<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="ot">        title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span><span class="ot"> cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;5&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>ingredient,units</span>
-<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
-<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> set</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="dt">&gt;</span>Preparation<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
-<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span></span>
-<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="ot">        title</span><span class="op">=</span><span class="st">&quot;preparation steps as free text&quot;</span></span>
-<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a><span class="ot">        placeholder</span><span class="op">=</span><span class="st">&quot;measure and pour flower in a bowl. Add egg ...&quot;</span><span class="ot"> cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
-<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;save&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;save&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Save Recipe&quot;</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;cancel&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;cancel&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;reset&quot;</span><span class="ot"> value</span><span class="op">=</span><span class="st">&quot;Cancel&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span>
-<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
-</div>
-<div id="mockup-what-how-about-displaying-our-recipe"
-class="slide section level1">
-<h1>Mockup, What how about displaying our recipe?</h1>
+<h1>Mock up, What about browsing our recipes?</h1>
 <p>We can use an UL list to list the recipe by name and link to the
 display page.</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/display_recipe.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;list-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;./&quot;</span><span class="dt">&gt;</span>List Receipt<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;edit-recipe&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;edit.html&quot;</span><span class="dt">&gt;</span>Edit<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">nav</span><span class="dt">&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>recipe name goes here<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Ingredients<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="dt">&gt;</span>ingredients goes here<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Preparation<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;preparation&quot;</span><span class="dt">&gt;</span>preparation instructions goes here<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
-<p>This is our landing page so it should be named “recipe.html” in the
-“htdocs” directory.</p>
-</div>
-<div id="mockup-what-about-browsing-our-recipes"
-class="slide section level1">
-<h1>Mockup, What about browsing our recipes?</h1>
-<p>We can use an UL list to list the recipe by name and link to the
-display page.</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/list_recipes.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Available Recipes<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">ul</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;recipe-list&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot"> title</span><span class="op">=</span><span class="st">&quot;View recipe&quot;</span><span class="dt">&gt;</span>Recipe name goes here<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Example: <a href="htdocs/index.html">htdocs/index.html</a></p>
 <p>This is our landing page so it should be named “index.html” in the
 “htdocs” directory.</p>
+<p>We can include mock up sample data view the before setting up our web
+service by opening the page directly in our web browser.</p>
+</div>
+<div id="mock-up-what-would-the-web-form-look-like"
+class="slide section level1">
+<h1>Mock up, What would the web form look like?</h1>
+<p>We can use a single web form for both adding and editing recipes.</p>
+<p>Example: <a
+href="htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></p>
+<p>This is our edit page so it should be named “edit_recipe.html” in the
+“htdocs” directory.</p>
+</div>
+<div id="mock-up-what-how-about-displaying-our-recipe"
+class="slide section level1">
+<h1>Mock up, What how about displaying our recipe?</h1>
+<p>We can use an UL list to list the recipe by name and link to the
+display page.</p>
+<p>Example: <a
+href="htdocs/display_recipe.html">htdocs/display_recipe.html</a></p>
+<p>This is our display page so it should be named “display_recipe.html”
+in the “htdocs” directory.</p>
 </div>
 <div id="behaviors-what-actions-are-needed"
 class="slide section level1">
 <h1>Behaviors, what actions are needed?</h1>
 <h2 id="crud-q">CRUD-Q</h2>
 <ul>
-<li>create a recipe</li>
-<li>retrieve a recipe</li>
-<li>update a recipes</li>
-<li>delete a recipe</li>
-<li>query our collection of recipes</li>
+<li>create a recipe (add)</li>
+<li>retrieve a recipe (display)</li>
+<li>update a recipes (edit)</li>
+<li>delete a recipe (left unimplemented)</li>
+<li>query our collection of recipes (list recipes)</li>
 </ul>
 </div>
 <div id="behaviors-we-can-use-javascript" class="slide section level1">
@@ -379,22 +302,22 @@ simple YAML file. It can host one or more dataset collections. It
 provides a static file service as well as a JSON API for each
 collection. Let’s call this <a
 href="recipes_api.yaml">recipes_api.yaml</a>.</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#!/usr/bin/env datasetd</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>        select src</span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>        from recipes</span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>        select src</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>        from recipes</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
 </div>
 <div id="wiring-things-up-start-recipes_api.yaml"
 class="slide section level1">
@@ -422,18 +345,18 @@ class="uri">http://localhost:8001/edit_recipe.html</a></li>
 </ul>
 </div>
 <div
-id="congradulations-you-just-implemented-your-applications-web-services"
+id="congratulations-you-just-implemented-your-applications-web-services"
 class="slide section level1">
-<h1>Congradulations, you just implemented your application’s web
+<h1>Congratulations, you just implemented your application’s web
 services</h1>
-<p><strong>Hurray!!!</strong></p>
+<p><strong>Hurrah!!!</strong></p>
 <p>The web service half of your application is completed.</p>
 </div>
 <div id="remember-your-browser-has-developer-tools-given-them-a-try"
 class="slide section level1">
 <h1>Remember your browser has “developer tools”, given them a try</h1>
 <ul>
-<li>With Firefix look at the “hamberger menu”, click “more tools”, click
+<li>With Firefox look at the “hamburger menu”, click “more tools”, click
 “web developer tools”</li>
 <li>Chrome, Safari have different menus, you’ll need to find them</li>
 </ul>
@@ -443,9 +366,9 @@ id="wiring-things-up-we-use-javascript-and-the-json-api-to-populate-our-pages"
 class="slide section level1">
 <h1>Wiring things up, we use JavaScript and the JSON API to populate our
 pages</h1>
-<p>Create our “htdocs” and “htdocs/js” directories.</p>
+<p>Create our “htdocs” and “htdocs/modules” directories.</p>
 <pre class="shell"><code>mkdir htdocs
-mkdir htdocs/js</code></pre>
+mkdir htdocs/modules</code></pre>
 <p>We will be creating the following files.</p>
 <ol style="list-style-type: decimal">
 <li><a
@@ -517,78 +440,91 @@ href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN
 <p>Here’s what <a
 href="htdocs/modules/list_recipes.js">list_recipes.js</a> looks
 like.</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co"> * list_recipes.js is a module that uses the Dataset JSON API for recipes_api.yaml to list</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co"> * the recipes in the recipes.ds collection.</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co"> * retrieveRecipesFromAPI shows the basic way to use &quot;fetch&quot; to retrieve results from </span></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co"> * the query end of the JSON API provided by dastasetd.</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">retrieveRecipesFromAPI</span>() {</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  <span class="kw">const</span> apiURL <span class="op">=</span> <span class="st">&quot;http://localhost:8001/api/recipes.ds/query/list_recipes&quot;</span><span class="op">;</span></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="kw">const</span> method <span class="op">=</span> <span class="st">&quot;POST&quot;</span><span class="op">;</span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(apiURL<span class="op">,</span> { <span class="dt">method</span><span class="op">:</span> method })<span class="op">;</span></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>response<span class="op">.</span><span class="at">ok</span>) {</span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`Response status: </span><span class="sc">${</span>response<span class="op">.</span><span class="at">status</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>  }</span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>  <span class="cf">return</span> data<span class="op">;</span></span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>}</span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="co"> * populateUL takes the results of the JSON API query and renders the LI for the UL list</span></span>
-<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="kw">function</span> <span class="fu">populateUL</span>(ul<span class="op">,</span> data) {</span>
-<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>    ul<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
-<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> obj <span class="kw">of</span> data) {</span>
-<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>      <span class="cf">if</span> (</span>
-<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>        obj<span class="op">.</span><span class="at">key</span> <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">&amp;&amp;</span> obj<span class="op">.</span><span class="at">key</span> <span class="op">!==</span> <span class="st">&quot;&quot;</span> <span class="op">&amp;&amp;</span> obj<span class="op">.</span><span class="at">name</span> <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>        obj<span class="op">.</span><span class="at">name</span> <span class="op">!==</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a>      ) {</span>
-<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>        <span class="kw">const</span> li <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;li&quot;</span>)<span class="op">;</span></span>
-<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>        <span class="kw">const</span> a <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;a&quot;</span>)<span class="op">;</span></span>
-<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`DEBUG key: </span><span class="sc">${</span>obj<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs"> -&gt; </span><span class="sc">${</span>obj<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a>        a<span class="op">.</span><span class="at">href</span> <span class="op">=</span> <span class="vs">`display_recipe.html?key=</span><span class="sc">${</span>obj<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a>        a<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> obj<span class="op">.</span><span class="at">name</span><span class="op">;</span></span>
-<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(a)<span class="op">;</span></span>
-<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a>        li<span class="op">.</span><span class="fu">appendChild</span>(a)<span class="op">;</span></span>
-<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>        ul<span class="op">.</span><span class="fu">appendChild</span>(li)<span class="op">;</span></span>
-<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a>      }</span>
-<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>    }</span>
-<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a>}</span>
-<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a></span>
-<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a><span class="co"> * listRecipes contacts the JSON API and populates the URL list identified using the id &quot;recipe_list&quot;.</span></span>
-<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">listRecipes</span>() {</span>
-<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a>    <span class="kw">const</span> ul <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&quot;recipe-list&quot;</span>)<span class="op">;</span></span>
-<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a>    <span class="co">// Clear our UL list</span></span>
-<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a>    ul<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
-<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a>    <span class="co">// Get our list</span></span>
-<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> <span class="fu">retrieveRecipesFromAPI</span>()<span class="op">;</span></span>
-<span id="cb11-55"><a href="#cb11-55" tabindex="-1"></a>    <span class="co">// Now populate it with &quot;data&quot;</span></span>
-<span id="cb11-56"><a href="#cb11-56" tabindex="-1"></a>    <span class="fu">populateUL</span>(ul<span class="op">,</span> data)<span class="op">;</span></span>
-<span id="cb11-57"><a href="#cb11-57" tabindex="-1"></a>}</span>
-<span id="cb11-58"><a href="#cb11-58" tabindex="-1"></a></span>
-<span id="cb11-59"><a href="#cb11-59" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb11-60"><a href="#cb11-60" tabindex="-1"></a><span class="co"> * Wait until the page is loaded before updating.</span></span>
-<span id="cb11-61"><a href="#cb11-61" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb11-62"><a href="#cb11-62" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&quot;DOMContentLoaded&quot;</span><span class="op">,</span>  <span class="cf">await</span> <span class="fu">listRecipes</span>())<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"> * list_recipes.js is a module that uses the Dataset JSON API for recipes_api.yaml to list</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"> * the recipes in the recipes.ds collection.</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co"> * retrieveRecipesFromAPI shows the basic way to use &quot;fetch&quot; to retrieve results from </span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co"> * the query endpoint of the JSON API provided by dastasetd.</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">retrieveRecipesFromAPI</span>() {</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  <span class="kw">const</span> apiURL <span class="op">=</span> <span class="st">&quot;http://localhost:8001/api/recipes.ds/query/list_recipes&quot;</span><span class="op">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="kw">const</span> method <span class="op">=</span> <span class="st">&quot;POST&quot;</span><span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(apiURL<span class="op">,</span> { <span class="dt">method</span><span class="op">:</span> method })<span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>response<span class="op">.</span><span class="at">ok</span>) {</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`Response status: </span><span class="sc">${</span>response<span class="op">.</span><span class="at">status</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>  }</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>  <span class="cf">return</span> data<span class="op">;</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>}</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co"> * populateUL takes the results of the JSON API query and renders the LI for the UL list</span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="kw">function</span> <span class="fu">populateUL</span>(ul<span class="op">,</span> data) {</span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>    ul<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> obj <span class="kw">of</span> data) {</span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>      <span class="cf">if</span> (</span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>        obj<span class="op">.</span><span class="at">key</span> <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">&amp;&amp;</span> obj<span class="op">.</span><span class="at">key</span> <span class="op">!==</span> <span class="st">&quot;&quot;</span> <span class="op">&amp;&amp;</span> obj<span class="op">.</span><span class="at">name</span> <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>        obj<span class="op">.</span><span class="at">name</span> <span class="op">!==</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>      ) {</span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a>        <span class="kw">const</span> li <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;li&quot;</span>)<span class="op">;</span></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>        <span class="kw">const</span> a <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;a&quot;</span>)<span class="op">;</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`DEBUG key: </span><span class="sc">${</span>obj<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs"> -&gt; </span><span class="sc">${</span>obj<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a>        a<span class="op">.</span><span class="at">href</span> <span class="op">=</span> <span class="vs">`display_recipe.html?key=</span><span class="sc">${</span>obj<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>        a<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> obj<span class="op">.</span><span class="at">name</span><span class="op">;</span></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(a)<span class="op">;</span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a>        li<span class="op">.</span><span class="fu">appendChild</span>(a)<span class="op">;</span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a>        ul<span class="op">.</span><span class="fu">appendChild</span>(li)<span class="op">;</span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a>      }</span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a>    }</span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a>}</span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co"> * listRecipes contacts the JSON API and populates the URL list identified using the id &quot;recipe_list&quot;.</span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">listRecipes</span>() {</span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a>    <span class="kw">const</span> ul <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&quot;recipe-list&quot;</span>)<span class="op">;</span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a>    <span class="co">// Clear our UL list</span></span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a>    ul<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a>    <span class="co">// Get our list</span></span>
+<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> <span class="fu">retrieveRecipesFromAPI</span>()<span class="op">;</span></span>
+<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a>    <span class="co">// Now populate it with &quot;data&quot;</span></span>
+<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a>    <span class="fu">populateUL</span>(ul<span class="op">,</span> data)<span class="op">;</span></span>
+<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a>}</span>
+<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a></span>
+<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb8-60"><a href="#cb8-60" tabindex="-1"></a><span class="co"> * Wait until the page is loaded before updating.</span></span>
+<span id="cb8-61"><a href="#cb8-61" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb8-62"><a href="#cb8-62" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&quot;DOMContentLoaded&quot;</span><span class="op">,</span>  <span class="cf">await</span> <span class="fu">listRecipes</span>())<span class="op">;</span></span></code></pre></div>
 </div>
-<div id="wiring-things-up-no.-2-display_recipe.js-behavior"
+<div id="wiring-things-up-no.-2a-display_recipe.js-behavior"
 class="slide section level1">
-<h1>Wiring things up, No. 2: “display_recipe.js” behavior</h1>
+<h1>Wiring things up, No. 2a: “display_recipe.js” behavior</h1>
+<p>We are going to create a JavaScript “module” caled
+“display_recipe.js”. It’s responsibilities are --</p>
 <ul>
-<li>determine the record key from the URL parameters</li>
-<li>retrieve the JSON object from the JSON API</li>
-<li>update the display</li>
+<li>After page is loaded, get the “key” from the URL paramters</li>
+<li>then retrieve our recipe object from the API</li>
+<li>populate the page and update the navigation (edit element)</li>
 </ul>
+<p>NOTE: We have more elements to adjust in the page otherwise the
+process is very similar to our index.html example.</p>
+</div>
+<div id="wiring-things-up-no.-2b-display_recipe.js-behavior"
+class="slide section level1">
+<h1>Wiring things up, No. 2b: “display_recipe.js” behavior</h1>
+<p>Here’s what <a
+href="htdocs/modules/display_recipe.js">display_recipes.js</a> looks
+like.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"></code></pre></div>
 </div>
 <div id="wiring-things-up-no.-3-edit_recipe.js-behaviors"
 class="slide section level1">
@@ -628,8 +564,8 @@ the JSON API to “create” or “update” the recipe</li>
 <div id="improving-our-application-vanilla-css"
 class="slide section level1">
 <h1>Improving our application, vanilla CSS</h1>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode css"><code class="sourceCode css"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">/* Example CSS, how minimal can we be? */</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">/* Example CSS, how minimal can we be? */</span></span></code></pre></div>
 </div>
 <div id="improving-our-application-leveraging-web-components"
 class="slide section level1">

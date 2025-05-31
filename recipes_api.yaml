@@ -1,4 +1,4 @@
-#!/usr/bin/env datasetd -debug
+#!/usr/bin/env -S datasetd -debug
 host: localhost:8001
 htdocs: htdocs
 collections:

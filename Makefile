@@ -18,5 +18,16 @@ clean: .FORCE
 	@if [ -f presentation1.html ]; then rm presentation1.html; fi
 	@if [ -f presentation1.pdf ];  then rm presentation1.pdf; fi
 	@if [ -f presentation1.pptx ]; then rm presentation1.pptx; fi
+
+status:
+	git status
+
+save:
+	if [ "$(msg)" != "" ]; then git commit -am "$(msg)"; else git commit -am "Quick Save"; fi
+	git push origin $(BRANCH)
+
+publish: website
+	bash publish.bash
+
 	
 .FORCE:
