@@ -112,9 +112,8 @@ class="email">rsdoiel@caltech.edu</a>
 <div class="slide" id="TOC">
 
 </div>
-<div id="recipe-for-an-application-dataset-and-a-web-component"
-class="slide section level1">
-<h1>Recipe for an application, Dataset and a Web Component</h1>
+<div id="dataset-and-a-web-components" class="slide section level1">
+<h1>Dataset and a Web Components</h1>
 <h2 id="what-well-do">What we’ll do</h2>
 <ul>
 <li>We’ll build a web application for managing a list of recipes</li>
@@ -122,8 +121,8 @@ class="slide section level1">
 </ul>
 <h2 id="what-well-learn">What we’ll learn</h2>
 <ul>
-<li>How to create a JSON API using a simple YAML file and a simple
-SQL</li>
+<li>How to create a JSON API using a simple YAML file and simple SQL
+SELECT statements</li>
 <li>How to enhance our HTML using Web Compents from <a
 href="https://github.com/caltechlibraryCL-web-components">CL Web
 Components</a></li>
@@ -132,83 +131,149 @@ Components</a></li>
 href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html"
 class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html</a></p>
 </div>
-<div id="recipe-for-an-application-dataset-and-a-web-component-1"
-class="slide section level1">
-<h1>Recipe for an application, Dataset and a Web Component</h1>
-<h2 id="required">Required</h2>
-<h3 id="you-probably-already-have-this">You probably already have
-this</h3>
+<div id="getting-started-requirements" class="slide section level1">
+<h1>Getting started, requirements</h1>
+<h3 id="you-probably-already-have-these-if-not-install-them">You
+probably already have these, if not install them</h3>
 <ul>
 <li>Terminal application</li>
 <li><a href="https://vscodium.com/">Text Editor</a></li>
 <li><a href="https://www.mozilla.org/en-US/firefox/new/">Web Browser</a>
 (I’m assuming Firefox for this tutorial)</li>
 </ul>
-<h3 id="youll-need-to-install-this">You’ll need to install this</h3>
+<h3 id="you-will-need-to-install-dataset">You will need to install
+dataset</h3>
 <ul>
 <li><a href="https://caltechlibrary.github.io/dataset">Dataset</a></li>
 </ul>
-<p>NOTE: you need to be comfortable using the terminal application</p>
-</div>
-<div id="recipe-for-an-application-dataset-and-a-web-component-2"
-class="slide section level1">
-<h1>Recipe for an application, Dataset and a Web Component</h1>
-<h2 id="suggested">Suggested</h2>
-<p>I will use the following to show and test our JSON API.</p>
-<ul>
-<li><a href="https://curl.se/docs/manpage.html">cURL</a> (for testing
-and debugging the JSON API)</li>
-<li><a href="https://jqlang.org">jq</a></li>
-</ul>
-</div>
-<div id="getting-started-what-are-we-creating"
-class="slide section level1">
-<h1>Getting started, what are we creating?</h1>
-<p>A simple web application that lets us curate a list of recipes.</p>
-</div>
-<div id="getting-started-what-are-the-parts-of-our-application"
-class="slide section level1">
-<h1>Getting started, what are the parts of our application?</h1>
+<p>We can start our first iteration of our applicaiton once you have
+these available.</p>
+<h2 id="four-parts">Four parts</h2>
 <ol style="list-style-type: decimal">
-<li>A web form to adding or edit our recipes</li>
-<li>A page to display our recipe</li>
-<li>A way to browse recipes</li>
-<li>A web service for managing our recipe collection</li>
-</ol>
-</div>
-<div id="getting-started-what-is-a-recipe" class="slide section level1">
-<h1>Getting started, what is a recipe?</h1>
-<p>(for purposes of this workshop)</p>
-<ul>
-<li>A unique identifier or “key”</li>
-<li>A name</li>
-<li>A URL if taken from the web</li>
-<li>A list of ingredients and measures (CSV data)</li>
-<li>A description of the preparation process (free format text)</li>
-</ul>
-</div>
-<div id="getting-started-strategy." class="slide section level1">
-<h1>Getting started, strategy.</h1>
-<ol style="list-style-type: decimal">
-<li>Mock up using HTML</li>
-<li>Defining some behaviors</li>
+<li>What are we building, how will we build it?</li>
 <li>Setting up our web service</li>
-<li>Wire up and improve</li>
+<li>Creating our static content</li>
+<li>Enhancements with Web Componts</li>
 </ol>
-<p>NOTE: feed free to enhance the display via CSS in <a
-href="htdocs/css/styles.css">htdocs/css/styles.css</a></p>
 </div>
-<div id="mock-up-what-does-our-metadata-look-like"
+<div id="part-1-what-are-we-building" class="slide section level1">
+<h1>Part 1: What are we building?</h1>
+<p>GOAL: A simple web application that lets us curate a list of
+recipes.</p>
+</div>
+<div id="part-1-what-are-the-parts-of-our-application"
 class="slide section level1">
-<h1>Mock up, what does our metadata look like?</h1>
+<h1>Part 1: What are the parts of our application?</h1>
+<ol style="list-style-type: decimal">
+<li>A web service for managing the recipe collection</li>
+<li>A way to browse recipes (e.g. list recipes by name)</li>
+<li>A page to display an individual recipe</li>
+<li>A web form to adding or edit our recipes</li>
+</ol>
+</div>
+<div id="part-1-what-is-a-recipe" class="slide section level1">
+<h1>Part 1: What is a recipe?</h1>
+<ul>
+<li>A unique identifier as a “key” (will become part of your URL’s
+path)</li>
+<li>A name</li>
+<li>A list of ingredients and measures (CSV data)</li>
+<li>A procedure describing the preparation process (free format
+text)</li>
+</ul>
+</div>
+<div id="part-1-strategy." class="slide section level1">
+<h1>Part 1: Strategy.</h1>
+<ol style="list-style-type: decimal">
+<li>Setting up our web service</li>
+<li>Mockup using HTML</li>
+<li>Wire up and test</li>
+</ol>
+</div>
+<div id="part-2-setting-up-our-web-service"
+class="slide section level1">
+<h1>Part 2: Setting up our web service</h1>
+<ol style="list-style-type: decimal">
+<li>create our recipes.ds collection</li>
+<li>load sample data into our recipes.ds collection</li>
+<li>Configure and run our collection as a web service</li>
+</ol>
+</div>
+<div id="part-2-creating-our-collection" class="slide section level1">
+<h1>Part 2: creating our collection</h1>
+<p>We use the <code>dataset</code> command line program to initialize a
+dataset collection.</p>
+<pre class="shell"><code>dataset init recipes.ds</code></pre>
+</div>
+<div id="part-2-loading-some-sample-data" class="slide section level1">
+<h1>Part 2: Loading some sample data</h1>
+<p>We can now load some sample data, see <a
+href="recipes.jsonl">recipes.jsonl</a>.</p>
+<pre class="shell"><code>dataset load recipes.ds &lt;recipes.jsonl</code></pre>
+</div>
+<div id="part-2-create-an-static-content-directory-directory"
+class="slide section level1">
+<h1>Part 2: create an static content directory directory</h1>
+<pre class="shell"><code>mkdir htdocs
+mkdir htdocs/modules
+mkdir htdocs/css</code></pre>
+</div>
+<div id="part-2-setting-up-our-web-service-configuring-the-web-service"
+class="slide section level1">
+<h1>Part 2: Setting up our web service, configuring the web service</h1>
+<p><code>datasetd</code> provides a turn key web service defined by a
+simple YAML file. It can host one or more dataset collections. It
+provides a static file service as well as a JSON API for each
+collection. Let’s call this <a
+href="recipes_api.yaml">recipes_api.yaml</a>.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>        select src</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>        from recipes</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
+</div>
+<div id="part-2-starting-and-stopping-the-web-service"
+class="slide section level1">
+<h1>Part 2: Starting and stopping the web service</h1>
+<p>Starting the web service.</p>
+<pre class="shell"><code>datasetd recipes_api.yaml</code></pre>
+<ul>
+<li>Go do <a href="http://localhost:8001/api/version"
+class="uri">http://localhost:8001/api/version</a></li>
+<li>Look at the terminal window, do you see the log message for the
+request?</li>
+<li>You can shutdown the service by press control and C (Ctrl-C) in the
+terminal session</li>
+</ul>
+</div>
+<div id="part-3-creating-our-static-content"
+class="slide section level1">
+<h1>Part 3: Creating our static content</h1>
+<p>The web service is running but if you go to the root URL, <a
+href="http://localhost:8001/" class="uri">http://localhost:8001/</a>,
+you’ll get a 404 page. We need to create HTML pages to hold the content
+that will be curated in our recipes application. We’ll be create three
+HTML documents and four JavaScript modules to help with that. But before
+we proceed with coding let’s think about what we’re curating.</p>
+</div>
+<div id="part-3mockup-what-does-our-metadata-look-like"
+class="slide section level1">
+<h1>Part 3:Mockup, what does our metadata look like?</h1>
 <dl>
 <dt>name</dt>
 <dd>
 A line of text. Held by an<code>input</code> element
-</dd>
-<dt>url</dt>
-<dd>
-A URL. Held by an <code>input</code> element of type “url”
 </dd>
 <dt>ingredients</dt>
 <dd>
@@ -223,14 +288,58 @@ Free text describing how to prepare the dish. Held by a
 </dl>
 <p>We’ll need a submit button to save a new or edited recipe.</p>
 </div>
-<div id="mock-up-what-about-browsing-our-recipes"
-class="slide section level1">
-<h1>Mock up, What about browsing our recipes?</h1>
-<p>We can use an UL list to list the recipe by name and link to the
-display page.</p>
-<p>Example: <a href="htdocs/index.html">htdocs/index.html</a></p>
-<p>This is our landing page so it should be named “index.html” in the
-“htdocs” directory.</p>
+<div id="part-3-what-are-our-web-pages" class="slide section level1">
+<h1>Part 3: What are our web pages?</h1>
+<dl>
+<dt><a href="htdocs/index.html">htdocs/index.html</a></dt>
+<dd>
+Display a list of our recipes
+</dd>
+<dt><a href="htdocs/display_recipe.html">htdocs/display.html</a></dt>
+<dd>
+A page that shows the recipe
+</dd>
+<dt><a href="htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></dt>
+<dd>
+A page used to add and edit recipes we’ve collectioned
+</dd>
+</dl>
+</div>
+<div id="part-3-populating-our-pages" class="slide section level1">
+<h1>Part 3: populating our pages</h1>
+<p>We’re create four modules, one specific to each HTML page and one
+utility one that fetches data from our JSON API.</p>
+<dl>
+<dt><a
+href="htdocs/modules/list_recipes.js">htdocs/modules/list_recipes.js</a></dt>
+<dd>
+Display a list of our recipes
+</dd>
+<dt><a
+href="htdocs/display_recipe.js">htdocs/modules/display_recipe.js</a></dt>
+<dd>
+A page that shows the recipe
+</dd>
+<dt><a
+href="htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipe.js</a></dt>
+<dd>
+A page used to add and edit recipes we’ve collectioned
+</dd>
+<dt><a
+href="htdocs/modules/client_api.js">htdocs/modules/client_api.js</a></dt>
+<dd>
+This module handles retrieving data from the JSON API. It is “imported”
+by the three previous modules.
+</dd>
+</dl>
+</div>
+<div id="mockup-wiring-up-our-pages" class="slide section level1">
+<h1>Mockup, wiring up our pages</h1>
+<ul>
+<li>A standard web form that can submit objects to the JSON API</li>
+<li>a JavaScript module used to retrieve objects form the JSON API</li>
+<li>a JavaScript module per page to display the retrieved data</li>
+</ul>
 <p>We can include mock up sample data view the before setting up our web
 service by opening the page directly in our web browser.</p>
 </div>
@@ -294,40 +403,7 @@ collections of JSON documents.</p>
 <p>Populate the collection with some test data, <a
 href="recipes.jsonl">download recipes.jsonl</a>.</p>
 <pre class="shell"><code>dataset load recipes.ds &lt;recipes.jsonl</code></pre>
-</div>
-<div id="behaviors-setting-up-with-yaml" class="slide section level1">
-<h1>Behaviors, setting up with YAML</h1>
-<p><code>datasetd</code> provides a turn key web service defined by a
-simple YAML file. It can host one or more dataset collections. It
-provides a static file service as well as a JSON API for each
-collection. Let’s call this <a
-href="recipes_api.yaml">recipes_api.yaml</a>.</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>        select src</span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>        from recipes</span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
-</div>
-<div id="wiring-things-up-start-recipes_api.yaml"
-class="slide section level1">
-<h1>Wiring things up, start “recipes_api.yaml”</h1>
-<p>In your terminal window enter the following command</p>
-<pre class="shell"><code>datasetd recipes_api.yaml</code></pre>
-<p>or the fancy way (make your recipes_api.yaml executable, then run
-it)</p>
-<pre class="shell"><code>chmod 775 recipes_api.yaml
-./recipes_api.yaml</code></pre>
+<p>—- FIXME: REWRITE rest of presentation</p>
 </div>
 <div
 id="wiring-things-up-checkout-the-web-service-with-your-web-browser"
@@ -438,71 +514,7 @@ href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN
 <div id="wiring-things-up.-no.-1e" class="slide section level1">
 <h1>Wiring things up. No. 1e:</h1>
 <p>Here’s what <a
-href="htdocs/modules/list_recipes.js">list_recipes.js</a> looks
-like.</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"> * list_recipes.js is a module that uses the Dataset JSON API for recipes_api.yaml to list</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"> * the recipes in the recipes.ds collection.</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co"> * retrieveRecipesFromAPI shows the basic way to use &quot;fetch&quot; to retrieve results from </span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co"> * the query endpoint of the JSON API provided by dastasetd.</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">retrieveRecipesFromAPI</span>() {</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  <span class="kw">const</span> apiURL <span class="op">=</span> <span class="st">&quot;http://localhost:8001/api/recipes.ds/query/list_recipes&quot;</span><span class="op">;</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="kw">const</span> method <span class="op">=</span> <span class="st">&quot;POST&quot;</span><span class="op">;</span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(apiURL<span class="op">,</span> { <span class="dt">method</span><span class="op">:</span> method })<span class="op">;</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>response<span class="op">.</span><span class="at">ok</span>) {</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">Error</span>(<span class="vs">`Response status: </span><span class="sc">${</span>response<span class="op">.</span><span class="at">status</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>  }</span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>  <span class="cf">return</span> data<span class="op">;</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>}</span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co"> * populateUL takes the results of the JSON API query and renders the LI for the UL list</span></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="kw">function</span> <span class="fu">populateUL</span>(ul<span class="op">,</span> data) {</span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>    ul<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
-<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> obj <span class="kw">of</span> data) {</span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>      <span class="cf">if</span> (</span>
-<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>        obj<span class="op">.</span><span class="at">key</span> <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">&amp;&amp;</span> obj<span class="op">.</span><span class="at">key</span> <span class="op">!==</span> <span class="st">&quot;&quot;</span> <span class="op">&amp;&amp;</span> obj<span class="op">.</span><span class="at">name</span> <span class="op">!==</span> <span class="kw">undefined</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>        obj<span class="op">.</span><span class="at">name</span> <span class="op">!==</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>      ) {</span>
-<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a>        <span class="kw">const</span> li <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;li&quot;</span>)<span class="op">;</span></span>
-<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>        <span class="kw">const</span> a <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&quot;a&quot;</span>)<span class="op">;</span></span>
-<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`DEBUG key: </span><span class="sc">${</span>obj<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs"> -&gt; </span><span class="sc">${</span>obj<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
-<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a>        a<span class="op">.</span><span class="at">href</span> <span class="op">=</span> <span class="vs">`display_recipe.html?key=</span><span class="sc">${</span>obj<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>        a<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> obj<span class="op">.</span><span class="at">name</span><span class="op">;</span></span>
-<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(a)<span class="op">;</span></span>
-<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a>        li<span class="op">.</span><span class="fu">appendChild</span>(a)<span class="op">;</span></span>
-<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a>        ul<span class="op">.</span><span class="fu">appendChild</span>(li)<span class="op">;</span></span>
-<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a>      }</span>
-<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a>    }</span>
-<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a>}</span>
-<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a></span>
-<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co"> * listRecipes contacts the JSON API and populates the URL list identified using the id &quot;recipe_list&quot;.</span></span>
-<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">listRecipes</span>() {</span>
-<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a>    <span class="kw">const</span> ul <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&quot;recipe-list&quot;</span>)<span class="op">;</span></span>
-<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a>    <span class="co">// Clear our UL list</span></span>
-<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a>    ul<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
-<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a>    <span class="co">// Get our list</span></span>
-<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> <span class="fu">retrieveRecipesFromAPI</span>()<span class="op">;</span></span>
-<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a>    <span class="co">// Now populate it with &quot;data&quot;</span></span>
-<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a>    <span class="fu">populateUL</span>(ul<span class="op">,</span> data)<span class="op">;</span></span>
-<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a>}</span>
-<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a></span>
-<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb8-60"><a href="#cb8-60" tabindex="-1"></a><span class="co"> * Wait until the page is loaded before updating.</span></span>
-<span id="cb8-61"><a href="#cb8-61" tabindex="-1"></a><span class="co"> */</span></span>
-<span id="cb8-62"><a href="#cb8-62" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&quot;DOMContentLoaded&quot;</span><span class="op">,</span>  <span class="cf">await</span> <span class="fu">listRecipes</span>())<span class="op">;</span></span></code></pre></div>
+href="htdocs/modules/list_recipes.js">htdocs/list_recipes.js</a>.</p>
 </div>
 <div id="wiring-things-up-no.-2a-display_recipe.js-behavior"
 class="slide section level1">
@@ -520,35 +532,24 @@ process is very similar to our index.html example.</p>
 <div id="wiring-things-up-no.-2b-display_recipe.js-behavior"
 class="slide section level1">
 <h1>Wiring things up, No. 2b: “display_recipe.js” behavior</h1>
+</div>
+<div id="wiring-things-up-no.-3a-edit_recipe.js-behaviors"
+class="slide section level1">
+<h1>Wiring things up, No. 3a: “edit_recipe.js” behaviors</h1>
+<ul>
+<li>Needs to handle both “create” and “update”</li>
+<li>Can uses URL path distinguish between “create” and “update”</li>
+<li>For update will need to retrieve the current recipe to edit as JSON,
+then populate the form</li>
+<li>Will need to handle gathering the form elements and sending them to
+the JSON API to “create” or “update” the recipe</li>
+</ul>
+</div>
+<div id="wiring-things-up-no.-3b-edit_recipe.js-behaviors"
+class="slide section level1">
+<h1>Wiring things up, No. 3b: “edit_recipe.js” behaviors</h1>
 <p>Here’s what <a
-href="htdocs/modules/display_recipe.js">display_recipes.js</a> looks
-like.</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"></code></pre></div>
-</div>
-<div id="wiring-things-up-no.-3-edit_recipe.js-behaviors"
-class="slide section level1">
-<h1>Wiring things up, No. 3: “edit_recipe.js” behaviors</h1>
-<ul>
-<li>Needs to handle both “create” and “update”</li>
-<li>Can uses URL path distinguish between “create” and “update”</li>
-<li>For update will need to retrieve the current recipe to edit as JSON,
-then populate the form</li>
-<li>Will need to handle gathering the form elements and sending them to
-the JSON API to “create” or “update” the recipe</li>
-</ul>
-</div>
-<div id="wiring-things-up-no.-3-edit_recipe.js-behaviors-1"
-class="slide section level1">
-<h1>Wiring things up, No. 3: “edit_recipe.js” behaviors</h1>
-<ul>
-<li>Needs to handle both “create” and “update”</li>
-<li>Can uses URL path distinguish between “create” and “update”</li>
-<li>For update will need to retrieve the current recipe to edit as JSON,
-then populate the form</li>
-<li>Will need to handle gathering the form elements and sending them to
-the JSON API to “create” or “update” the recipe</li>
-</ul>
+href="htdocs/modules/edit_recipe.js">htdocs/edit_recipe.js</a>.</p>
 </div>
 <div id="debugging" class="slide section level1">
 <h1>Debugging</h1>
@@ -559,7 +560,8 @@ the JSON API to “create” or “update” the recipe</li>
 </div>
 <div id="wait-but-this-is-ugly" class="slide section level1">
 <h1>Wait but this is ugly!</h1>
-<p>This is just the minimum prototpye</p>
+<p>Yeah, this is only a prototype. Let’s iterate on our
+implementation.</p>
 </div>
 <div id="improving-our-application-vanilla-css"
 class="slide section level1">
@@ -579,6 +581,8 @@ htdocs/modules/csvtextarea.js</li>
 <li><a href="">sortable_table.js</a> -&gt;
 htdocs/modules/sortable_table.js</li>
 </ul>
+<p>Now we can update our list, display and web form HTML with these
+components.</p>
 </div>
 <div id="conclusion" class="slide section level1">
 <h1>Conclusion</h1>
@@ -587,7 +591,7 @@ htdocs/modules/sortable_table.js</li>
 <ul>
 <li>the building blocks are HTML, CSS and JavaScript</li>
 </ul></li>
-<li>Localhost services versus internet services
+<li>localhost services versus internet services
 <ul>
 <li>security concerns</li>
 </ul></li>
