@@ -28,7 +28,7 @@ function updateFormActionURL(form, key) {
 
 /**
  * displayWebForm takes the results of the JSON API query and renders the LI for the UL list
- * @param key: string, recipe identifing the recipe
+ * @param key: string, recipe identifying the recipe
  * @param data: object, the recipe metadata
  */
 function displayWebFrom(key, data) {
@@ -39,10 +39,12 @@ function displayWebFrom(key, data) {
   const ingredientsTextarea = document.getElementById('ingredients');
   const procedureTextarea = document.getElementById('procedure');
   if (key !== undefined && key !== '') {
+    console.log(`DEBUG editing ${key}`);
     keyInput.value = key;
     keyInput.setAttribute('readonly', true);
     updateFormActionURL(form, key);
   } else {
+    console.log(`DEBUG creating new recipe`);
     keyInput.setAttribute('required', true);
     // FIXME: Key is special, it needs to form the URL for creating objects in the API.
     // When the key is set in the web form it needs to update the URL specified in the action.
@@ -67,6 +69,7 @@ function displayWebFrom(key, data) {
       procedureTextarea.innerHTML = data['procedure'];
     }
   }
+<<<<<<< HEAD
 }
 
 

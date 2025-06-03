@@ -14,7 +14,7 @@
         <div>
           <label set="key">Key</label>
           <input id="key" name="key" type="text" value=""
-          title="Unique identfier for recipe" placeholder="lower case unique text" size="60">
+          title="Unique identifier for recipe" placeholder="lower case unique text" size="60">
         </div>
 
         <div>
@@ -26,28 +26,24 @@
         <div>
           <label set="url">Source URL</label>
           <input id="url" name="url" type="url" value=""
-          title="The URL where the recipe was found" placeholder="e.g. https://cullanary.example.edu/fry-bread" size="80">
+          title="The URL where the recipe was found" placeholder="e.g. https://culinary.example.edu/fry-bread" size="80">
         </div>
 
         <div>
           <label set="ingredients">Ingredients</label>
           <textarea id="ingredients" name="ingredients"
           title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-          cols="60"rows="10">
-ingredient,units
-
-          </textarea>
+          cols="60"rows="10">Ingredients,Units</textarea>
         </div>
 
         <div>
           <label set="procedure">Procedure</label>
           <textarea id="procedure" name="procedure"
           title="procedure as free text" placeholder="measure and pour flower in a bowl. Add egg ..."
-          cols="60"rows="10">
-          </textarea>
+          cols="60"rows="10"></textarea>
         </div>
 
-        <div><input id="save" name="save" type="submit" value="Save"> <input id="cancel" name="cancel" type="reset" value="Cancel"></div>
+        <div><button id="save" name="save">Save</button> <button id="cancel" name="cancel">Cancel</button></div>
       </form>
     </section>
   </body>
