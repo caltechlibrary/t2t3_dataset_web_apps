@@ -2,24 +2,7 @@
  * list_recipes.js is a module that uses the Dataset JSON API for recipes_api.yaml to list
  * the recipes in the recipes.ds collection.
  */
-
-
-/**
- * retrieveRecipesFromAPI shows the basic way to use "fetch" to retrieve results from 
- * the query endpoint of the JSON API provided by dastasetd.
- */
-async function retrieveRecipesFromAPI() {
-  const apiURL = "http://localhost:8001/api/recipes.ds/query/list_recipes";
-  const method = "POST";
-
-  const response = await fetch(apiURL, { method: method });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  const data = await response.json();
-
-  return data;
-}
+import { getRecipes } from "./utils.js";
 
 /**
  * populateUL takes the results of the JSON API query and renders the LI for the UL list
@@ -51,7 +34,7 @@ async function listRecipes() {
     // Clear our UL list
     ul.innerHTML = "";
     // Get our list
-    const data = await retrieveRecipesFromAPI();
+    const data = await getRecipes();
     // Now populate it with "data"
     populateUL(ul, data);
 }

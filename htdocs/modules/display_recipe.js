@@ -2,37 +2,7 @@
  * display_recipe.js is a module that uses the Dataset JSON API for recipes_api.yaml to retrieves
  * the recipe from the recipes.ds collection.
  */
-
-/**
- * getKey retrieves the "key" specified in the URL parameters
- */
-function getKey() {
-  const queryString = globalThis.location.search;
-  const params = new URLSearchParams(queryString);
-  const key = params.get("key");
-  if (key === undefined || key === null) {
-    return "";
-  }
-  return key.trim();
-}
-
-/**
- * retrieveRecipeFromAPI shows the basic way to use "fetch" to retrieve results from
- * the object endpoint of the JSON API provided by dastasetd.
- * @param key: string
- */
-async function retrieveRecipeFromAPI(key) {
-  const apiURL = `http://localhost:8001/api/recipes.ds/object/${key}`;
-  const method = "GET";
-
-  const response = await fetch(apiURL, { method: method });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  const data = await response.json();
-  console.log(`DEBUG data -> ${JSON.stringify(data)}`);
-  return data;
-}
+import { getKey, getRecipe } from "./utils.js";
 
 /**
  * populatePage takes the results of the JSON API query and renders the LI for the UL list
@@ -64,16 +34,25 @@ function populatePage(key, data) {
   headerTr.appendChild(th2);
   tableHeader.appendChild(headerTr);
   if (data['ingredients']) {// !== undefined && data['ingredients'] !== null) {
-    for (const key of Object.keys(data['ingredients'])) {
-      const val = data['ingredients'][key];
+    for (let line of data['ingredients'].split("\n")) {
       const tr = document.createElement("tr");
       const td1 = document.createElement("td");
       const td2 = document.createElement("td");
-      td1.innerHTML = key;
-      td2.innerHTML = val;
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tableBody.appendChild(tr);
+      if (line.indexOf('","') > -1) {
+        line = line.trim('"');
+        console.log(`DEBUG unquoted line -> ${line}`);
+        [td1.innerHTML, td2.innerHTML ] = line.split('","', 2);
+      } else if (line.indexOf(',') > -1 ) {
+        [td1.innerHTML, td2.innerHTML ] = line.split(',', 2);
+      } else {
+        [td1.innerHTML, td2.innerHTML ]= [line, ''];
+      }
+      // Down add the CSV header line if it is proved.
+      if (td1.innerHTML.startsWith('ingredient') === false) {
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tableBody.appendChild(tr);
+      }
     }
   }
   table.appendChild(tableHeader);
@@ -92,7 +71,7 @@ function populatePage(key, data) {
  */
 async function displayRecipe() {
   const key = getKey();
-  const data = await retrieveRecipeFromAPI(key);
+  const data = await getRecipe(key);
 
   populatePage(key, data);
 }

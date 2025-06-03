@@ -2,38 +2,29 @@
  * edit_recipe.js is a module that uses the Dataset JSON API for recipes_api.yaml to list
  * the recipes in the recipes.ds collection.
  */
+import { getKey, getRecipe } from './utils.js';
+
 
 /**
- * getKey retrieves the "key" specified in the URL parameters
+ * updateFormAction will update the URL to add a specific key.
  */
-function getKey() {
-  const queryString = globalThis.location.search;
-  const params = new URLSearchParams(queryString);
-  const key = params.get("key");
-  if (key === undefined || key === null) {
-    return "";
-  }
-  return key.trim();
+function updateFormActionURL(form, key) {
+   console.log(`DEBUG what is the key value? ${key}, form action -> ${form.action}`);
+   let u = URL.parse(form.action);
+   let parts = u.pathname.split('/');
+   const lastPos = parts.length - 1;
+   let pos = parts.indexOf("object")
+   console.log(`DEBUG parts -> ${parts.join('/')}`);
+   if (pos < lastPos) {
+    parts.pop();
+   }
+   console.log(`DEBUG parts after pop -> ${parts.join('/')}`);
+   parts.push(key);
+   u.pathname = parts.join('/');
+   console.log(`DEBUG action is now ${u.toString()}`);
+   form.action = u.toString();
+   return form.action;
 }
-
-/**
- * retrieveRecipeFromAPI shows the basic way to use "fetch" to retrieve results from
- * the object endpoint of the JSON API provided by dastasetd.
- * @param key: string
- */
-async function retrieveRecipeFromAPI(key) {
-  const apiURL = `http://localhost:8001/api/recipes.ds/object/${key}`;
-  const method = "GET";
-
-  const response = await fetch(apiURL, { method: method });
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-  const data = await response.json();
-  console.log(`DEBUG data -> ${JSON.stringify(data)}`);
-  return data;
-}
-
 
 /**
  * displayWebForm takes the results of the JSON API query and renders the LI for the UL list
@@ -41,7 +32,7 @@ async function retrieveRecipeFromAPI(key) {
  * @param data: object, the recipe metadata
  */
 function displayWebFrom(key, data) {
-  const form = documents.getElementById('edit-recipe');
+  const form = document.getElementById('edit-recipe');
   const keyInput = document.getElementById('key');
   const nameInput = document.getElementById('name');
   const urlInput = document.getElementById('url');
@@ -50,122 +41,51 @@ function displayWebFrom(key, data) {
   if (key !== undefined && key !== '') {
     keyInput.value = key;
     keyInput.setAttribute('readonly', true);
+    updateFormActionURL(form, key);
   } else {
     keyInput.setAttribute('required', true);
-  }
-  if (data['name']) {
-    nameInput.value = data['name'];
-  }
-  if (data['url']) {
-    urlInput.value = data['url'];
-  }
-  if (data['ingredients']) {
-//    console.log(data['ingredients'])
-    const lines = [];
-    lines.push('ingredients,units');
-    for (const key of Object.keys(data['ingredients'])) {
-      const val = data['ingredients'][key];
-      lines.push(`${key},${val}`);
-    }
-    console.log(lines.join("\n"));
-    ingredientsTextarea.innerHTML = lines.join("\n");
-  }
-  if (data['procedure']) {
-    procedureTextarea.innerHTML = data['procedure'];
-  }
-}
-
-/**
- */
-async function sendFormData(key) {
-  const apiURL = `http://localhost:8001/api/recipes.ds/object/${key}`;
-  const method = "POST";
-
-  const keyInput = document.getElementById('key');
-  const nameInput = document.getElementById('name');
-  const urlInput = document.getElementById('url');
-  const ingredientsTextarea = document.getElementById('ingredients');
-  const procedureTextarea = document.getElementById('procedure');
-
-  let data = {};
-  if (keyInput.value) {
-    data['key'] = keyInput.value;
-  }
-  if (nameInput.value) {
-    data['name'] = nameInput.value;
-  }
-  if (urlInput.value) {
-    data['url'] = urlInput.value;
-  }
-  if (ingredientsTextarea.innerHTML) {
-    const lines = ingredientsTextarea.innerHTML.split("\n");
-    const ingredientList = {};
-    // NOTE: This is a very nieve CSV parse, you really want to use something like Papa parse or @std/csv from jsr.io ...
-    for (const line of lines) {
-      if (line.indexOf(',') > -1) {
-        const parts = lines.split(/,/, 2);
-        if (parts.length > 1) {
-          ingredientList[parts[0]] = parts[1];
-        } else {
-          ingredientList[line] = '';
-        }
+    // FIXME: Key is special, it needs to form the URL for creating objects in the API.
+    // When the key is set in the web form it needs to update the URL specified in the action.
+    keyInput.addEventListener('change', function (evt) {
+      let key = evt.target.value;
+      if (key !== '') {
+        updateFormActionURL(form, key);
       }
+    })
+  }
+  if (data !== null) {
+    if (data['name'] !== undefined) {
+      nameInput.value = data['name'];
     }
-    data['ingredients'] = ingredientList;
+    if (data['url'] !== undefined) {
+      urlInput.value = data['url'];
+    }
+    if (data['ingredients'] !== undefined) {
+      ingredientsTextarea.innerHTML = data['ingredients'];
+    }
+    if (data['procedure'] !== undefined) {
+      procedureTextarea.innerHTML = data['procedure'];
+    }
   }
-  if (procedureTextarea.innerHTML) {
-    data['procedure'] = procedureTextarea.innerHTML;
-  }
-  // NOTE!!!!!!: You really need to validate this object before sending it ...
-  return await fetch (apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
 }
 
-/**
- * handleSubmission handles the case of when the web form's submit or cancel buttons are pressed.
- */
-async function handleSubmission(key) {
-  const saveButton = document.getElementById('save');
-  const cancelButton = document.getElementById('cancel');
-  saveButton.addEventListener('click', async (evt) => {
-    const response = await sendFormData(key);
-    if (response.ok) {
-      window.location.href = `display_recipe.html?key=${key}`;
-      return;
-    }
-    alert(`form failed to submit ${response.status}`);
-  });
-
-  cancelButton.addEventListen('click', function (evt) {
-    if (key === undefined || key === '') {
-      // If we are aborting creation of a new recipe just go back to the list.
-      window.location.href = './';
-      return;
-    }
-    // If not go to the display page
-    window.location.href= `display_recipe.html?key=${key}`;
-    return;
-  });
-}
 
 /**
- * displayRecipe contacts the JSON API and populates the page.
+ * populatePage contacts the JSON API and populates the page.
  */
-async function displayRecipe() {
+async function populatePage() {
+  const form = document.getElementById('edit-recipe');
   const key = getKey();
-  const data = await retrieveRecipeFromAPI(key);
-  console.log(`DEBUG key -> ${key}`);
+  let data = null;
+  if (key !== '') {
+    data = await getRecipe(key);
+  }
+  console.log(`DEBUG before, form.method -> ${form.method}, form.action -> ${form.action}`);
   displayWebFrom(key, data);
-  const response = await handleSubmission(key);
-  console.log(response);
+  console.log(`DEBUG after, form.method -> ${form.method}, form.action -> ${form.action}`);
 }
 
 /**
  * Wait until the page is loaded before updating.
  */
-document.addEventListener("DOMContentLoaded", await displayRecipe());
+document.addEventListener("DOMContentLoaded", await populatePage());

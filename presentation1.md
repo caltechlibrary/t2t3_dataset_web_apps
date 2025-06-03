@@ -20,7 +20,7 @@ keywords: [ "microservices", "SQLite3", "Deno", "TypeScript", "Dataset" ]
 url: "https://caltechlibrary.github.io/dataset/presentation/presentation1.html"
 ---
 
-# Recipe for an application, Dataset and a Web Component
+# Dataset and a Web Components
 
 ## What we'll do
 
@@ -29,70 +29,131 @@ url: "https://caltechlibrary.github.io/dataset/presentation/presentation1.html"
 
 ## What we'll learn
 
-- How to create a JSON API using a simple YAML file and a simple SQL
+- How to create a JSON API using a simple YAML file and simple SQL SELECT statements
 - How to enhance our HTML using Web Compents from [CL Web Components](https://github.com/caltechlibraryCL-web-components)
 
 Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
 
-# Recipe for an application, Dataset and a Web Component
+# Getting started, requirements
 
-## Required
+## We'll be used your favor
 
-### You probably aready have this
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
 
-### You'll need to install this
+### You'll need to install
 
 - [Dataset](https://caltechlibrary.github.io/dataset)
 
-NOTE: you need to be comfortable using the terminal application
+We can start our first iteration of our applicaiton once you have these available.
 
-# Recipe for an application, Dataset and a Web Component
 
-## Suggested
+## Four parts
 
-I will use the following to show and test our JSON API.
+1. What are we building, how will we build it?
+2. Setting up our web service
+3. Creating our static content
+4. Enhancements with Web Componts
 
-- [cURL](https://curl.se/docs/manpage.html) (for testing and debugging the JSON API)
-- [jq](https://jqlang.org)
+# Part 1: What are we building?
 
-# Getting started, what are we creating?
+GOAL: A simple web application that lets us curate a list of recipes.
 
-A simple web application that lets us curate a list of recipes.
+# Part 1: What are the parts of our application?
 
-# Getting started, what are the parts of our application?
+1. A web service for managing the recipe collection
+2. A way to browse recipes (e.g. list recipes by name)
+3. A page to display an individual recipe
+4. A web form to adding or edit our recipes
 
-1. A web form to adding or edit our recipes
-2. A page to display our recipe
-2. A way to browse recipes
-3. A web service for managing our recipe collection
+# Part 1: What is a recipe?
 
-# Getting started, what is a recipe?
-
-(for purposes of this workshop)
-
-- A unique identifier as a "key"
+- A unique identifier as a "key" (will become part of your URL's path)
 - A name
-- A URL where it was found
 - A list of ingredients and measures (CSV data)
-- A description of the preparation process (free format text)
+- A procedure describing the preparation process (free format text)
 
-# Getting started, strategy.
+# Part 1: Strategy.
 
-1. Mockup using HTML
-2. Defining some behaviors
-3. Setting up our web service
-4. Wire up and improve
+1. Setting up our web service
+2. Mockup using HTML
+3. Wire up and test
 
-# Mockup, what does our metadata look like?
+# Part 2: Setting up our web service
+
+1. create our recipes.ds collection
+2. load sample data into our recipes.ds collection
+3. Configure and run our collection as a web service
+
+# Part 2: creating our collection
+
+We use the `dataset` command line program to initialize a dataset collection.
+
+~~~shell
+dataset init recipes.ds
+~~~
+
+# Part 2: Loading some sample data
+
+We can now load some sample data, see [recipes.jsonl](recipes.jsonl).
+
+~~~shell
+dataset load recipes.ds <recipes.jsonl
+~~~
+
+# Part 2: create an static content directory directory
+
+~~~shell
+mkdir htdocs
+mkdir htdocs/modules
+mkdir htdocs/css
+~~~
+
+# Part 2: Setting up our web service, configuring the web service
+
+`datasetd` provides a turn key web service defined by a simple YAML file. It can host
+one or more dataset collections. It provides a static file service as well as a JSON API
+for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml).
+
+~~~yaml
+#!/usr/bin/env -S datasetd
+host: localhost:8001
+htdocs: htdocs
+collections:
+  - dataset: recipes.ds
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    query:
+      list_recipes: |
+        select src
+        from recipes
+        order by src->>'name'
+~~~
+
+# Part 2: Starting and stopping the web service
+
+Starting the web service.
+
+~~~shell
+datasetd recipes_api.yaml
+~~~
+
+- Go do <http://localhost:8001/api/version>
+- Look at the terminal window, do you see the log message for the request?
+- You can shutdown the service by press control and C (Ctrl-C) in the terminal session
+
+# Part 3: Creating our static content
+
+The web service is running but if you go to the root URL, <http://localhost:8001/>, you'll get a 404 page. We need to create HTML pages to hold the content that will be curated in our recipes application.  We'll be create three HTML documents and four JavaScript modules to help with that. But before we proceed with coding let's think about what we're curating.
+
+# Part 3:Mockup, what does our metadata look like?
 
 name
 : A line of text. Held by an`input` element
-
-url
-: A URL. Held by an `input` element of type "url"
 
 ingredients
 : A CSV table. Held by a `textarea` or for display a `table`.
@@ -102,118 +163,38 @@ preparation
 
 We'll need a submit button to save a new or edited recipe.
 
-# Mockup, What would the web form look like?
+# Part 3: What are our web pages?
 
-This is our edit page so it should be named [edit.html](htdics/edit.html) in the "htdocs" directory.
+[htdocs/index.html](htdocs/index.html)
+: Display a list of our recipes
 
-~~~html
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <title>A recipe collection</title>
-    <link rel="style" href="css/style.css">
-    <script type="module" src="modules/edit_recipe.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a id="list-recipe" href="./">List Receipt</a> <a id="display-recipe" href="display.html">Display</a>
-    </nav>
+[htdocs/display.html](htdocs/display_recipe.html)
+: A page that shows the recipe
 
-    <form id="edit-recipe" method="" action="">
-      <div>
-        <label set="key">Key</label>
-        <input id="key" name="key" type="text" 
-        value="" title="Unique identfier for recipe" 
-        placeholder="lower case unique text" size="60">
-      </div>
+[htdocs/edit_recipe.html](htdocs/edit_recipe.html)
+: A page used to add and edit recipes we've collectioned
 
-      <div>
-        <label set="name">Name</label>
-        <input id="name" name="name" type="text" 
-        value="" title="The common name for this recipe" placeholder="e.g. fry bread" size="60">
-      </div>
+# Part 3: populating our pages
 
-      <div>
-        <label set="url">Source URL</label>
-        <input id="url" name="url" type="url"
-        value="" title="The URL where the recipe was found"
-        placeholder="e.g. https://cullanary.example.edu/fry-bread" size="80">
-      </div>
+We're create four modules, one specific to each HTML page and one utility one that fetches data from our JSON API.
 
-      <div>
-        <label set="ingredients">Ingredients</label>
-        <textarea id="ingredients" name="ingredients"
-        title="ingredient,units (CSV data)" placeholder="flour,2 cups" cols="60"rows="5">
-ingredient,units
-        </textarea>
-      </div>
+[htdocs/modules/list_recipes.js](htdocs/modules/list_recipes.js)
+: Display a list of our recipes
 
-      <div>
-        <label set="preparation">Preparation</label>
-        <textarea id="preparation" name="preparation"
-        title="preparation steps as free text"
-        placeholder="measure and pour flower in a bowl. Add egg ..." cols="60"rows="10">
-        </textarea>
-      </div>
+[htdocs/modules/display_recipe.js](htdocs/display_recipe.js)
+: A page that shows the recipe
 
-      <div><input id="save" name="save" type="submit" value="Save Recipe"> <input id="cancel" name="cancel" type="reset" value="Cancel"></div>
-    </form>
-  </body>
-</html>
+[htdocs/modules/edit_recipe.js](htdocs/modules/edit_recipe.js)
+: A page used to add and edit recipes we've collectioned
 
-~~~
+[htdocs/modules/client_api.js](htdocs/modules/client_api.js)
+: This module handles retrieving data from the JSON API. It is "imported" by the three previous modules.
 
-# Mockup, What how about displaying our recipe?
+# Mockup, wiring up our pages
 
-We can use an UL list to list the recipe by name and link to the display page.
-
-~~~html
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <title>A recipe collection</title>
-    <link rel="style" href="css/style.css">
-    <script type="module" src="modules/display_recipe.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a id="list-recipe" href="./">List Receipt</a> <a id="edit-recipe" href="edit.html">Edit</a>
-    </nav>
-    <h1 id="name">recipe name goes here</h1>
-    <h2>Ingredients</h2>
-    <div id="ingredients">ingredients goes here</div>
-    <h2>Preparation</h2>
-    <div id="preparation">preparation instructions goes here</div>
-  </body>
-</html>
-
-~~~
-
-This is our landing page so it should be named "recipe.html" in the "htdocs" directory.
-
-# Mockup, What about browsing our recipes?
-
-We can use an UL list to list the recipe by name and link to the display page.
-
-~~~html
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <title>A recipe collection</title>
-    <link rel="style" href="css/style.css">
-    <script type="module" src="modules/list_recipes.js"></script>
-  </head>
-  <body>
-    <h1>Available Recipes</h1>
-    <ul id="recipe-list">
-      <li><a href="" title="View recipe">Recipe name goes here</a></li>
-    </ul>
-  </body>
-</html>
-
-~~~
-
-This is our landing page so it should be named "index.html" in the "htdocs" directory.
+- A standard web form that can submit objects to the JSON API
+- a JavaScript module used to retrieve objects form the JSON API
+- a JavaScript module per page to display the retrieved data
 
 # Behaviors, what actions are needed?
 
@@ -253,44 +234,6 @@ Populate the collection with some test data, [download recipes.jsonl](recipes.js
 dataset load recipes.ds <recipes.jsonl
 ~~~
 
-# Behaviors, setting up with YAML
-
-`datasetd` provides a turn key web service defined by a simple YAML file. It can host
-one or more dataset collections. It provides a static file service as well as a JSON API
-for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml).
-
-~~~yaml
-#!/usr/bin/env datasetd
-host: localhost:8001
-htdocs: htdocs
-collections:
-  - dataset: recipes.ds
-    keys: true
-    create: true
-    read: true
-    update: true
-    delete: true
-    query:
-      list_recipes: |
-        select src
-        from recipes
-        order by src->>'name'
-~~~
-
-# Wiring things up, start "recipes_api.yaml"
-
-In your terminal window enter the following command
-
-~~~shell
-datasetd recipes_api.yaml
-~~~
-
-or the fancy way (make your recipes_api.yaml executable, then run it)
-
-~~~shell
-chmod 775 recipes_api.yaml
-./recipes_api.yaml
-~~~
 
 # Wiring things up, checkout the web service with your web browser
 

@@ -1,0 +1,16 @@
+{
+    "ingredients": {
+        "baking powder": "1 tablespoon",
+        "eggs, separated": 2,
+        "flour": "1¾ cups (420 ml)",
+        "milk": "1½ cups (360 ml)",
+        "salt": "1 teaspoon",
+        "vegetable oil": "½ cup (120 ml)",
+        "white granulated sugar": "1 tablespoon"
+    },
+    "key": "waffles",
+    "name": "Waffles",
+    "notes": "Spread ¾ cup (180 ml) batter, then quickly cover surface of batter with thinly sliced apples. Close cover and cook as usual.\n",
+    "procedure": "1. Lightly brush grids of waffle iron with oil, close waffle iron, and preheat according to manufacturer's directions.\n2. In small bowl, beat egg whites until stiff (but not dry) and set aside.\n3. In large bowl, beat egg yolks until thick and lemon-colored.\n4. Continue beating, adding milk and oil.\n5. Add dry ingredients, beat until smooth, and fold in egg whites.\n6. Pour 1 cup (240 ml) of batter on heated grid, close unit and cook according to manufacturer's directions.\",\n",
+    "url": "https://en.wikibooks.org/wiki/Cookbook:Waffles"
+}

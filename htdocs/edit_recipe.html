@@ -10,7 +10,7 @@
       <a id="list-recipe" href="./">List Receipt</a> <a id="display-recipe" href="display_recipe.html">View</a>
     </nav>
     <section id="content">
-      <form id="edit-recipe" autocomplete="off" accept-charset="utf-8">
+      <form id="edit-recipe" autocomplete="off" accept-charset="utf-8" method="POST" action="./api/recipes.ds/object">
         <div>
           <label set="key">Key</label>
           <input id="key" name="key" type="text" value=""
