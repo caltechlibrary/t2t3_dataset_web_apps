@@ -1,12 +1,21 @@
+VERSION = $(jq -r .version codemeta.json)
+
+HTML_PAGES = $(shell ls -1 *.md | grep -v 'presentation' | sed -E 's/.md/.html/g')
 
 # where FORMAT is either s5, slidy, slideous, dzslides, or revealjs.
 SLIDE_FORMAT = slidy
 
-build: clean html
+build: clean html website
 
 html: .FORCE
 	pandoc -V lang=en -s -t $(SLIDE_FORMAT) presentation1.md -o presentation1.html
-	git add presentation1.html
+	git add presentation1.html index.html
+
+website: .FORCE
+	make -f website.mak
+
+cleanweb: .FORCE
+	rm $(HTML_PAGES)
 
 pdf: .FORCE
 	pandoc -V lang=en -s -t beamer presentation1.md -o presentation1.pdf

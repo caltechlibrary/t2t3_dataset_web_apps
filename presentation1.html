@@ -123,7 +123,7 @@ class="email">rsdoiel@caltech.edu</a>
 <ul>
 <li>How to create a JSON API using a simple YAML file and using a simple
 SQL SELECT statement</li>
-<li>How to enhance our HTML using Web Compents from <a
+<li>How to enhance our HTML using Web Components from <a
 href="https://github.com/caltechlibraryCL-web-components">CL Web
 Components</a></li>
 </ul>
@@ -147,7 +147,7 @@ dataset</h3>
 <li><a href="https://caltechlibrary.github.io/dataset">Dataset</a>, get
 the latest release</li>
 </ul>
-<p>We can start our first iteration of our applicaiton once you have
+<p>We can start our first iteration of our application once you have
 these available.</p>
 </div>
 <div id="getting-started-four-parts" class="slide section level1">
@@ -156,7 +156,7 @@ these available.</p>
 <li>What are we building, how will we build it?</li>
 <li>Setting up our web service</li>
 <li>Creating our static content</li>
-<li>Enhancements with Web Componts</li>
+<li>Enhancements with Web Components</li>
 </ol>
 </div>
 <div id="part-1-what-are-we-building" class="slide section level1">
@@ -169,27 +169,25 @@ class="slide section level1">
 <h1>Part 1: What are the parts of our application?</h1>
 <ol style="list-style-type: decimal">
 <li>A web service for managing the recipe collection</li>
-<li>A way to browse recipes (e.g. list recipes by name)</li>
-<li>A page to display an individual recipe</li>
-<li>A web form to adding or edit our recipes</li>
+<li>A way to browse recipes by name</li>
+<li>A page to display a recipe</li>
+<li>A web form for adding or edit our recipes</li>
 </ol>
 </div>
 <div id="part-1-what-is-a-recipe" class="slide section level1">
 <h1>Part 1: What is a recipe?</h1>
 <ul>
-<li>A unique identifier as a “key” (will become part of your URL’s
-path)</li>
+<li>A “key”, the unique identifier of a recipe</li>
 <li>A name</li>
 <li>A list of ingredients and measures (CSV data)</li>
-<li>A procedure describing the preparation process (free format
-text)</li>
+<li>A procedure describing the preparation process (text)</li>
 </ul>
 </div>
 <div id="part-1-strategy." class="slide section level1">
 <h1>Part 1: Strategy.</h1>
 <ol style="list-style-type: decimal">
 <li>Setting up our web service</li>
-<li>Mockup using HTML</li>
+<li>Mock up using HTML</li>
 <li>Wire up and test</li>
 </ol>
 </div>
@@ -229,6 +227,11 @@ simple YAML file. It can host one or more dataset collections. It
 provides a static file service as well as a JSON API for each
 collection. Let’s call this <a
 href="recipes_api.yaml">recipes_api.yaml</a>.</p>
+</div>
+<div
+id="part-2-setting-up-our-web-service-configuring-the-web-service-1"
+class="slide section level1">
+<h1>Part 2: Setting up our web service, configuring the web service</h1>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
@@ -270,9 +273,9 @@ that will be curated in our recipes application. We’ll be create three
 HTML documents and four JavaScript modules to help with that. But before
 we proceed with coding let’s think about what we’re curating.</p>
 </div>
-<div id="part-3mockup-what-does-our-metadata-look-like"
+<div id="part-3mock-up-what-does-our-metadata-look-like"
 class="slide section level1">
-<h1>Part 3:Mockup, what does our metadata look like?</h1>
+<h1>Part 3:Mock up, what does our metadata look like?</h1>
 <dl>
 <dt>name</dt>
 <dd>
@@ -304,7 +307,7 @@ A page that shows the recipe
 </dd>
 <dt><a href="htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></dt>
 <dd>
-A page used to add and edit recipes we’ve collectioned
+A page used to add and edit recipes we’ve collected
 </dd>
 </dl>
 </div>
@@ -326,7 +329,7 @@ A page that shows the recipe
 <dt><a
 href="htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipe.js</a></dt>
 <dd>
-A page used to add and edit recipes we’ve collectioned
+A page used to add and edit recipes we’ve collected
 </dd>
 <dt><a href="htdocs/modules/utils.js">htdocs/modules/utils.js</a></dt>
 <dd>
@@ -362,7 +365,7 @@ class="uri">http://localhost:8001</a></li>
 </div>
 <div id="intermission" class="slide section level1">
 <h1>Intermission</h1>
-<p>Let’s take a short break then we’ll comback and iterate.</p>
+<p>Let’s take a short break then we’ll comeback and iterate.</p>
 </div>
 <div id="part-1-version-2" class="slide section level1">
 <h1>Part 1, version 2</h1>
@@ -385,7 +388,7 @@ didn’t work.</p>
 cp recipes_api.yaml recipes_api2.yaml
 cp -vR htdocs htdocs2</code></pre>
 <p>on Windows</p>
-<pre class="pwsh"><code>dataset init receipes2.ds
+<pre class="pwsh"><code>dataset init recipes2.ds
 copy recipes_api.yaml recipes_api2.yaml
 copy -Recurse htdocs htdocs</code></pre>
 </div>
@@ -397,6 +400,7 @@ class="slide section level1">
 <li>update the <code>htdocs</code> reference</li>
 <li>update the port number in hosts to 8002</li>
 <li>update the dataset to <code>recipes2.ds</code></li>
+<li>Are their other files that need to be edited?</li>
 </ul>
 </div>
 <div id="part-1-version-2-testing-a-new-instance"
@@ -404,6 +408,12 @@ class="slide section level1">
 <h1>Part 1, version 2: Testing a new instance</h1>
 <ol style="list-style-type: decimal">
 <li>Test our new instance</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>what is broken?</li>
+<li>Are there places where hard code collection needs updating?</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
 <li>Shut it down before we proceed.</li>
 </ol>
 <pre class="shell"><code>dataset recipes_api2.yaml</code></pre>
@@ -428,9 +438,9 @@ href="https://github.com/caltechlibrary/CL-web-components/releases"
 class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></li>
 </ul>
 </div>
-<div id="part-2-veresion-2-web-components-cl-web-components"
+<div id="part-2-version-2-web-components-cl-web-components"
 class="slide section level1">
-<h1>Part 2, veresion 2: Web Components, CL-web-components</h1>
+<h1>Part 2, version 2: Web Components, CL-web-components</h1>
 <dl>
 <dt>CSVTextarea</dt>
 <dd>
@@ -442,7 +452,7 @@ Wraps a UL list and creates an A to Z list
 </dd>
 <dt>SortableTable</dt>
 <dd>
-Wraps an HTML table making it sortable and filterable on a column
+Wraps an HTML table making it sort-able and filterable on a column
 </dd>
 </dl>
 </div>
@@ -484,22 +494,22 @@ a status page</li>
 redirect to the right place</li>
 </ul>
 </div>
-<div id="part-3-version-2-added-a-formsubmit-method-to-utils.js"
+<div id="part-3-version-2-adding-a-listener-for-form-submission"
 class="slide section level1">
-<h1>Part 3, version 2: Added a formSubmit method to
-<code>utils.js</code></h1>
+<h1>Part 3, version 2: Adding a listener for form submission</h1>
 <ol style="list-style-type: decimal">
-<li>Write the formSubmision function</li>
-<li>Wrap it in an event listener</li>
+<li>Add a script element in <code>edit_recipe.html</code></li>
+<li>Add an event listener for the form that uses <code>saveRecipe</code>
+function from <code>utils.js</code></li>
 <li>Reload page and test our revision</li>
 </ol>
 </div>
-<div id="part-3-version-2-anatomy-of-our-formsubmission"
+<div id="part-3-version-2-anatomy-of-our-saverecipe"
 class="slide section level1">
-<h1>Part 3, version 2: Anatomy of our formSubmission</h1>
+<h1>Part 3, version 2: Anatomy of our saveRecipe</h1>
 <ol style="list-style-type: decimal">
 <li>Retrieve the data from the web form</li>
-<li>Use fetch to send the data and recieve a response</li>
+<li>Use fetch to send the data and receive a response</li>
 <li>Based on the response decide where to go</li>
 </ol>
 </div>
@@ -539,7 +549,7 @@ class="slide section level1">
 <h1>Misc thoughts</h1>
 <ul>
 <li>Progressive enhancement is still relevant in 2025</li>
-<li>Web Components offer the possibility of consistant rich behaviors
+<li>Web Components offer the possibility of consistent rich behaviors
 across websites and web applications (bonus they can be used to to
 ensure accessibility)</li>
 <li>There are still times you want to write custom middle ware, example

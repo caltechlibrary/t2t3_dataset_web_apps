@@ -17,7 +17,7 @@ date: TBD
 section-titles: false
 toc: true
 keywords: [ "microservices", "SQLite3", "Deno", "TypeScript", "Dataset" ]
-url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation/presentation1.html"
+url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 ---
 
 # Dataset and a Web Components
