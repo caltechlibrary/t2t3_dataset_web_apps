@@ -115,6 +115,8 @@ mkdir htdocs/css
 one or more dataset collections. It provides a static file service as well as a JSON API
 for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml).
 
+# Part 2: Setting up our web service, configuring the web service
+
 ~~~yaml
 #!/usr/bin/env -S datasetd
 host: localhost:8001
