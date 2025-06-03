@@ -9,7 +9,7 @@ urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: TBD
+updateDate: 2025-06-03
 draft: true
 pubDate: TBD
 place: Caltech
@@ -17,7 +17,7 @@ date: TBD
 section-titles: false
 toc: true
 keywords: [ "microservices", "SQLite3", "Deno", "TypeScript", "Dataset" ]
-url: "https://caltechlibrary.github.io/dataset/presentation/presentation1.html"
+url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation/presentation1.html"
 ---
 
 # Dataset and a Web Components
@@ -29,8 +29,8 @@ url: "https://caltechlibrary.github.io/dataset/presentation/presentation1.html"
 
 ## What we'll learn
 
-- How to create a JSON API using a simple YAML file and simple SQL SELECT statements
-- How to enhance our HTML using Web Compents from [CL Web Components](https://github.com/caltechlibraryCL-web-components)
+- How to create a JSON API using a simple YAML file and using a simple SQL SELECT statement
+- How to enhance our HTML using Web Components from [CL Web Components](https://github.com/caltechlibraryCL-web-components)
 
 Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
 
@@ -44,17 +44,16 @@ Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presenta
 
 ### You will need to install dataset
 
-- [Dataset](https://caltechlibrary.github.io/dataset)
+- [Dataset](https://caltechlibrary.github.io/dataset), get the latest release
 
-We can start our first iteration of our applicaiton once you have these available.
+We can start our first iteration of our application once you have these available.
 
-
-## Four parts
+# Getting started, four parts
 
 1. What are we building, how will we build it?
 2. Setting up our web service
 3. Creating our static content
-4. Enhancements with Web Componts
+4. Enhancements with Web Components
 
 # Part 1: What are we building?
 
@@ -63,21 +62,21 @@ GOAL: A simple web application that lets us curate a list of recipes.
 # Part 1: What are the parts of our application?
 
 1. A web service for managing the recipe collection
-2. A way to browse recipes (e.g. list recipes by name)
-3. A page to display an individual recipe
-4. A web form to adding or edit our recipes
+2. A way to browse recipes by name
+3. A page to display a recipe
+4. A web form for adding or edit our recipes
 
 # Part 1: What is a recipe?
 
-- A unique identifier as a "key" (will become part of your URL's path)
+- A "key", the unique identifier of a recipe
 - A name
 - A list of ingredients and measures (CSV data)
-- A procedure describing the preparation process (free format text)
+- A procedure describing the preparation process (text)
 
 # Part 1: Strategy.
 
 1. Setting up our web service
-2. Mockup using HTML
+2. Mock up using HTML
 3. Wire up and test
 
 # Part 2: Setting up our web service
@@ -150,7 +149,7 @@ datasetd recipes_api.yaml
 
 The web service is running but if you go to the root URL, <http://localhost:8001/>, you'll get a 404 page. We need to create HTML pages to hold the content that will be curated in our recipes application.  We'll be create three HTML documents and four JavaScript modules to help with that. But before we proceed with coding let's think about what we're curating.
 
-# Part 3:Mockup, what does our metadata look like?
+# Part 3:Mock up, what does our metadata look like?
 
 name
 : A line of text. Held by an`input` element
@@ -172,11 +171,11 @@ We'll need a submit button to save a new or edited recipe.
 : A page that shows the recipe
 
 [htdocs/edit_recipe.html](htdocs/edit_recipe.html)
-: A page used to add and edit recipes we've collectioned
+: A page used to add and edit recipes we've collected
 
 # Part 3: populating our pages
 
-We're create four modules, one specific to each HTML page and one utility one that fetches data from our JSON API.
+We'll create four modules, one specific to each HTML page and one utility module
 
 [htdocs/modules/list_recipes.js](htdocs/modules/list_recipes.js)
 : Display a list of our recipes
@@ -185,208 +184,166 @@ We're create four modules, one specific to each HTML page and one utility one th
 : A page that shows the recipe
 
 [htdocs/modules/edit_recipe.js](htdocs/modules/edit_recipe.js)
-: A page used to add and edit recipes we've collectioned
+: A page used to add and edit recipes we've collected
 
-[htdocs/modules/client_api.js](htdocs/modules/client_api.js)
-: This module handles retrieving data from the JSON API. It is "imported" by the three previous modules.
+[htdocs/modules/utils.js](htdocs/modules/utils.js)
+: This module handles retrieving data from the JSON API and finding the object's key
 
-# Mockup, wiring up our pages
+# Part 3: Fire up our web service
 
-- A standard web form that can submit objects to the JSON API
-- a JavaScript module used to retrieve objects form the JSON API
-- a JavaScript module per page to display the retrieved data
-
-We can include mock up sample data view the before setting up our web service by opening the page directly in our web browser.
-
-
-# Mock up, What would the web form look like?
-
-We can use a single web form for both adding and editing recipes.
-
-Example: [htdocs/edit_recipe.html](htdocs/edit_recipe.html)
-
-This is our edit page so it should be named "edit_recipe.html" in the "htdocs" directory.
-
-
-# Mock up, What how about displaying our recipe?
-
-We can use an UL list to list the recipe by name and link to the display page.
-
-Example: [htdocs/display_recipe.html](htdocs/display_recipe.html)
-
-This is our display page so it should be named "display_recipe.html" in the "htdocs" directory.
-
-
-# Behaviors, what actions are needed?
-
-## CRUD-Q
-
-- create a recipe (add)
-- retrieve a recipe (display)
-- update a recipes (edit)
-- delete a recipe (left unimplemented)
-- query our collection of recipes (list recipes)
-
-
-# Behaviors, we can use JavaScript
-
-- retrieve and drop data into our HTML pages
-- handle form submission
-- to create web components to simplify our HTML and make it more user friendly
-
-
-# Behaviors, our web service and JSON API provides our data source
-
-- `dataset` sets up our collection 
-- `datasetd` provides our web service
-- web service is defined using YAML
-
-
-# Behaviors, create our collection
-
-`dataset` is a command line tool for interacting with collections of JSON documents.
-
-This will create our "recipes.ds" collection.
+In a terminal run our startup command 
 
 ~~~shell
-dataset init recipes.ds
+datasetd recipe_api.yaml
 ~~~
 
-Populate the collection with some test data, [download recipes.jsonl](recipes.jsonl).
+# Part 3: Test using your web browser
+
+1. Go to <http://localhost:8001>
+2. In your browser open your "developer tools"
+3. Reload the page and monitor the loads
+4. Click through the sites
+
+# Part 3: Debugging and improving
+
+1. There will be issues you need to debug
+2. What happens when you add a recipe?
+3. What happens when you hen you update a receipt?
+4. Can any of this be improved?
+
+# Intermission
+
+Let's take a short break then we'll comeback and iterate.
+
+# Part 1, version 2
+
+We're going to set aside the prototype noting what worked and what didn't work. 
+
+# Part 1, version 2: Setting up
+
+1. Create a new dataset collection called `recipes2.ds`
+2. Create a `recipes_api2.yaml`
+3. Create new directory structure for our static content called `htdocs2`
+
+# Part 1, version 2: Setting up
+
+On macOS and Linux
 
 ~~~shell
-dataset load recipes.ds <recipes.jsonl
+dataset init recipes2.ds
+cp recipes_api.yaml recipes_api2.yaml
+cp -vR htdocs htdocs2
 ~~~
 
----- FIXME: REWRITE rest of presentation
+on Windows
 
-# Wiring things up, checkout the web service with your web browser
+~~~pwsh
+dataset init recipes2.ds
+copy recipes_api.yaml recipes_api2.yaml
+copy -Recurse htdocs htdocs
+~~~
 
-Fireup your web browser and try the following links.
+# Part 1, version 2: Updating our YAML configuration
 
-- <http://localhost:8001/index.html>
-- <http://localhost:8001/display_recipe.html>
-- <http://localhost:8001/edit_recipe.html>
+- edit our `recipes_api2.yaml`
+- update the `htdocs` reference
+- update the port number in hosts to 8002
+- update the dataset to `recipes2.ds`
+- Are their other files that need to be edited?
 
-# Congratulations, you just implemented your application's web services
+# Part 1, version 2: Testing a new instance
 
-**Hurrah!!!**
-
-The web service half of your application is completed.
-
-# Remember your browser has "developer tools", given them a try
-
-- With Firefox look at the "hamburger menu", click "more tools", click "web developer tools"
-- Chrome, Safari have different menus, you'll need to find them
-
-# Wiring things up, we use JavaScript and the JSON API to populate our pages
-
-Create our "htdocs" and "htdocs/modules" directories.
+1. Test our new instance
+  a. what is broken?
+  b. Are there places where hard code collection needs updating?
+2. Shut it down before we proceed.
 
 ~~~shell
-mkdir htdocs
-mkdir htdocs/modules
+dataset recipes_api2.yaml
 ~~~
 
-We will be creating the following files.
+# Part 2, version 2: Introducing Web Components
 
-1. [htdocs/modules/list_recipes.js](htdocs/modules/list_recipes.js)
-2. [htdocs/modules/display_recipe.js](htdocs/modules/display_recipe.js)
-3. [htdocs/modules/edit_recipes.js](htdocs/modules/edit_recipe.js)
+1. A means of extending HTML elements supported in your web browser
+2. Implemented as JavaScript Modules
 
-You can download them from <https://github.com/caltechlibrary/t2t3_dataset_web_apps> if you're following along.
+# Part 2, version 2: CL-web-components
 
-# Wiring things up, No. 1a: List our recipes
+- CL-web-components, a collection of web components designed for Caltech Library
+- Retrieve the latest versions at <https://github.com/caltechlibrary/CL-web-components/releases>
 
-- Our recipes are provided by our JSON API using the "query" we defined in our "recipe_api.yaml". 
-- We can retrieve that using a JavaScript "fetch"
-- We can then use the results to populate our index page
+# Part 2, version 2: Web Components, CL-web-components
 
-# Wiring things up. No. 1b: Our JSON API URL
+CSVTextarea
+: Wraps a textarea element and presents a editable table of cells
 
-The query api call requires a POST action. The URL <http://localhost:8001/api/recipes.ds/query/list_recipes>. Here is the brakedown the the URL path.
+AToZUL
+: Wraps a UL list and creates an A to Z list
 
-- `/api`, this indicates to our web service this is an API call
-- `/recipes.ds`, indicates the collection we're working with
-- `/query`, indicates we running a "query" (remember that from the YAML?)
-- `/list_recipes` is the query name to run, parameters would come next if it needed them
+SortableTable
+: Wraps an HTML table making it sort-able and filterable on a column
 
-# Wiring things up, No. 1c: Testing our JSON API
+# Part 2, version 2: Adding CSVTextarea to edit_recipe.html
 
-I use cURL and jq to test the JSON API. cURL provides a easy way to express the HTTP action, GET, POST, PUT, DELETE used in [RESTful](https://en.wikipedia.org/wiki/REST) JSON API.
+- copy `csvtextarea.js` to the modules directory under htdocs2
+- edit `htdocs/edit_recipe.html` to include the CSVTextarea module in the document head
+- edit `htdocs/edit_recipe.html` wrapping the ingredients textarea with our csvtextarea
 
-~~~shell
-curl -X POST http://localhost:8001/api/recipes.ds/query/list_recipes | jq .
+# Part 2, version 2: Restart recipes_api2.yaml and test
+
+Start up our web service
+
+~~~
+dataset recipes_api2.yaml
 ~~~
 
-# Wiring things up, No. 1d: Creating list_recipes.js, using "fetch"
+1. Point your browser at <http://localhost:8002/edit_recipe.html>
+2. Turn on your developer tools
+3. Test the web component
 
-We are going to create a JavaScript "module" caled "list_recipes.js". It's responsibilities are \--
+# Part 3, version 2: solving the missing redirect from submit status
 
-- After page is loaded, get the elem holding our UL list ("recipe-list")
-- then retrieve our list of recipes from the API
-- populate the UL list using the retrieved object
+- In version 1 when we created or updated and element we were taken to a status page
+- What we want to do is go to a more logical place
+- We can use JavaScript to handle the form submission and then redirect to the right place
 
-See "modules" at [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+# Part 3, version 2: Adding a listener for form submission
 
-NOTE: The script element should be of type "module".
+1. Add a script element in `edit_recipe.html`
+2. Add an event listener for the form that uses `saveRecipe` function from `utils.js`
+3. Reload page and test our revision
 
-# Wiring things up. No. 1e: 
+# Part 3, version 2: Anatomy of our saveRecipe
 
-Here's what [htdocs/list_recipes.js](htdocs/modules/list_recipes.js).
+1. Retrieve the data from the web form
+2. Use fetch to send the data and receive a response
+3. Based on the response decide where to go
 
+# Part 3, version 3: Exploring further
 
-# Wiring things up, No. 2a: "display_recipe.js" behavior
+- [MDN](https://developer.mozilla.org/en-US)
+- LLMs, including ones you can run locally via Ollama
 
-We are going to create a JavaScript "module" caled "display_recipe.js". It's responsibilities are \--
+# What we've covered and some questions
 
-- After page is loaded, get the "key" from the URL paramters
-- then retrieve our recipe object from the API
-- populate the page and update the navigation (edit element)
+- The server side can be turn key using a JavaScript web page
+  - What is it a good idea?
+  - When is be an bad idea?
 
-NOTE: We have more elements to adjust in the page otherwise the process is very similar to our index.html example.
+# What we've covered and some questions
 
-# Wiring things up, No. 2b: "display_recipe.js" behavior
+- The traditional division of responsibilities in the browser is
+  - HTML for structured data markup
+  - CSS for visual design and layout
+  - JavaScript to orchestrate behaviors
+- Why bother with Web Components?
 
+# Misc thoughts
 
-
-# Wiring things up, No. 3a: "edit_recipe.js" behaviors
-
-- Needs to handle both "create" and "update"
-- Can uses URL path distinguish between "create" and "update"
-- For update will need to retrieve the current recipe to edit as JSON, then populate the form
-- Will need to handle gathering the form elements and sending them to the JSON API to "create" or "update" the recipe
-
-
-# Wiring things up, No. 3b: "edit_recipe.js" behaviors
-
-Here's what [htdocs/edit_recipe.js](htdocs/modules/edit_recipe.js).
-
-# Debugging
-
-Work as a group
-
-# Prototype
-
-# Wait but this is ugly!
-
-Yeah, this is only a prototype. Let's iterate on our implementation.
-
-# Improving our application, vanilla CSS
-
-~~~css
-/* Example CSS, how minimal can we be? */
-~~~
-
-# Improving our application, leveraging web components
-
-We can retrieve the following from [CL-web-components](https://github.com/caltechlibrary/CL-web-components)
-
-- [a_to_z_ul.js]() -> htdocs/modules/a_to_z_ul.js
-- [csvtextarea.js]() -> htdocs/modules/csvtextarea.js
-- [sortable_table.js]() -> htdocs/modules/sortable_table.js
-
-Now we can update our list, display and web form HTML with these components.
+- Progressive enhancement is still relevant in 2025
+- Web Components offer the possibility of consistent rich behaviors across
+  websites and web applications (bonus they can be used to to ensure accessibility)
+- There are still times you want to write custom middle ware, example COLD
 
 # Conclusion
 

@@ -121,8 +121,8 @@ class="email">rsdoiel@caltech.edu</a>
 </ul>
 <h2 id="what-well-learn">What we’ll learn</h2>
 <ul>
-<li>How to create a JSON API using a simple YAML file and simple SQL
-SELECT statements</li>
+<li>How to create a JSON API using a simple YAML file and using a simple
+SQL SELECT statement</li>
 <li>How to enhance our HTML using Web Compents from <a
 href="https://github.com/caltechlibraryCL-web-components">CL Web
 Components</a></li>
@@ -144,11 +144,14 @@ probably already have these, if not install them</h3>
 <h3 id="you-will-need-to-install-dataset">You will need to install
 dataset</h3>
 <ul>
-<li><a href="https://caltechlibrary.github.io/dataset">Dataset</a></li>
+<li><a href="https://caltechlibrary.github.io/dataset">Dataset</a>, get
+the latest release</li>
 </ul>
 <p>We can start our first iteration of our applicaiton once you have
 these available.</p>
-<h2 id="four-parts">Four parts</h2>
+</div>
+<div id="getting-started-four-parts" class="slide section level1">
+<h1>Getting started, four parts</h1>
 <ol style="list-style-type: decimal">
 <li>What are we building, how will we build it?</li>
 <li>Setting up our web service</li>
@@ -307,8 +310,8 @@ A page used to add and edit recipes we’ve collectioned
 </div>
 <div id="part-3-populating-our-pages" class="slide section level1">
 <h1>Part 3: populating our pages</h1>
-<p>We’re create four modules, one specific to each HTML page and one
-utility one that fetches data from our JSON API.</p>
+<p>We’ll create four modules, one specific to each HTML page and one
+utility module</p>
 <dl>
 <dt><a
 href="htdocs/modules/list_recipes.js">htdocs/modules/list_recipes.js</a></dt>
@@ -325,264 +328,223 @@ href="htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipe.js</a></dt>
 <dd>
 A page used to add and edit recipes we’ve collectioned
 </dd>
-<dt><a
-href="htdocs/modules/client_api.js">htdocs/modules/client_api.js</a></dt>
+<dt><a href="htdocs/modules/utils.js">htdocs/modules/utils.js</a></dt>
 <dd>
-This module handles retrieving data from the JSON API. It is “imported”
-by the three previous modules.
+This module handles retrieving data from the JSON API and finding the
+object’s key
 </dd>
 </dl>
 </div>
-<div id="mockup-wiring-up-our-pages" class="slide section level1">
-<h1>Mockup, wiring up our pages</h1>
-<ul>
-<li>A standard web form that can submit objects to the JSON API</li>
-<li>a JavaScript module used to retrieve objects form the JSON API</li>
-<li>a JavaScript module per page to display the retrieved data</li>
-</ul>
-<p>We can include mock up sample data view the before setting up our web
-service by opening the page directly in our web browser.</p>
+<div id="part-3-fire-up-our-web-service" class="slide section level1">
+<h1>Part 3: Fire up our web service</h1>
+<p>In a terminal run our startup command</p>
+<pre class="shell"><code>datasetd recipe_api.yaml</code></pre>
 </div>
-<div id="mock-up-what-would-the-web-form-look-like"
+<div id="part-3-test-using-your-web-browser"
 class="slide section level1">
-<h1>Mock up, What would the web form look like?</h1>
-<p>We can use a single web form for both adding and editing recipes.</p>
-<p>Example: <a
-href="htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></p>
-<p>This is our edit page so it should be named “edit_recipe.html” in the
-“htdocs” directory.</p>
-</div>
-<div id="mock-up-what-how-about-displaying-our-recipe"
-class="slide section level1">
-<h1>Mock up, What how about displaying our recipe?</h1>
-<p>We can use an UL list to list the recipe by name and link to the
-display page.</p>
-<p>Example: <a
-href="htdocs/display_recipe.html">htdocs/display_recipe.html</a></p>
-<p>This is our display page so it should be named “display_recipe.html”
-in the “htdocs” directory.</p>
-</div>
-<div id="behaviors-what-actions-are-needed"
-class="slide section level1">
-<h1>Behaviors, what actions are needed?</h1>
-<h2 id="crud-q">CRUD-Q</h2>
-<ul>
-<li>create a recipe (add)</li>
-<li>retrieve a recipe (display)</li>
-<li>update a recipes (edit)</li>
-<li>delete a recipe (left unimplemented)</li>
-<li>query our collection of recipes (list recipes)</li>
-</ul>
-</div>
-<div id="behaviors-we-can-use-javascript" class="slide section level1">
-<h1>Behaviors, we can use JavaScript</h1>
-<ul>
-<li>retrieve and drop data into our HTML pages</li>
-<li>handle form submission</li>
-<li>to create web components to simplify our HTML and make it more user
-friendly</li>
-</ul>
-</div>
-<div
-id="behaviors-our-web-service-and-json-api-provides-our-data-source"
-class="slide section level1">
-<h1>Behaviors, our web service and JSON API provides our data
-source</h1>
-<ul>
-<li><code>dataset</code> sets up our collection</li>
-<li><code>datasetd</code> provides our web service</li>
-<li>web service is defined using YAML</li>
-</ul>
-</div>
-<div id="behaviors-create-our-collection" class="slide section level1">
-<h1>Behaviors, create our collection</h1>
-<p><code>dataset</code> is a command line tool for interacting with
-collections of JSON documents.</p>
-<p>This will create our “recipes.ds” collection.</p>
-<pre class="shell"><code>dataset init recipes.ds</code></pre>
-<p>Populate the collection with some test data, <a
-href="recipes.jsonl">download recipes.jsonl</a>.</p>
-<pre class="shell"><code>dataset load recipes.ds &lt;recipes.jsonl</code></pre>
-<p>—- FIXME: REWRITE rest of presentation</p>
-</div>
-<div
-id="wiring-things-up-checkout-the-web-service-with-your-web-browser"
-class="slide section level1">
-<h1>Wiring things up, checkout the web service with your web
-browser</h1>
-<p>Fireup your web browser and try the following links.</p>
-<ul>
-<li><a href="http://localhost:8001/index.html"
-class="uri">http://localhost:8001/index.html</a></li>
-<li><a href="http://localhost:8001/display_recipe.html"
-class="uri">http://localhost:8001/display_recipe.html</a></li>
-<li><a href="http://localhost:8001/edit_recipe.html"
-class="uri">http://localhost:8001/edit_recipe.html</a></li>
-</ul>
-</div>
-<div
-id="congratulations-you-just-implemented-your-applications-web-services"
-class="slide section level1">
-<h1>Congratulations, you just implemented your application’s web
-services</h1>
-<p><strong>Hurrah!!!</strong></p>
-<p>The web service half of your application is completed.</p>
-</div>
-<div id="remember-your-browser-has-developer-tools-given-them-a-try"
-class="slide section level1">
-<h1>Remember your browser has “developer tools”, given them a try</h1>
-<ul>
-<li>With Firefox look at the “hamburger menu”, click “more tools”, click
-“web developer tools”</li>
-<li>Chrome, Safari have different menus, you’ll need to find them</li>
-</ul>
-</div>
-<div
-id="wiring-things-up-we-use-javascript-and-the-json-api-to-populate-our-pages"
-class="slide section level1">
-<h1>Wiring things up, we use JavaScript and the JSON API to populate our
-pages</h1>
-<p>Create our “htdocs” and “htdocs/modules” directories.</p>
-<pre class="shell"><code>mkdir htdocs
-mkdir htdocs/modules</code></pre>
-<p>We will be creating the following files.</p>
+<h1>Part 3: Test using your web browser</h1>
 <ol style="list-style-type: decimal">
-<li><a
-href="htdocs/modules/list_recipes.js">htdocs/modules/list_recipes.js</a></li>
-<li><a
-href="htdocs/modules/display_recipe.js">htdocs/modules/display_recipe.js</a></li>
-<li><a
-href="htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipes.js</a></li>
+<li>Go to <a href="http://localhost:8001"
+class="uri">http://localhost:8001</a></li>
+<li>In your browser open your “developer tools”</li>
+<li>Reload the page and monitor the loads</li>
+<li>Click through the sites</li>
 </ol>
-<p>You can download them from <a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps"
-class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps</a>
-if you’re following along.</p>
 </div>
-<div id="wiring-things-up-no.-1a-list-our-recipes"
+<div id="part-3-debugging-and-improving" class="slide section level1">
+<h1>Part 3: Debugging and improving</h1>
+<ol style="list-style-type: decimal">
+<li>There will be issues you need to debug</li>
+<li>What happens when you add a recipe?</li>
+<li>What happens when you hen you update a receipt?</li>
+<li>Can any of this be improved?</li>
+</ol>
+</div>
+<div id="intermission" class="slide section level1">
+<h1>Intermission</h1>
+<p>Let’s take a short break then we’ll comback and iterate.</p>
+</div>
+<div id="part-1-version-2" class="slide section level1">
+<h1>Part 1, version 2</h1>
+<p>We’re going to set aside the prototype noting what worked and what
+didn’t work.</p>
+</div>
+<div id="part-1-version-2-setting-up" class="slide section level1">
+<h1>Part 1, version 2: Setting up</h1>
+<ol style="list-style-type: decimal">
+<li>Create a new dataset collection called <code>recipes2.ds</code></li>
+<li>Create a <code>recipes_api2.yaml</code></li>
+<li>Create new directory structure for our static content called
+<code>htdocs2</code></li>
+</ol>
+</div>
+<div id="part-1-version-2-setting-up-1" class="slide section level1">
+<h1>Part 1, version 2: Setting up</h1>
+<p>On macOS and Linux</p>
+<pre class="shell"><code>dataset init recipes2.ds
+cp recipes_api.yaml recipes_api2.yaml
+cp -vR htdocs htdocs2</code></pre>
+<p>on Windows</p>
+<pre class="pwsh"><code>dataset init receipes2.ds
+copy recipes_api.yaml recipes_api2.yaml
+copy -Recurse htdocs htdocs</code></pre>
+</div>
+<div id="part-1-version-2-updating-our-yaml-configuration"
 class="slide section level1">
-<h1>Wiring things up, No. 1a: List our recipes</h1>
+<h1>Part 1, version 2: Updating our YAML configuration</h1>
 <ul>
-<li>Our recipes are provided by our JSON API using the “query” we
-defined in our “recipe_api.yaml”.</li>
-<li>We can retrieve that using a JavaScript “fetch”</li>
-<li>We can then use the results to populate our index page</li>
+<li>edit our <code>recipes_api2.yaml</code></li>
+<li>update the <code>htdocs</code> reference</li>
+<li>update the port number in hosts to 8002</li>
+<li>update the dataset to <code>recipes2.ds</code></li>
 </ul>
 </div>
-<div id="wiring-things-up.-no.-1b-our-json-api-url"
+<div id="part-1-version-2-testing-a-new-instance"
 class="slide section level1">
-<h1>Wiring things up. No. 1b: Our JSON API URL</h1>
-<p>The query api call requires a POST action. The URL <a
-href="http://localhost:8001/api/recipes.ds/query/list_recipes"
-class="uri">http://localhost:8001/api/recipes.ds/query/list_recipes</a>.
-Here is the brakedown the the URL path.</p>
+<h1>Part 1, version 2: Testing a new instance</h1>
+<ol style="list-style-type: decimal">
+<li>Test our new instance</li>
+<li>Shut it down before we proceed.</li>
+</ol>
+<pre class="shell"><code>dataset recipes_api2.yaml</code></pre>
+</div>
+<div id="part-2-version-2-introducing-web-components"
+class="slide section level1">
+<h1>Part 2, version 2: Introducing Web Components</h1>
+<ol style="list-style-type: decimal">
+<li>A means of extending HTML elements supported in your web
+browser</li>
+<li>Implemented as JavaScript Modules</li>
+</ol>
+</div>
+<div id="part-2-version-2-cl-web-components"
+class="slide section level1">
+<h1>Part 2, version 2: CL-web-components</h1>
 <ul>
-<li><code>/api</code>, this indicates to our web service this is an API
-call</li>
-<li><code>/recipes.ds</code>, indicates the collection we’re working
-with</li>
-<li><code>/query</code>, indicates we running a “query” (remember that
-from the YAML?)</li>
-<li><code>/list_recipes</code> is the query name to run, parameters
-would come next if it needed them</li>
+<li>CL-web-components, a collection of web components designed for
+Caltech Library</li>
+<li>Retrieve the latest versions at <a
+href="https://github.com/caltechlibrary/CL-web-components/releases"
+class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></li>
 </ul>
 </div>
-<div id="wiring-things-up-no.-1c-testing-our-json-api"
+<div id="part-2-veresion-2-web-components-cl-web-components"
 class="slide section level1">
-<h1>Wiring things up, No. 1c: Testing our JSON API</h1>
-<p>I use cURL and jq to test the JSON API. cURL provides a easy way to
-express the HTTP action, GET, POST, PUT, DELETE used in <a
-href="https://en.wikipedia.org/wiki/REST">RESTful</a> JSON API.</p>
-<pre class="shell"><code>curl -X POST http://localhost:8001/api/recipes.ds/query/list_recipes | jq .</code></pre>
+<h1>Part 2, veresion 2: Web Components, CL-web-components</h1>
+<dl>
+<dt>CSVTextarea</dt>
+<dd>
+Wraps a textarea element and presents a editable table of cells
+</dd>
+<dt>AToZUL</dt>
+<dd>
+Wraps a UL list and creates an A to Z list
+</dd>
+<dt>SortableTable</dt>
+<dd>
+Wraps an HTML table making it sortable and filterable on a column
+</dd>
+</dl>
 </div>
-<div id="wiring-things-up-no.-1d-creating-list_recipes.js-using-fetch"
+<div id="part-2-version-2-adding-csvtextarea-to-edit_recipe.html"
 class="slide section level1">
-<h1>Wiring things up, No. 1d: Creating list_recipes.js, using
-“fetch”</h1>
-<p>We are going to create a JavaScript “module” caled “list_recipes.js”.
-It’s responsibilities are --</p>
+<h1>Part 2, version 2: Adding CSVTextarea to edit_recipe.html</h1>
 <ul>
-<li>After page is loaded, get the elem holding our UL list
-(“recipe-list”)</li>
-<li>then retrieve our list of recipes from the API</li>
-<li>populate the UL list using the retrieved object</li>
-</ul>
-<p>See “modules” at <a
-href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN</a></p>
-<p>NOTE: The script element should be of type “module”.</p>
-</div>
-<div id="wiring-things-up.-no.-1e" class="slide section level1">
-<h1>Wiring things up. No. 1e:</h1>
-<p>Here’s what <a
-href="htdocs/modules/list_recipes.js">htdocs/list_recipes.js</a>.</p>
-</div>
-<div id="wiring-things-up-no.-2a-display_recipe.js-behavior"
-class="slide section level1">
-<h1>Wiring things up, No. 2a: “display_recipe.js” behavior</h1>
-<p>We are going to create a JavaScript “module” caled
-“display_recipe.js”. It’s responsibilities are --</p>
-<ul>
-<li>After page is loaded, get the “key” from the URL paramters</li>
-<li>then retrieve our recipe object from the API</li>
-<li>populate the page and update the navigation (edit element)</li>
-</ul>
-<p>NOTE: We have more elements to adjust in the page otherwise the
-process is very similar to our index.html example.</p>
-</div>
-<div id="wiring-things-up-no.-2b-display_recipe.js-behavior"
-class="slide section level1">
-<h1>Wiring things up, No. 2b: “display_recipe.js” behavior</h1>
-</div>
-<div id="wiring-things-up-no.-3a-edit_recipe.js-behaviors"
-class="slide section level1">
-<h1>Wiring things up, No. 3a: “edit_recipe.js” behaviors</h1>
-<ul>
-<li>Needs to handle both “create” and “update”</li>
-<li>Can uses URL path distinguish between “create” and “update”</li>
-<li>For update will need to retrieve the current recipe to edit as JSON,
-then populate the form</li>
-<li>Will need to handle gathering the form elements and sending them to
-the JSON API to “create” or “update” the recipe</li>
+<li>copy <code>csvtextarea.js</code> to the modules directory under
+htdocs2</li>
+<li>edit <code>htdocs/edit_recipe.html</code> to include the CSVTextarea
+module in the document head</li>
+<li>edit <code>htdocs/edit_recipe.html</code> wrapping the ingredients
+textarea with our csvtextarea</li>
 </ul>
 </div>
-<div id="wiring-things-up-no.-3b-edit_recipe.js-behaviors"
+<div id="part-2-version-2-restart-recipes_api2.yaml-and-test"
 class="slide section level1">
-<h1>Wiring things up, No. 3b: “edit_recipe.js” behaviors</h1>
-<p>Here’s what <a
-href="htdocs/modules/edit_recipe.js">htdocs/edit_recipe.js</a>.</p>
+<h1>Part 2, version 2: Restart recipes_api2.yaml and test</h1>
+<p>Start up our web service</p>
+<pre><code>dataset recipes_api2.yaml</code></pre>
+<ol style="list-style-type: decimal">
+<li>Point your browser at <a
+href="http://localhost:8002/edit_recipe.html"
+class="uri">http://localhost:8002/edit_recipe.html</a></li>
+<li>Turn on your developer tools</li>
+<li>Test the web component</li>
+</ol>
 </div>
-<div id="debugging" class="slide section level1">
-<h1>Debugging</h1>
-<p>Work as a group</p>
-</div>
-<div id="prototype" class="slide section level1">
-<h1>Prototype</h1>
-</div>
-<div id="wait-but-this-is-ugly" class="slide section level1">
-<h1>Wait but this is ugly!</h1>
-<p>Yeah, this is only a prototype. Let’s iterate on our
-implementation.</p>
-</div>
-<div id="improving-our-application-vanilla-css"
+<div
+id="part-3-version-2-solving-the-missing-redirect-from-submit-status"
 class="slide section level1">
-<h1>Improving our application, vanilla CSS</h1>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode css"><code class="sourceCode css"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">/* Example CSS, how minimal can we be? */</span></span></code></pre></div>
-</div>
-<div id="improving-our-application-leveraging-web-components"
-class="slide section level1">
-<h1>Improving our application, leveraging web components</h1>
-<p>We can retrieve the following from <a
-href="https://github.com/caltechlibrary/CL-web-components">CL-web-components</a></p>
+<h1>Part 3, version 2: solving the missing redirect from submit
+status</h1>
 <ul>
-<li><a href="">a_to_z_ul.js</a> -&gt; htdocs/modules/a_to_z_ul.js</li>
-<li><a href="">csvtextarea.js</a> -&gt;
-htdocs/modules/csvtextarea.js</li>
-<li><a href="">sortable_table.js</a> -&gt;
-htdocs/modules/sortable_table.js</li>
+<li>In version 1 when we created or updated and element we were taken to
+a status page</li>
+<li>What we want to do is go to a more logical place</li>
+<li>We can use JavaScript to handle the form submission and then
+redirect to the right place</li>
 </ul>
-<p>Now we can update our list, display and web form HTML with these
-components.</p>
+</div>
+<div id="part-3-version-2-added-a-formsubmit-method-to-utils.js"
+class="slide section level1">
+<h1>Part 3, version 2: Added a formSubmit method to
+<code>utils.js</code></h1>
+<ol style="list-style-type: decimal">
+<li>Write the formSubmision function</li>
+<li>Wrap it in an event listener</li>
+<li>Reload page and test our revision</li>
+</ol>
+</div>
+<div id="part-3-version-2-anatomy-of-our-formsubmission"
+class="slide section level1">
+<h1>Part 3, version 2: Anatomy of our formSubmission</h1>
+<ol style="list-style-type: decimal">
+<li>Retrieve the data from the web form</li>
+<li>Use fetch to send the data and recieve a response</li>
+<li>Based on the response decide where to go</li>
+</ol>
+</div>
+<div id="part-3-version-3-exploring-further"
+class="slide section level1">
+<h1>Part 3, version 3: Exploring further</h1>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US">MDN</a></li>
+<li>LLMs, including ones you can run locally via Ollama</li>
+</ul>
+</div>
+<div id="what-weve-covered-and-some-questions"
+class="slide section level1">
+<h1>What we’ve covered and some questions</h1>
+<ul>
+<li>The server side can be turn key using a JavaScript web page
+<ul>
+<li>What is it a good idea?</li>
+<li>When is be an bad idea?</li>
+</ul></li>
+</ul>
+</div>
+<div id="what-weve-covered-and-some-questions-1"
+class="slide section level1">
+<h1>What we’ve covered and some questions</h1>
+<ul>
+<li>The traditional division of responsibilities in the browser is
+<ul>
+<li>HTML for structured data markup</li>
+<li>CSS for visual design and layout</li>
+<li>JavaScript to orchestrate behaviors</li>
+</ul></li>
+<li>Why bother with Web Components?</li>
+</ul>
+</div>
+<div id="misc-thoughts" class="slide section level1">
+<h1>Misc thoughts</h1>
+<ul>
+<li>Progressive enhancement is still relevant in 2025</li>
+<li>Web Components offer the possibility of consistant rich behaviors
+across websites and web applications (bonus they can be used to to
+ensure accessibility)</li>
+<li>There are still times you want to write custom middle ware, example
+COLD</li>
+</ul>
 </div>
 <div id="conclusion" class="slide section level1">
 <h1>Conclusion</h1>

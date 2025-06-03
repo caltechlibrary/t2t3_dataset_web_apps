@@ -1,0 +1,15 @@
+#!/usr/bin/env -S datasetd -debug
+host: localhost:8002
+htdocs: htdocs2
+collections:
+  - dataset: recipes2.ds
+    keys: true
+    create: true
+    read: true
+    update: true
+    delete: true
+    query:
+      list_recipes: |
+        select src
+        from recipes2
+        order by src->>'name'

@@ -19,10 +19,8 @@ export function getKey() {
 
 // apiURL is the path to the API relative to the modules directory. 
 // The browser will resolve the request to the a specific part or hostname.
-//
-// NOTE: this collection name is embedded in the path, what issues does tha cause?
-//
-const apiBaseURL = "../api/recipes.ds";
+// NOTE: the dataset collection needed to be updated in the path compared to version 1!!!!
+const apiBaseURL = "../api/recipes2.ds";
 
 /**
  * getRecipes retieves a list of recipes using the query API we defined in recipes_api.yaml.
@@ -79,7 +77,7 @@ export async function saveRecipe(event) {
   // NOTE: In our form we called the submit button "save", so that's what we remove.
   formData.delete("save"); //formData.delete("submit");
   formData.delete("cancel");
-  
+
   // Convert FormData to URL-encoded string
   const urlEncodedData = new URLSearchParams(formData).toString();
 
@@ -93,7 +91,6 @@ export async function saveRecipe(event) {
   }
   const apiURL = `${apiBaseURL}/object/${key}`;
   const displayPage = `display_recipe.html?key=${key}`;
-  console.log(`DEBUG displayPage is -> ${displayPage}`);
   let editPage = `edit_recipe.html`;
   if (isUpdate) {
     editPage = `edit_recipe.html?key=${key}`;
@@ -108,16 +105,13 @@ export async function saveRecipe(event) {
   });
   if (response.ok) {
     // We're good do display the saved recipe.
-    console.log(`Redirecting to ${displayPage}`);
     globalThis.location.href = displayPage;
     return;
   }
   // Return to the edit page pass the error through the parameters
   if (isUpdate) {
-    console.log(`Redirecting to ${editPage}&error=${response.statusText}`);
     globalThis.location.href = `${editPage}&error=${response.statusText}`;
   } else {
-    console.log(`Redirecting to ${editPage}?error=${response.statusText}`);
     globalThis.location.href = `${editPage}?error=${response.statusText}`;
   }
 }
