@@ -12,9 +12,16 @@
     }
   ],
   "dateCreated": "2025-05-30",
-  "dateModified": "2025-05-30",
-  "datePublished": "2025-05-30",
-  "description": "This is a presentation intended for the T2T3 series at Caltech Library showing how to develop web applicaitons easily using Dataset and CL Web Components.",
+  "dateModified": "2025-06-03",
+  "datePublished": "2025-06-03",
+  "description": "The repository contains a presentation introducing web application construction using\nDataset and Web Components. It is intended for the T2T3 series at Caltech Library.\n\nIt presents the construction process to build a simple recipe collection system.",
+  "funder": [
+    {
+      "name": "Caltech Library",
+      "id": "https://ror.org/5dxps055",
+      "type": "Organization"
+    }
+  ],
   "keywords": [
     "web applicaitons",
     "dataset",
@@ -48,7 +55,7 @@
   "version": "0.0.1",
   "developmentStatus": "concept",
   "issueTracker": "https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues",
-  "releaseNotes": "Sketch of a T2T3 workshop for using Dataset and CL Web Components to build web applications.",
+  "releaseNotes": "First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications.",
   "copyrightYear": 2025,
   "copyrightHolder": "California Institute of Technology"
 }
