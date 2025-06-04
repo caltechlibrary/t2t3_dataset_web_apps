@@ -3,7 +3,8 @@
   <head>
     <title>A recipe collection</title>
     <link rel="style" href="css/style.css">
-    <script type="module" src="./modules/edit_recipe.js"></script>
+    <script type="module" src="modules/csvtextarea.js"></script>
+    <script type="module" src="modules/edit_recipe.js"></script>
   </head>
   <body>
     <nav>
@@ -26,9 +27,17 @@
 
         <div>
           <label set="ingredients">Ingredients</label>
-          <textarea id="ingredients" name="ingredients"
-          title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-          cols="60"rows="10">Ingredients,Units</textarea>
+          <!-- NOTES that web components use a hyphen in their name, that avoids collission with
+           standard HTML elements -->
+          <csv-textarea id="ingredients" name="ingredients"
+            column-headings="Ingredients,Units"
+            title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+            cols="60"rows="10" debug="true">
+            <textarea id="ingredients" name="ingredients"
+              title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+              cols="60"rows="10">
+            </textarea>
+          </csv-textarea>
         </div>
 
         <div>
@@ -43,7 +52,10 @@
     </section>
     <script type="module">
       import { saveRecipe } from './modules/utils.js';
+      document.addEventListener('DOMContentLoaded', () => {
+      /* NOTE: we want to add the event listener after the web component has been instatiated. */
       const form = document.addEventListener('submit', saveRecipe);
+      });
     </script>
   </body>
 </html>

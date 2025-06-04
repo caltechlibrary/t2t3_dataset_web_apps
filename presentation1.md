@@ -29,10 +29,12 @@ url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 
 ## What we'll learn
 
-- How to create a JSON API using a simple YAML file and using a simple SQL SELECT statement
+- How to create a JSON API using a YAML file and an embedded SQL SELECT statement
 - How to enhance our HTML using Web Components from [CL Web Components](https://github.com/caltechlibraryCL-web-components)
 
 Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
+
+You can download the presentation in a zip fil at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
 
 # Getting started, requirements
 
@@ -118,7 +120,7 @@ for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml).
 # Part 2: Setting up our web service, configuring the web service
 
 ~~~yaml
-#!/usr/bin/env -S datasetd
+#!/usr/bin/env -S datasetd -debug
 host: localhost:8001
 htdocs: htdocs
 collections:
@@ -151,7 +153,7 @@ datasetd recipes_api.yaml
 
 The web service is running but if you go to the root URL, <http://localhost:8001/>, you'll get a 404 page. We need to create HTML pages to hold the content that will be curated in our recipes application.  We'll be create three HTML documents and four JavaScript modules to help with that. But before we proceed with coding let's think about what we're curating.
 
-# Part 3:Mock up, what does our metadata look like?
+# Part 3: What should our recipe metadata look like?
 
 name
 : A line of text. Held by an`input` element
@@ -166,29 +168,29 @@ We'll need a submit button to save a new or edited recipe.
 
 # Part 3: What are our web pages?
 
-[htdocs/index.html](htdocs/index.html)
+[htdocs/index.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/index.html)
 : Display a list of our recipes
 
-[htdocs/display.html](htdocs/display_recipe.html)
+[htdocs/display_recipe.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/display_recipe.html)
 : A page that shows the recipe
 
-[htdocs/edit_recipe.html](htdocs/edit_recipe.html)
+[htdocs/edit_recipe.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/edit_recipe.html)
 : A page used to add and edit recipes we've collected
 
 # Part 3: populating our pages
 
 We'll create four modules, one specific to each HTML page and one utility module
 
-[htdocs/modules/list_recipes.js](htdocs/modules/list_recipes.js)
+[htdocs/modules/list_recipes.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/list_recipes.js)
 : Display a list of our recipes
 
-[htdocs/modules/display_recipe.js](htdocs/display_recipe.js)
+[htdocs/modules/display_recipe.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/display_recipe.js)
 : A page that shows the recipe
 
-[htdocs/modules/edit_recipe.js](htdocs/modules/edit_recipe.js)
+[htdocs/modules/edit_recipe.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/edit_recipe.js)
 : A page used to add and edit recipes we've collected
 
-[htdocs/modules/utils.js](htdocs/modules/utils.js)
+[htdocs/modules/utils.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/utils.js)
 : This module handles retrieving data from the JSON API and finding the object's key
 
 # Part 3: Fire up our web service
@@ -215,7 +217,7 @@ datasetd recipe_api.yaml
 
 # Intermission
 
-Let's take a short break then we'll comeback and iterate.
+Let's take a short break then we'll comeback and iterate. I'm available to answer questions.
 
 # Part 1, version 2
 
@@ -223,13 +225,15 @@ We're going to set aside the prototype noting what worked and what didn't work.
 
 # Part 1, version 2: Setting up
 
-1. Create a new dataset collection called `recipes2.ds`
-2. Create a `recipes_api2.yaml`
-3. Create new directory structure for our static content called `htdocs2`
+What we are doing next
+
+- Creating a new dataset collection called, `recipes2.ds`
+- Creating a new, `recipes_api2.yaml`
+- Creating a new directory structure for our static content called, `htdocs2`
 
 # Part 1, version 2: Setting up
 
-On macOS and Linux
+On macOS and Linux 
 
 ~~~shell
 dataset init recipes2.ds
@@ -239,15 +243,17 @@ cp -vR htdocs htdocs2
 
 on Windows
 
-~~~pwsh
+~~~shell
 dataset init recipes2.ds
 copy recipes_api.yaml recipes_api2.yaml
-copy -Recurse htdocs htdocs
+copy -Recurse htdocs htdocs2
 ~~~
+
+(NOTE: The first line should look familiar, the others are just time savers)
 
 # Part 1, version 2: Updating our YAML configuration
 
-- edit our `recipes_api2.yaml`
+- edit our [recipes_api2.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
 - update the `htdocs` reference
 - update the port number in hosts to 8002
 - update the dataset to `recipes2.ds`
@@ -257,8 +263,8 @@ copy -Recurse htdocs htdocs
 
 1. Test our new instance
   a. what is broken?
-  b. Are there places where hard code collection needs updating?
-2. Shut it down before we proceed.
+  b. are there places where hard code collection names?
+2. Shutdown down the service and restart to debug
 
 ~~~shell
 dataset recipes_api2.yaml
@@ -272,24 +278,51 @@ dataset recipes_api2.yaml
 # Part 2, version 2: CL-web-components
 
 - CL-web-components, a collection of web components designed for Caltech Library
-- Retrieve the latest versions at <https://github.com/caltechlibrary/CL-web-components/releases>
+- Using your web browser retrieve the latest versions
+
+<https://github.com/caltechlibrary/CL-web-components/releases>
+
+
+# Part 2, version 2: Copy the web components to the modules directory (macOS, Linux)
+
+- Unzip just the JavaScript files
+- Copy the JavaScript files in the zip file to `htdocs2/modules/`.
+
+Linux, macOS
+
+~~~shell
+unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
+mv -v *.js htdocs2/models/
+~~~
+
+# Part 2, version 2: Copy the web components to the modules directory (Windows)
+
+- Unzip just the JavaScript files
+- Copy the JavaScript files in the zip file to `htdocs2/modules/`.
+
+Linux, macOS
+
+~~~shell
+unzip $HOME\Downloads\cl-web-components-0.0.6.zip *.js
+move *.js htdocs2\models\
+~~~
 
 # Part 2, version 2: Web Components, CL-web-components
 
-CSVTextarea
+[CSVTextarea](https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js)
 : Wraps a textarea element and presents a editable table of cells
 
-AToZUL
+[AToZUL](https://github.com/caltechlibrary/CL-web-components/blob/main/a_to_z_ul.js)
 : Wraps a UL list and creates an A to Z list
 
-SortableTable
+[SortableTable](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_table.js)
 : Wraps an HTML table making it sort-able and filterable on a column
 
 # Part 2, version 2: Adding CSVTextarea to edit_recipe.html
 
 - copy `csvtextarea.js` to the modules directory under htdocs2
-- edit `htdocs/edit_recipe.html` to include the CSVTextarea module in the document head
-- edit `htdocs/edit_recipe.html` wrapping the ingredients textarea with our csvtextarea
+- edit [htdocs2/edit_recipe.html]() to include the CSVTextarea module in the document head
+- edit `htdocs2/edit_recipe.html` wrapping the ingredients textarea with our csvtextarea
 
 # Part 2, version 2: Restart recipes_api2.yaml and test
 

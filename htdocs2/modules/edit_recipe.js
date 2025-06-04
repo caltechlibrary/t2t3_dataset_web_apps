@@ -1,3 +1,4 @@
+
 /**
  * edit_recipe.js is a module that uses the Dataset JSON API for recipes_api.yaml to list
  * the recipes in the recipes.ds collection.
@@ -64,7 +65,9 @@ function displayWebFrom(key, data) {
       urlInput.value = data["url"];
     }
     if (data["ingredients"] !== undefined) {
-      ingredientsTextarea.innerHTML = data["ingredients"];
+      // NOTE: we can just drop this on the inner HTML, that'll replace the embedded table.
+      // We need to use the CSVTextarea's method to update the table.
+      ingredientsTextarea.fromCSV(data['ingredients']);
     }
     if (data["procedure"] !== undefined) {
       procedureTextarea.innerHTML = data["procedure"];

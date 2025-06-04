@@ -121,8 +121,8 @@ class="email">rsdoiel@caltech.edu</a>
 </ul>
 <h2 id="what-well-learn">What we’ll learn</h2>
 <ul>
-<li>How to create a JSON API using a simple YAML file and using a simple
-SQL SELECT statement</li>
+<li>How to create a JSON API using a YAML file and an embedded SQL
+SELECT statement</li>
 <li>How to enhance our HTML using Web Components from <a
 href="https://github.com/caltechlibraryCL-web-components">CL Web
 Components</a></li>
@@ -130,6 +130,9 @@ Components</a></li>
 <p>Follow along at <a
 href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html"
 class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html</a></p>
+<p>You can download the presentation in a zip fil at <a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases"
+class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases</a></p>
 </div>
 <div id="getting-started-requirements" class="slide section level1">
 <h1>Getting started, requirements</h1>
@@ -233,7 +236,7 @@ id="part-2-setting-up-our-web-service-configuring-the-web-service-1"
 class="slide section level1">
 <h1>Part 2: Setting up our web service, configuring the web service</h1>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd</span></span>
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
@@ -273,9 +276,9 @@ that will be curated in our recipes application. We’ll be create three
 HTML documents and four JavaScript modules to help with that. But before
 we proceed with coding let’s think about what we’re curating.</p>
 </div>
-<div id="part-3mock-up-what-does-our-metadata-look-like"
+<div id="part-3-what-should-our-recipe-metadata-look-like"
 class="slide section level1">
-<h1>Part 3:Mock up, what does our metadata look like?</h1>
+<h1>Part 3: What should our recipe metadata look like?</h1>
 <dl>
 <dt>name</dt>
 <dd>
@@ -297,15 +300,18 @@ Free text describing how to prepare the dish. Held by a
 <div id="part-3-what-are-our-web-pages" class="slide section level1">
 <h1>Part 3: What are our web pages?</h1>
 <dl>
-<dt><a href="htdocs/index.html">htdocs/index.html</a></dt>
+<dt><a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/index.html">htdocs/index.html</a></dt>
 <dd>
 Display a list of our recipes
 </dd>
-<dt><a href="htdocs/display_recipe.html">htdocs/display.html</a></dt>
+<dt><a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/display_recipe.html">htdocs/display_recipe.html</a></dt>
 <dd>
 A page that shows the recipe
 </dd>
-<dt><a href="htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></dt>
+<dt><a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></dt>
 <dd>
 A page used to add and edit recipes we’ve collected
 </dd>
@@ -317,21 +323,22 @@ A page used to add and edit recipes we’ve collected
 utility module</p>
 <dl>
 <dt><a
-href="htdocs/modules/list_recipes.js">htdocs/modules/list_recipes.js</a></dt>
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/list_recipes.js">htdocs/modules/list_recipes.js</a></dt>
 <dd>
 Display a list of our recipes
 </dd>
 <dt><a
-href="htdocs/display_recipe.js">htdocs/modules/display_recipe.js</a></dt>
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/display_recipe.js">htdocs/modules/display_recipe.js</a></dt>
 <dd>
 A page that shows the recipe
 </dd>
 <dt><a
-href="htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipe.js</a></dt>
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipe.js</a></dt>
 <dd>
 A page used to add and edit recipes we’ve collected
 </dd>
-<dt><a href="htdocs/modules/utils.js">htdocs/modules/utils.js</a></dt>
+<dt><a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/utils.js">htdocs/modules/utils.js</a></dt>
 <dd>
 This module handles retrieving data from the JSON API and finding the
 object’s key
@@ -365,7 +372,8 @@ class="uri">http://localhost:8001</a></li>
 </div>
 <div id="intermission" class="slide section level1">
 <h1>Intermission</h1>
-<p>Let’s take a short break then we’ll comeback and iterate.</p>
+<p>Let’s take a short break then we’ll comeback and iterate. I’m
+available to answer questions.</p>
 </div>
 <div id="part-1-version-2" class="slide section level1">
 <h1>Part 1, version 2</h1>
@@ -374,12 +382,14 @@ didn’t work.</p>
 </div>
 <div id="part-1-version-2-setting-up" class="slide section level1">
 <h1>Part 1, version 2: Setting up</h1>
-<ol style="list-style-type: decimal">
-<li>Create a new dataset collection called <code>recipes2.ds</code></li>
-<li>Create a <code>recipes_api2.yaml</code></li>
-<li>Create new directory structure for our static content called
+<p>What we are doing next</p>
+<ul>
+<li>Creating a new dataset collection called,
+<code>recipes2.ds</code></li>
+<li>Creating a new, <code>recipes_api2.yaml</code></li>
+<li>Creating a new directory structure for our static content called,
 <code>htdocs2</code></li>
-</ol>
+</ul>
 </div>
 <div id="part-1-version-2-setting-up-1" class="slide section level1">
 <h1>Part 1, version 2: Setting up</h1>
@@ -388,15 +398,18 @@ didn’t work.</p>
 cp recipes_api.yaml recipes_api2.yaml
 cp -vR htdocs htdocs2</code></pre>
 <p>on Windows</p>
-<pre class="pwsh"><code>dataset init recipes2.ds
+<pre class="shell"><code>dataset init recipes2.ds
 copy recipes_api.yaml recipes_api2.yaml
-copy -Recurse htdocs htdocs</code></pre>
+copy -Recurse htdocs htdocs2</code></pre>
+<p>(NOTE: The first line should look familiar, the others are just time
+savers)</p>
 </div>
 <div id="part-1-version-2-updating-our-yaml-configuration"
 class="slide section level1">
 <h1>Part 1, version 2: Updating our YAML configuration</h1>
 <ul>
-<li>edit our <code>recipes_api2.yaml</code></li>
+<li>edit our <a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml">recipes_api2.yaml</a></li>
 <li>update the <code>htdocs</code> reference</li>
 <li>update the port number in hosts to 8002</li>
 <li>update the dataset to <code>recipes2.ds</code></li>
@@ -411,10 +424,10 @@ class="slide section level1">
 </ol>
 <ol style="list-style-type: lower-alpha">
 <li>what is broken?</li>
-<li>Are there places where hard code collection needs updating?</li>
+<li>are there places where hard code collection names?</li>
 </ol>
 <ol start="2" style="list-style-type: decimal">
-<li>Shut it down before we proceed.</li>
+<li>Shutdown down the service and restart to debug</li>
 </ol>
 <pre class="shell"><code>dataset recipes_api2.yaml</code></pre>
 </div>
@@ -433,24 +446,56 @@ class="slide section level1">
 <ul>
 <li>CL-web-components, a collection of web components designed for
 Caltech Library</li>
-<li>Retrieve the latest versions at <a
-href="https://github.com/caltechlibrary/CL-web-components/releases"
-class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></li>
+<li>Using your web browser retrieve the latest versions</li>
 </ul>
+<p><a
+href="https://github.com/caltechlibrary/CL-web-components/releases"
+class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></p>
+</div>
+<div
+id="part-2-version-2-copy-the-web-components-to-the-modules-directory-macos-linux"
+class="slide section level1">
+<h1>Part 2, version 2: Copy the web components to the modules directory
+(macOS, Linux)</h1>
+<ul>
+<li>Unzip just the JavaScript files</li>
+<li>Copy the JavaScript files in the zip file to
+<code>htdocs2/modules/</code>.</li>
+</ul>
+<p>Linux, macOS</p>
+<pre class="shell"><code>unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
+mv -v *.js htdocs2/models/</code></pre>
+</div>
+<div
+id="part-2-version-2-copy-the-web-components-to-the-modules-directory-windows"
+class="slide section level1">
+<h1>Part 2, version 2: Copy the web components to the modules directory
+(Windows)</h1>
+<ul>
+<li>Unzip just the JavaScript files</li>
+<li>Copy the JavaScript files in the zip file to
+<code>htdocs2/modules/</code>.</li>
+</ul>
+<p>Linux, macOS</p>
+<pre class="shell"><code>unzip $HOME\Downloads\cl-web-components-0.0.6.zip *.js
+move *.js htdocs2\models\</code></pre>
 </div>
 <div id="part-2-version-2-web-components-cl-web-components"
 class="slide section level1">
 <h1>Part 2, version 2: Web Components, CL-web-components</h1>
 <dl>
-<dt>CSVTextarea</dt>
+<dt><a
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js">CSVTextarea</a></dt>
 <dd>
 Wraps a textarea element and presents a editable table of cells
 </dd>
-<dt>AToZUL</dt>
+<dt><a
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/a_to_z_ul.js">AToZUL</a></dt>
 <dd>
 Wraps a UL list and creates an A to Z list
 </dd>
-<dt>SortableTable</dt>
+<dt><a
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_table.js">SortableTable</a></dt>
 <dd>
 Wraps an HTML table making it sort-able and filterable on a column
 </dd>
@@ -462,9 +507,9 @@ class="slide section level1">
 <ul>
 <li>copy <code>csvtextarea.js</code> to the modules directory under
 htdocs2</li>
-<li>edit <code>htdocs/edit_recipe.html</code> to include the CSVTextarea
-module in the document head</li>
-<li>edit <code>htdocs/edit_recipe.html</code> wrapping the ingredients
+<li>edit <a href="">htdocs2/edit_recipe.html</a> to include the
+CSVTextarea module in the document head</li>
+<li>edit <code>htdocs2/edit_recipe.html</code> wrapping the ingredients
 textarea with our csvtextarea</li>
 </ul>
 </div>

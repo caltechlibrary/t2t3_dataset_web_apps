@@ -52,10 +52,10 @@
     "htmlq",
     "CMTools >= 0.0.29"
   ],
-  "version": "0.0.1",
-  "developmentStatus": "concept",
+  "version": "0.0.2",
+  "developmentStatus": "wip",
   "issueTracker": "https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues",
-  "releaseNotes": "First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications.",
+  "releaseNotes": "First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications.\n\nMerged in CSVTextarea example to htdocs/edit_recipe.html, htdocs/modules/utils.js.",
   "copyrightYear": 2025,
   "copyrightHolder": "California Institute of Technology"
 }
