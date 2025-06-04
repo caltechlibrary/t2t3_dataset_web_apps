@@ -9,7 +9,7 @@ urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: 2025-06-03
+updateDate: 2025-06-04
 draft: true
 pubDate: TBD
 place: Caltech
@@ -428,48 +428,63 @@ if (data["ingredients"] !== undefined) {
 }
 ~~~
 
+# Part 2.2: Test and debug
+
+- Do you find other problems?
+
 # Part 3: Exploring further
 
-- [MDN](https://developer.mozilla.org/en-US)
-- LLMs, including ones you can run locally via Ollama
-
-# Part 3: What we've covered and some questions
-
 - The server side can be turn key using a JavaScript web page
-  - What is it a good idea?
+  - When is it a good idea?
   - When is be an bad idea?
 - Moving from a single layer stack to a two or three layer stack
   - Dataset behind a front end web server
   - Dataset behind middle ware
+- Is this approach sustainable?
 
-# Part 3: What we've covered and some questions
+# Part 3: Exploring Human Interfaces
+
+- Why bother with Web Components? 
+  - What's missing?
+- What are the assumptions in this approach? 
+  - Are they valid?
+
+# Part 3: Exploring Human Interfaces
 
 - The traditional division of responsibilities in the browser is
   - HTML for structured data markup
   - CSS for visual design and layout
   - JavaScript to orchestrate behaviors
-- Why bother with Web Components?
+- Does Web components contradict that the division of responsibilities?
+- Is progressive enhancement is still relevant in 2025?
+  - Is it OK to require JavaScript in a web page?
 
-# Part 3: Misc thoughts
-
-- Progressive enhancement is still relevant in 2025
-- Web Components offer the possibility of consistent rich behaviors across
-  websites and web applications (bonus they can be used to to ensure accessibility)
-- There are still times you want to write custom middle ware, example COLD
-
-# Conclusion
+# Part 3: My Remomendations
 
 - Build with the grain of the web
-  - the building blocks are HTML, CSS and JavaScript
-  - take advantage of running software on localhost
+  - Building blocks are HTML, CSS, JavaScript and HTTP protocol
+- Take advantage of localhost
 - Production, build in layers
   - access control with front end web service (Apache+Shibboleth, NginX+Shibboleth)
-  - data validation with middle ware (localhost: TypeScript or Python)
+  - data validation with middle ware (localhost: Go, TypeScript or Python)
   - object storage with Dataset (localhost)
+
+# Part 3: What I am still mulling over?
+
+- Dataset can shrink the stack but does not remove the need for middleware (yet)
+- Web Components offer the possibility of consistent interfaces across sites
+  - They can help with accessibility
+- I think Web Components ultimately simplify things
+  - Trade off: individual compontents can be complex
+- REST services force us to middleware or Browser JavaScript
+  - Can we go with a simpler service model?
+  - Is it reasonable to require JavaScript (or WASM)?
 
 # Reference: Dataset
 
 - [Dataset Project](https://caltechlibrary.github.io/dataset)
+- [Dataset Repostitory](https://github.com/caltechlibrary/dataset)
+- [Getting help with Dataset](https://github.com/caltechlibrary/dataset/issues)
 
 # Reference: CL-web-components
 
@@ -481,6 +496,8 @@ if (data["ingredients"] !== undefined) {
 
 [SortableTable](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_table.js)
 : Wraps an HTML table making it sort-able and filterable on a column
+
+- Getting help with CL-web-components, <https://github.com/caltechlibrary/CL-web-components/issues>.
 
 # Reference: Programming Languages
 
@@ -495,3 +512,15 @@ if (data["ingredients"] !== undefined) {
 - [JSON](https://www.json.org)
 - [JSON Lines](https://jsonlines.org)
 - [YAML](https://yaml.org/)
+
+# Reference: Additional resources
+
+- [MDN](https://developer.mozilla.org/en-US)
+- LLMs, including ones you can run locally via Ollama
+
+# Thank you for listening
+
+- View presentation: <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
+- View the repository: <https://github.com/caltechlibrary/t2t3_dataset_web_apps>
+- Comment on this spresentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
+- Author: R. S. Doiel, <mailto:rsdoiel@caltech.edu>

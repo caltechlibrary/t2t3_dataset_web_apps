@@ -611,20 +611,18 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>}</span></code></pre></div>
 </div>
+<div id="part-2.2-test-and-debug" class="slide section level1">
+<h1>Part 2.2: Test and debug</h1>
+<ul>
+<li>Do you find other problems?</li>
+</ul>
+</div>
 <div id="part-3-exploring-further" class="slide section level1">
 <h1>Part 3: Exploring further</h1>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US">MDN</a></li>
-<li>LLMs, including ones you can run locally via Ollama</li>
-</ul>
-</div>
-<div id="part-3-what-weve-covered-and-some-questions"
-class="slide section level1">
-<h1>Part 3: What we’ve covered and some questions</h1>
-<ul>
 <li>The server side can be turn key using a JavaScript web page
 <ul>
-<li>What is it a good idea?</li>
+<li>When is it a good idea?</li>
 <li>When is be an bad idea?</li>
 </ul></li>
 <li>Moving from a single layer stack to a two or three layer stack
@@ -632,11 +630,26 @@ class="slide section level1">
 <li>Dataset behind a front end web server</li>
 <li>Dataset behind middle ware</li>
 </ul></li>
+<li>Is this approach sustainable?</li>
 </ul>
 </div>
-<div id="part-3-what-weve-covered-and-some-questions-1"
+<div id="part-3-exploring-human-interfaces"
 class="slide section level1">
-<h1>Part 3: What we’ve covered and some questions</h1>
+<h1>Part 3: Exploring Human Interfaces</h1>
+<ul>
+<li>Why bother with Web Components?
+<ul>
+<li>What’s missing?</li>
+</ul></li>
+<li>What are the assumptions in this approach?
+<ul>
+<li>Are they valid?</li>
+</ul></li>
+</ul>
+</div>
+<div id="part-3-exploring-human-interfaces-1"
+class="slide section level1">
+<h1>Part 3: Exploring Human Interfaces</h1>
 <ul>
 <li>The traditional division of responsibilities in the browser is
 <ul>
@@ -644,35 +657,51 @@ class="slide section level1">
 <li>CSS for visual design and layout</li>
 <li>JavaScript to orchestrate behaviors</li>
 </ul></li>
-<li>Why bother with Web Components?</li>
-</ul>
-</div>
-<div id="part-3-misc-thoughts" class="slide section level1">
-<h1>Part 3: Misc thoughts</h1>
+<li>Does Web components contradict that the division of
+responsibilities?</li>
+<li>Is progressive enhancement is still relevant in 2025?
 <ul>
-<li>Progressive enhancement is still relevant in 2025</li>
-<li>Web Components offer the possibility of consistent rich behaviors
-across websites and web applications (bonus they can be used to to
-ensure accessibility)</li>
-<li>There are still times you want to write custom middle ware, example
-COLD</li>
+<li>Is it OK to require JavaScript in a web page?</li>
+</ul></li>
 </ul>
 </div>
-<div id="conclusion" class="slide section level1">
-<h1>Conclusion</h1>
+<div id="part-3-my-remomendations" class="slide section level1">
+<h1>Part 3: My Remomendations</h1>
 <ul>
 <li>Build with the grain of the web
 <ul>
-<li>the building blocks are HTML, CSS and JavaScript</li>
-<li>take advantage of running software on localhost</li>
+<li>Building blocks are HTML, CSS, JavaScript and HTTP protocol</li>
 </ul></li>
+<li>Take advantage of localhost</li>
 <li>Production, build in layers
 <ul>
 <li>access control with front end web service (Apache+Shibboleth,
 NginX+Shibboleth)</li>
-<li>data validation with middle ware (localhost: TypeScript or
+<li>data validation with middle ware (localhost: Go, TypeScript or
 Python)</li>
 <li>object storage with Dataset (localhost)</li>
+</ul></li>
+</ul>
+</div>
+<div id="part-3-what-i-am-still-mulling-over"
+class="slide section level1">
+<h1>Part 3: What I am still mulling over?</h1>
+<ul>
+<li>Dataset can shrink the stack but does not remove the need for
+middleware (yet)</li>
+<li>Web Components offer the possibility of consistent interfaces across
+sites
+<ul>
+<li>They can help with accessibility</li>
+</ul></li>
+<li>I think Web Components ultimately simplify things
+<ul>
+<li>Trade off: individual compontents can be complex</li>
+</ul></li>
+<li>REST services force us to middleware or Browser JavaScript
+<ul>
+<li>Can we go with a simpler service model?</li>
+<li>Is it reasonable to require JavaScript (or WASM)?</li>
 </ul></li>
 </ul>
 </div>
@@ -681,6 +710,10 @@ Python)</li>
 <ul>
 <li><a href="https://caltechlibrary.github.io/dataset">Dataset
 Project</a></li>
+<li><a href="https://github.com/caltechlibrary/dataset">Dataset
+Repostitory</a></li>
+<li><a href="https://github.com/caltechlibrary/dataset/issues">Getting
+help with Dataset</a></li>
 </ul>
 </div>
 <div id="reference-cl-web-components" class="slide section level1">
@@ -702,6 +735,11 @@ href="https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_tab
 Wraps an HTML table making it sort-able and filterable on a column
 </dd>
 </dl>
+<ul>
+<li>Getting help with CL-web-components, <a
+href="https://github.com/caltechlibrary/CL-web-components/issues"
+class="uri">https://github.com/caltechlibrary/CL-web-components/issues</a>.</li>
+</ul>
 </div>
 <div id="reference-programming-languages" class="slide section level1">
 <h1>Reference: Programming Languages</h1>
@@ -727,6 +765,29 @@ behaviors and web components</li>
 <li><a href="https://www.json.org">JSON</a></li>
 <li><a href="https://jsonlines.org">JSON Lines</a></li>
 <li><a href="https://yaml.org/">YAML</a></li>
+</ul>
+</div>
+<div id="reference-additional-resources" class="slide section level1">
+<h1>Reference: Additional resources</h1>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US">MDN</a></li>
+<li>LLMs, including ones you can run locally via Ollama</li>
+</ul>
+</div>
+<div id="thank-you-for-listening" class="slide section level1">
+<h1>Thank you for listening</h1>
+<ul>
+<li>View presentation: <a
+href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html"
+class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html</a></li>
+<li>View the repository: <a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps"
+class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps</a></li>
+<li>Comment on this spresentation: <a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues"
+class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues</a></li>
+<li>Author: R. S. Doiel, <a href="mailto:rsdoiel@caltech.edu"
+class="uri">mailto:rsdoiel@caltech.edu</a></li>
 </ul>
 </div>
 </body>
