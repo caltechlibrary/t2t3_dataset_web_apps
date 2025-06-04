@@ -112,8 +112,13 @@ class="email">rsdoiel@caltech.edu</a>
 <div class="slide" id="TOC">
 
 </div>
-<div id="dataset-and-a-web-components" class="slide section level1">
-<h1>Dataset and a Web Components</h1>
+<div id="welcome-to-dataset-and-a-web-components"
+class="slide section level1">
+<h1>Welcome to Dataset and a Web Components</h1>
+<ul>
+<li>Dataset provides a turn key web static service and JSON API</li>
+<li>Extending HTML elements using Web Components</li>
+</ul>
 <h2 id="what-well-do">What we’ll do</h2>
 <ul>
 <li>We’ll build a web application for managing a list of recipes</li>
@@ -130,7 +135,7 @@ Components</a></li>
 <p>Follow along at <a
 href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html"
 class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html</a></p>
-<p>You can download the presentation in a zip fil at <a
+<p>You can download the presentation in a zip file at <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases"
 class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases</a></p>
 </div>
@@ -167,9 +172,9 @@ these available.</p>
 <p>GOAL: A simple web application that lets us curate a list of
 recipes.</p>
 </div>
-<div id="part-1-what-are-the-parts-of-our-application"
+<div id="part-1.1-what-are-the-parts-of-our-application"
 class="slide section level1">
-<h1>Part 1: What are the parts of our application?</h1>
+<h1>Part 1.1: What are the parts of our application?</h1>
 <ol style="list-style-type: decimal">
 <li>A web service for managing the recipe collection</li>
 <li>A way to browse recipes by name</li>
@@ -177,8 +182,8 @@ class="slide section level1">
 <li>A web form for adding or edit our recipes</li>
 </ol>
 </div>
-<div id="part-1-what-is-a-recipe" class="slide section level1">
-<h1>Part 1: What is a recipe?</h1>
+<div id="part-1.1-what-is-a-recipe" class="slide section level1">
+<h1>Part 1.1: What is a recipe?</h1>
 <ul>
 <li>A “key”, the unique identifier of a recipe</li>
 <li>A name</li>
@@ -186,45 +191,48 @@ class="slide section level1">
 <li>A procedure describing the preparation process (text)</li>
 </ul>
 </div>
-<div id="part-1-strategy." class="slide section level1">
-<h1>Part 1: Strategy.</h1>
+<div id="part-1.1-strategy." class="slide section level1">
+<h1>Part 1.1: Strategy.</h1>
 <ol style="list-style-type: decimal">
 <li>Setting up our web service</li>
-<li>Mock up using HTML</li>
+<li>Sketch your app using HTML</li>
 <li>Wire up and test</li>
 </ol>
 </div>
-<div id="part-2-setting-up-our-web-service"
+<div id="part-1.2-setting-up-our-web-service"
 class="slide section level1">
-<h1>Part 2: Setting up our web service</h1>
+<h1>Part 1.2: Setting up our web service</h1>
 <ol style="list-style-type: decimal">
-<li>create our recipes.ds collection</li>
-<li>load sample data into our recipes.ds collection</li>
+<li>create our <code>recipes.ds</code> collection</li>
+<li>load sample data into our <code>recipes.ds</code> collection</li>
 <li>Configure and run our collection as a web service</li>
 </ol>
 </div>
-<div id="part-2-creating-our-collection" class="slide section level1">
-<h1>Part 2: creating our collection</h1>
+<div id="part-1.2-creating-our-collection" class="slide section level1">
+<h1>Part 1.2: creating our collection</h1>
 <p>We use the <code>dataset</code> command line program to initialize a
 dataset collection.</p>
 <pre class="shell"><code>dataset init recipes.ds</code></pre>
 </div>
-<div id="part-2-loading-some-sample-data" class="slide section level1">
-<h1>Part 2: Loading some sample data</h1>
+<div id="part-1.2-loading-some-sample-data"
+class="slide section level1">
+<h1>Part 1.2: Loading some sample data</h1>
 <p>We can now load some sample data, see <a
 href="recipes.jsonl">recipes.jsonl</a>.</p>
 <pre class="shell"><code>dataset load recipes.ds &lt;recipes.jsonl</code></pre>
 </div>
-<div id="part-2-create-an-static-content-directory-directory"
+<div id="part-1.2-create-an-static-content-directory-directory"
 class="slide section level1">
-<h1>Part 2: create an static content directory directory</h1>
+<h1>Part 1.2: create an static content directory directory</h1>
 <pre class="shell"><code>mkdir htdocs
 mkdir htdocs/modules
 mkdir htdocs/css</code></pre>
 </div>
-<div id="part-2-setting-up-our-web-service-configuring-the-web-service"
+<div
+id="part-1.2-setting-up-our-web-service-configuring-the-web-service"
 class="slide section level1">
-<h1>Part 2: Setting up our web service, configuring the web service</h1>
+<h1>Part 1.2: Setting up our web service, configuring the web
+service</h1>
 <p><code>datasetd</code> provides a turn key web service defined by a
 simple YAML file. It can host one or more dataset collections. It
 provides a static file service as well as a JSON API for each
@@ -232,9 +240,10 @@ collection. Let’s call this <a
 href="recipes_api.yaml">recipes_api.yaml</a>.</p>
 </div>
 <div
-id="part-2-setting-up-our-web-service-configuring-the-web-service-1"
+id="part-1.2-setting-up-our-web-service-configuring-the-web-service-1"
 class="slide section level1">
-<h1>Part 2: Setting up our web service, configuring the web service</h1>
+<h1>Part 1.2: Setting up our web service, configuring the web
+service</h1>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
@@ -252,9 +261,9 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="
 <span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>        from recipes</span>
 <span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
 </div>
-<div id="part-2-starting-and-stopping-the-web-service"
+<div id="part-1.2-starting-and-stopping-the-web-service"
 class="slide section level1">
-<h1>Part 2: Starting and stopping the web service</h1>
+<h1>Part 1.2: Starting and stopping the web service</h1>
 <p>Starting the web service.</p>
 <pre class="shell"><code>datasetd recipes_api.yaml</code></pre>
 <ul>
@@ -266,9 +275,9 @@ request?</li>
 terminal session</li>
 </ul>
 </div>
-<div id="part-3-creating-our-static-content"
+<div id="part-1.3-creating-our-static-content"
 class="slide section level1">
-<h1>Part 3: Creating our static content</h1>
+<h1>Part 1.3: Creating our static content</h1>
 <p>The web service is running but if you go to the root URL, <a
 href="http://localhost:8001/" class="uri">http://localhost:8001/</a>,
 you’ll get a 404 page. We need to create HTML pages to hold the content
@@ -276,9 +285,9 @@ that will be curated in our recipes application. We’ll be create three
 HTML documents and four JavaScript modules to help with that. But before
 we proceed with coding let’s think about what we’re curating.</p>
 </div>
-<div id="part-3-what-should-our-recipe-metadata-look-like"
+<div id="part-1.3-what-should-our-recipe-metadata-look-like"
 class="slide section level1">
-<h1>Part 3: What should our recipe metadata look like?</h1>
+<h1>Part 1.3: What should our recipe metadata look like?</h1>
 <dl>
 <dt>name</dt>
 <dd>
@@ -297,8 +306,8 @@ Free text describing how to prepare the dish. Held by a
 </dl>
 <p>We’ll need a submit button to save a new or edited recipe.</p>
 </div>
-<div id="part-3-what-are-our-web-pages" class="slide section level1">
-<h1>Part 3: What are our web pages?</h1>
+<div id="part-1.3-what-are-our-web-pages" class="slide section level1">
+<h1>Part 1.3: What are our web pages?</h1>
 <dl>
 <dt><a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/index.html">htdocs/index.html</a></dt>
@@ -317,8 +326,8 @@ A page used to add and edit recipes we’ve collected
 </dd>
 </dl>
 </div>
-<div id="part-3-populating-our-pages" class="slide section level1">
-<h1>Part 3: populating our pages</h1>
+<div id="part-1.3-populating-our-pages" class="slide section level1">
+<h1>Part 1.3: populating our pages</h1>
 <p>We’ll create four modules, one specific to each HTML page and one
 utility module</p>
 <dl>
@@ -345,14 +354,14 @@ object’s key
 </dd>
 </dl>
 </div>
-<div id="part-3-fire-up-our-web-service" class="slide section level1">
-<h1>Part 3: Fire up our web service</h1>
+<div id="part-1.3-fire-up-our-web-service" class="slide section level1">
+<h1>Part 1.3: Fire up our web service</h1>
 <p>In a terminal run our startup command</p>
 <pre class="shell"><code>datasetd recipe_api.yaml</code></pre>
 </div>
-<div id="part-3-test-using-your-web-browser"
+<div id="part-1.3-test-using-your-web-browser"
 class="slide section level1">
-<h1>Part 3: Test using your web browser</h1>
+<h1>Part 1.3: Test using your web browser</h1>
 <ol style="list-style-type: decimal">
 <li>Go to <a href="http://localhost:8001"
 class="uri">http://localhost:8001</a></li>
@@ -361,8 +370,8 @@ class="uri">http://localhost:8001</a></li>
 <li>Click through the sites</li>
 </ol>
 </div>
-<div id="part-3-debugging-and-improving" class="slide section level1">
-<h1>Part 3: Debugging and improving</h1>
+<div id="part-1.3-debugging-and-improving" class="slide section level1">
+<h1>Part 1.3: Debugging and improving</h1>
 <ol style="list-style-type: decimal">
 <li>There will be issues you need to debug</li>
 <li>What happens when you add a recipe?</li>
@@ -375,13 +384,13 @@ class="uri">http://localhost:8001</a></li>
 <p>Let’s take a short break then we’ll comeback and iterate. I’m
 available to answer questions.</p>
 </div>
-<div id="part-1-version-2" class="slide section level1">
-<h1>Part 1, version 2</h1>
+<div id="part-2" class="slide section level1">
+<h1>Part 2</h1>
 <p>We’re going to set aside the prototype noting what worked and what
 didn’t work.</p>
 </div>
-<div id="part-1-version-2-setting-up" class="slide section level1">
-<h1>Part 1, version 2: Setting up</h1>
+<div id="part-2.1-setting-up" class="slide section level1">
+<h1>Part 2.1: Setting up</h1>
 <p>What we are doing next</p>
 <ul>
 <li>Creating a new dataset collection called,
@@ -391,8 +400,8 @@ didn’t work.</p>
 <code>htdocs2</code></li>
 </ul>
 </div>
-<div id="part-1-version-2-setting-up-1" class="slide section level1">
-<h1>Part 1, version 2: Setting up</h1>
+<div id="part-2.2-setting-up" class="slide section level1">
+<h1>Part 2.2: Setting up</h1>
 <p>On macOS and Linux</p>
 <pre class="shell"><code>dataset init recipes2.ds
 cp recipes_api.yaml recipes_api2.yaml
@@ -404,9 +413,9 @@ copy -Recurse htdocs htdocs2</code></pre>
 <p>(NOTE: The first line should look familiar, the others are just time
 savers)</p>
 </div>
-<div id="part-1-version-2-updating-our-yaml-configuration"
+<div id="part-2.2-updating-our-yaml-configuration"
 class="slide section level1">
-<h1>Part 1, version 2: Updating our YAML configuration</h1>
+<h1>Part 2.2: Updating our YAML configuration</h1>
 <ul>
 <li>edit our <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml">recipes_api2.yaml</a></li>
@@ -416,9 +425,8 @@ href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_
 <li>Are their other files that need to be edited?</li>
 </ul>
 </div>
-<div id="part-1-version-2-testing-a-new-instance"
-class="slide section level1">
-<h1>Part 1, version 2: Testing a new instance</h1>
+<div id="part-2.2-testing-a-new-instance" class="slide section level1">
+<h1>Part 2.2: Testing a new instance</h1>
 <ol style="list-style-type: decimal">
 <li>Test our new instance</li>
 </ol>
@@ -431,18 +439,17 @@ class="slide section level1">
 </ol>
 <pre class="shell"><code>dataset recipes_api2.yaml</code></pre>
 </div>
-<div id="part-2-version-2-introducing-web-components"
+<div id="part-2.2-introducing-web-components"
 class="slide section level1">
-<h1>Part 2, version 2: Introducing Web Components</h1>
+<h1>Part 2.2: Introducing Web Components</h1>
 <ol style="list-style-type: decimal">
 <li>A means of extending HTML elements supported in your web
 browser</li>
 <li>Implemented as JavaScript Modules</li>
 </ol>
 </div>
-<div id="part-2-version-2-cl-web-components"
-class="slide section level1">
-<h1>Part 2, version 2: CL-web-components</h1>
+<div id="part-2.2-cl-web-components" class="slide section level1">
+<h1>Part 2.2: CL-web-components</h1>
 <ul>
 <li>CL-web-components, a collection of web components designed for
 Caltech Library</li>
@@ -453,10 +460,10 @@ href="https://github.com/caltechlibrary/CL-web-components/releases"
 class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></p>
 </div>
 <div
-id="part-2-version-2-copy-the-web-components-to-the-modules-directory-macos-linux"
+id="part-2.2-copy-the-web-components-to-the-modules-directory-macos-linux"
 class="slide section level1">
-<h1>Part 2, version 2: Copy the web components to the modules directory
-(macOS, Linux)</h1>
+<h1>Part 2.2: Copy the web components to the modules directory (macOS,
+Linux)</h1>
 <ul>
 <li>Unzip just the JavaScript files</li>
 <li>Copy the JavaScript files in the zip file to
@@ -467,9 +474,9 @@ class="slide section level1">
 mv -v *.js htdocs2/models/</code></pre>
 </div>
 <div
-id="part-2-version-2-copy-the-web-components-to-the-modules-directory-windows"
+id="part-2.2-copy-the-web-components-to-the-modules-directory-windows"
 class="slide section level1">
-<h1>Part 2, version 2: Copy the web components to the modules directory
+<h1>Part 2.2: Copy the web components to the modules directory
 (Windows)</h1>
 <ul>
 <li>Unzip just the JavaScript files</li>
@@ -480,9 +487,9 @@ class="slide section level1">
 <pre class="shell"><code>unzip $HOME\Downloads\cl-web-components-0.0.6.zip *.js
 move *.js htdocs2\models\</code></pre>
 </div>
-<div id="part-2-version-2-web-components-cl-web-components"
+<div id="part-2.2-web-components-cl-web-components"
 class="slide section level1">
-<h1>Part 2, version 2: Web Components, CL-web-components</h1>
+<h1>Part 2.2: Web Components, CL-web-components</h1>
 <dl>
 <dt><a
 href="https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js">CSVTextarea</a></dt>
@@ -501,9 +508,9 @@ Wraps an HTML table making it sort-able and filterable on a column
 </dd>
 </dl>
 </div>
-<div id="part-2-version-2-adding-csvtextarea-to-edit_recipe.html"
+<div id="part-2.2-adding-csvtextarea-to-edit_recipe.html"
 class="slide section level1">
-<h1>Part 2, version 2: Adding CSVTextarea to edit_recipe.html</h1>
+<h1>Part 2.2: Adding CSVTextarea to edit_recipe.html</h1>
 <ul>
 <li>copy <code>csvtextarea.js</code> to the modules directory under
 htdocs2</li>
@@ -513,9 +520,9 @@ CSVTextarea module in the document head</li>
 textarea with our csvtextarea</li>
 </ul>
 </div>
-<div id="part-2-version-2-restart-recipes_api2.yaml-and-test"
+<div id="part-2.2-restart-recipes_api2.yaml-and-test"
 class="slide section level1">
-<h1>Part 2, version 2: Restart recipes_api2.yaml and test</h1>
+<h1>Part 2.2: Restart recipes_api2.yaml and test</h1>
 <p>Start up our web service</p>
 <pre><code>dataset recipes_api2.yaml</code></pre>
 <ol style="list-style-type: decimal">
@@ -526,11 +533,9 @@ class="uri">http://localhost:8002/edit_recipe.html</a></li>
 <li>Test the web component</li>
 </ol>
 </div>
-<div
-id="part-3-version-2-solving-the-missing-redirect-from-submit-status"
+<div id="part-2.3-solving-the-missing-redirect-from-submit-status"
 class="slide section level1">
-<h1>Part 3, version 2: solving the missing redirect from submit
-status</h1>
+<h1>Part 2.3: solving the missing redirect from submit status</h1>
 <ul>
 <li>In version 1 when we created or updated and element we were taken to
 a status page</li>
@@ -539,9 +544,9 @@ a status page</li>
 redirect to the right place</li>
 </ul>
 </div>
-<div id="part-3-version-2-adding-a-listener-for-form-submission"
+<div id="part-2.3-adding-a-listener-for-form-submission"
 class="slide section level1">
-<h1>Part 3, version 2: Adding a listener for form submission</h1>
+<h1>Part 2.3: Adding a listener for form submission</h1>
 <ol style="list-style-type: decimal">
 <li>Add a script element in <code>edit_recipe.html</code></li>
 <li>Add an event listener for the form that uses <code>saveRecipe</code>
@@ -549,37 +554,41 @@ function from <code>utils.js</code></li>
 <li>Reload page and test our revision</li>
 </ol>
 </div>
-<div id="part-3-version-2-anatomy-of-our-saverecipe"
+<div id="part-2.3-anatomy-of-our-saverecipe"
 class="slide section level1">
-<h1>Part 3, version 2: Anatomy of our saveRecipe</h1>
+<h1>Part 2.3: Anatomy of our saveRecipe</h1>
 <ol style="list-style-type: decimal">
 <li>Retrieve the data from the web form</li>
 <li>Use fetch to send the data and receive a response</li>
 <li>Based on the response decide where to go</li>
 </ol>
 </div>
-<div id="part-3-version-3-exploring-further"
-class="slide section level1">
-<h1>Part 3, version 3: Exploring further</h1>
+<div id="part-3-exploring-further" class="slide section level1">
+<h1>Part 3: Exploring further</h1>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US">MDN</a></li>
 <li>LLMs, including ones you can run locally via Ollama</li>
 </ul>
 </div>
-<div id="what-weve-covered-and-some-questions"
+<div id="part-3-what-weve-covered-and-some-questions"
 class="slide section level1">
-<h1>What we’ve covered and some questions</h1>
+<h1>Part 3: What we’ve covered and some questions</h1>
 <ul>
 <li>The server side can be turn key using a JavaScript web page
 <ul>
 <li>What is it a good idea?</li>
 <li>When is be an bad idea?</li>
 </ul></li>
+<li>Moving from a single layer stack to a two or three layer stack
+<ul>
+<li>Dataset behind a front end web server</li>
+<li>Dataset behind middle ware</li>
+</ul></li>
 </ul>
 </div>
-<div id="what-weve-covered-and-some-questions-1"
+<div id="part-3-what-weve-covered-and-some-questions-1"
 class="slide section level1">
-<h1>What we’ve covered and some questions</h1>
+<h1>Part 3: What we’ve covered and some questions</h1>
 <ul>
 <li>The traditional division of responsibilities in the browser is
 <ul>
@@ -590,8 +599,8 @@ class="slide section level1">
 <li>Why bother with Web Components?</li>
 </ul>
 </div>
-<div id="misc-thoughts" class="slide section level1">
-<h1>Misc thoughts</h1>
+<div id="part-3-misc-thoughts" class="slide section level1">
+<h1>Part 3: Misc thoughts</h1>
 <ul>
 <li>Progressive enhancement is still relevant in 2025</li>
 <li>Web Components offer the possibility of consistent rich behaviors
@@ -607,10 +616,15 @@ COLD</li>
 <li>Build with the grain of the web
 <ul>
 <li>the building blocks are HTML, CSS and JavaScript</li>
+<li>take advantage of running software on localhost</li>
 </ul></li>
-<li>localhost services versus internet services
+<li>Production, build in layers
 <ul>
-<li>security concerns</li>
+<li>access control with front end web service (Apache+Shibboleth,
+NginX+Shibboleth)</li>
+<li>data validation with middle ware (localhost: TypeScript or
+Python)</li>
+<li>object storage with Dataset (localhost)</li>
 </ul></li>
 </ul>
 </div>

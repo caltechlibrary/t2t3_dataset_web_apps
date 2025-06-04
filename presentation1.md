@@ -20,7 +20,10 @@ keywords: [ "microservices", "SQLite3", "Deno", "TypeScript", "Dataset" ]
 url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 ---
 
-# Dataset and a Web Components
+# Welcome to Dataset and a Web Components
+
+- Dataset provides a turn key web static service and JSON API
+- Extending HTML elements using Web Components
 
 ## What we'll do
 
@@ -34,7 +37,7 @@ url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 
 Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
 
-You can download the presentation in a zip fil at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
+You can download the presentation in a zip file at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
 
 # Getting started, requirements
 
@@ -61,33 +64,33 @@ We can start our first iteration of our application once you have these availabl
 
 GOAL: A simple web application that lets us curate a list of recipes.
 
-# Part 1: What are the parts of our application?
+# Part 1.1: What are the parts of our application?
 
 1. A web service for managing the recipe collection
 2. A way to browse recipes by name
 3. A page to display a recipe
 4. A web form for adding or edit our recipes
 
-# Part 1: What is a recipe?
+# Part 1.1: What is a recipe?
 
 - A "key", the unique identifier of a recipe
 - A name
 - A list of ingredients and measures (CSV data)
 - A procedure describing the preparation process (text)
 
-# Part 1: Strategy.
+# Part 1.1: Strategy.
 
 1. Setting up our web service
-2. Mock up using HTML
+2. Sketch your app using HTML
 3. Wire up and test
 
-# Part 2: Setting up our web service
+# Part 1.2: Setting up our web service
 
-1. create our recipes.ds collection
-2. load sample data into our recipes.ds collection
+1. create our `recipes.ds` collection
+2. load sample data into our `recipes.ds` collection
 3. Configure and run our collection as a web service
 
-# Part 2: creating our collection
+# Part 1.2: creating our collection
 
 We use the `dataset` command line program to initialize a dataset collection.
 
@@ -95,7 +98,7 @@ We use the `dataset` command line program to initialize a dataset collection.
 dataset init recipes.ds
 ~~~
 
-# Part 2: Loading some sample data
+# Part 1.2: Loading some sample data
 
 We can now load some sample data, see [recipes.jsonl](recipes.jsonl).
 
@@ -103,7 +106,7 @@ We can now load some sample data, see [recipes.jsonl](recipes.jsonl).
 dataset load recipes.ds <recipes.jsonl
 ~~~
 
-# Part 2: create an static content directory directory
+# Part 1.2: create an static content directory directory
 
 ~~~shell
 mkdir htdocs
@@ -111,13 +114,13 @@ mkdir htdocs/modules
 mkdir htdocs/css
 ~~~
 
-# Part 2: Setting up our web service, configuring the web service
+# Part 1.2: Setting up our web service, configuring the web service
 
 `datasetd` provides a turn key web service defined by a simple YAML file. It can host
 one or more dataset collections. It provides a static file service as well as a JSON API
 for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml).
 
-# Part 2: Setting up our web service, configuring the web service
+# Part 1.2: Setting up our web service, configuring the web service
 
 ~~~yaml
 #!/usr/bin/env -S datasetd -debug
@@ -137,7 +140,7 @@ collections:
         order by src->>'name'
 ~~~
 
-# Part 2: Starting and stopping the web service
+# Part 1.2: Starting and stopping the web service
 
 Starting the web service.
 
@@ -149,11 +152,11 @@ datasetd recipes_api.yaml
 - Look at the terminal window, do you see the log message for the request?
 - You can shutdown the service by press control and C (Ctrl-C) in the terminal session
 
-# Part 3: Creating our static content
+# Part 1.3: Creating our static content
 
 The web service is running but if you go to the root URL, <http://localhost:8001/>, you'll get a 404 page. We need to create HTML pages to hold the content that will be curated in our recipes application.  We'll be create three HTML documents and four JavaScript modules to help with that. But before we proceed with coding let's think about what we're curating.
 
-# Part 3: What should our recipe metadata look like?
+# Part 1.3: What should our recipe metadata look like?
 
 name
 : A line of text. Held by an`input` element
@@ -166,7 +169,7 @@ procedure
 
 We'll need a submit button to save a new or edited recipe.
 
-# Part 3: What are our web pages?
+# Part 1.3: What are our web pages?
 
 [htdocs/index.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/index.html)
 : Display a list of our recipes
@@ -177,7 +180,7 @@ We'll need a submit button to save a new or edited recipe.
 [htdocs/edit_recipe.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/edit_recipe.html)
 : A page used to add and edit recipes we've collected
 
-# Part 3: populating our pages
+# Part 1.3: populating our pages
 
 We'll create four modules, one specific to each HTML page and one utility module
 
@@ -193,7 +196,7 @@ We'll create four modules, one specific to each HTML page and one utility module
 [htdocs/modules/utils.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/utils.js)
 : This module handles retrieving data from the JSON API and finding the object's key
 
-# Part 3: Fire up our web service
+# Part 1.3: Fire up our web service
 
 In a terminal run our startup command 
 
@@ -201,14 +204,14 @@ In a terminal run our startup command
 datasetd recipe_api.yaml
 ~~~
 
-# Part 3: Test using your web browser
+# Part 1.3: Test using your web browser
 
 1. Go to <http://localhost:8001>
 2. In your browser open your "developer tools"
 3. Reload the page and monitor the loads
 4. Click through the sites
 
-# Part 3: Debugging and improving
+# Part 1.3: Debugging and improving
 
 1. There will be issues you need to debug
 2. What happens when you add a recipe?
@@ -219,11 +222,11 @@ datasetd recipe_api.yaml
 
 Let's take a short break then we'll comeback and iterate. I'm available to answer questions.
 
-# Part 1, version 2
+# Part 2
 
 We're going to set aside the prototype noting what worked and what didn't work. 
 
-# Part 1, version 2: Setting up
+# Part 2.1: Setting up
 
 What we are doing next
 
@@ -231,7 +234,7 @@ What we are doing next
 - Creating a new, `recipes_api2.yaml`
 - Creating a new directory structure for our static content called, `htdocs2`
 
-# Part 1, version 2: Setting up
+# Part 2.2: Setting up
 
 On macOS and Linux 
 
@@ -251,7 +254,7 @@ copy -Recurse htdocs htdocs2
 
 (NOTE: The first line should look familiar, the others are just time savers)
 
-# Part 1, version 2: Updating our YAML configuration
+# Part 2.2: Updating our YAML configuration
 
 - edit our [recipes_api2.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
 - update the `htdocs` reference
@@ -259,7 +262,7 @@ copy -Recurse htdocs htdocs2
 - update the dataset to `recipes2.ds`
 - Are their other files that need to be edited?
 
-# Part 1, version 2: Testing a new instance
+# Part 2.2: Testing a new instance
 
 1. Test our new instance
   a. what is broken?
@@ -270,12 +273,12 @@ copy -Recurse htdocs htdocs2
 dataset recipes_api2.yaml
 ~~~
 
-# Part 2, version 2: Introducing Web Components
+# Part 2.2: Introducing Web Components
 
 1. A means of extending HTML elements supported in your web browser
 2. Implemented as JavaScript Modules
 
-# Part 2, version 2: CL-web-components
+# Part 2.2: CL-web-components
 
 - CL-web-components, a collection of web components designed for Caltech Library
 - Using your web browser retrieve the latest versions
@@ -283,7 +286,7 @@ dataset recipes_api2.yaml
 <https://github.com/caltechlibrary/CL-web-components/releases>
 
 
-# Part 2, version 2: Copy the web components to the modules directory (macOS, Linux)
+# Part 2.2: Copy the web components to the modules directory (macOS, Linux)
 
 - Unzip just the JavaScript files
 - Copy the JavaScript files in the zip file to `htdocs2/modules/`.
@@ -295,7 +298,7 @@ unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
 mv -v *.js htdocs2/models/
 ~~~
 
-# Part 2, version 2: Copy the web components to the modules directory (Windows)
+# Part 2.2: Copy the web components to the modules directory (Windows)
 
 - Unzip just the JavaScript files
 - Copy the JavaScript files in the zip file to `htdocs2/modules/`.
@@ -307,7 +310,7 @@ unzip $HOME\Downloads\cl-web-components-0.0.6.zip *.js
 move *.js htdocs2\models\
 ~~~
 
-# Part 2, version 2: Web Components, CL-web-components
+# Part 2.2: Web Components, CL-web-components
 
 [CSVTextarea](https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js)
 : Wraps a textarea element and presents a editable table of cells
@@ -318,13 +321,13 @@ move *.js htdocs2\models\
 [SortableTable](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_table.js)
 : Wraps an HTML table making it sort-able and filterable on a column
 
-# Part 2, version 2: Adding CSVTextarea to edit_recipe.html
+# Part 2.2: Adding CSVTextarea to edit_recipe.html
 
 - copy `csvtextarea.js` to the modules directory under htdocs2
 - edit [htdocs2/edit_recipe.html]() to include the CSVTextarea module in the document head
 - edit `htdocs2/edit_recipe.html` wrapping the ingredients textarea with our csvtextarea
 
-# Part 2, version 2: Restart recipes_api2.yaml and test
+# Part 2.2: Restart recipes_api2.yaml and test
 
 Start up our web service
 
@@ -336,36 +339,39 @@ dataset recipes_api2.yaml
 2. Turn on your developer tools
 3. Test the web component
 
-# Part 3, version 2: solving the missing redirect from submit status
+# Part 2.3: solving the missing redirect from submit status
 
 - In version 1 when we created or updated and element we were taken to a status page
 - What we want to do is go to a more logical place
 - We can use JavaScript to handle the form submission and then redirect to the right place
 
-# Part 3, version 2: Adding a listener for form submission
+# Part 2.3: Adding a listener for form submission
 
 1. Add a script element in `edit_recipe.html`
 2. Add an event listener for the form that uses `saveRecipe` function from `utils.js`
 3. Reload page and test our revision
 
-# Part 3, version 2: Anatomy of our saveRecipe
+# Part 2.3: Anatomy of our saveRecipe
 
 1. Retrieve the data from the web form
 2. Use fetch to send the data and receive a response
 3. Based on the response decide where to go
 
-# Part 3, version 3: Exploring further
+# Part 3: Exploring further
 
 - [MDN](https://developer.mozilla.org/en-US)
 - LLMs, including ones you can run locally via Ollama
 
-# What we've covered and some questions
+# Part 3: What we've covered and some questions
 
 - The server side can be turn key using a JavaScript web page
   - What is it a good idea?
   - When is be an bad idea?
+- Moving from a single layer stack to a two or three layer stack
+  - Dataset behind a front end web server
+  - Dataset behind middle ware
 
-# What we've covered and some questions
+# Part 3: What we've covered and some questions
 
 - The traditional division of responsibilities in the browser is
   - HTML for structured data markup
@@ -373,7 +379,7 @@ dataset recipes_api2.yaml
   - JavaScript to orchestrate behaviors
 - Why bother with Web Components?
 
-# Misc thoughts
+# Part 3: Misc thoughts
 
 - Progressive enhancement is still relevant in 2025
 - Web Components offer the possibility of consistent rich behaviors across
@@ -384,8 +390,11 @@ dataset recipes_api2.yaml
 
 - Build with the grain of the web
   - the building blocks are HTML, CSS and JavaScript
-- localhost services versus internet services
-  - security concerns
+  - take advantage of running software on localhost
+- Production, build in layers
+  - access control with front end web service (Apache+Shibboleth, NginX+Shibboleth)
+  - data validation with middle ware (localhost: TypeScript or Python)
+  - object storage with Dataset (localhost)
 
 # Reference: Dataset
 

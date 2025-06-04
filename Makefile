@@ -7,10 +7,6 @@ SLIDE_FORMAT = slidy
 
 build: clean html website
 
-html: .FORCE
-	pandoc -V lang=en -s -t $(SLIDE_FORMAT) presentation1.md -o presentation1.html
-	git add presentation1.html index.html
-
 CITATION.cff: codemeta.json
 	cmt codemeta.json CITATION.cff
 
@@ -22,6 +18,10 @@ website: CITATION.cff about.md .FORCE
 
 cleanweb: .FORCE
 	rm $(HTML_PAGES)
+
+html: .FORCE
+	pandoc -V lang=en -s -t $(SLIDE_FORMAT) presentation1.md -o presentation1.html
+	git add presentation1.html index.html
 
 pdf: .FORCE
 	pandoc -V lang=en -s -t beamer presentation1.md -o presentation1.pdf
