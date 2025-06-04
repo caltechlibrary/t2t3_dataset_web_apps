@@ -27,12 +27,18 @@
 
         <div>
           <label set="ingredients">Ingredients</label>
-          <!-- NOTES that web components use a hyphen in their name, that avoids collission with
-           standard HTML elements -->
-          <csv-textarea id="ingredients" name="ingredients"
-            column-headings="Ingredients,Units"
+          <!-- NOTE: that web components use a hyphen in their name, that avoids collission with
+           standard HTML elements.
+
+           The attributes of the csv-textarea can match the fallback, but add the required 
+           "column-headings" attrtibute.
+           
+           You can also add a "debug"="true" attribute to debug things.
+          -->
+          <csv-textarea id="ingredients" name="ingredients"          
             title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-            cols="60"rows="10" debug="true">
+            cols="60"rows="10" 
+            column-headings="Ingredients,Units" debug="true">
             <textarea id="ingredients" name="ingredients"
               title="ingredient,units (CSV data)" placeholder="flour,2 cups"
               cols="60"rows="10">
@@ -47,7 +53,7 @@
           cols="60"rows="10"></textarea>
         </div>
 
-        <div><button id="save" name="save">Save</button> <button id="cancel" name="cancel">Cancel</button></div>
+        <div><button id="save" name="save">Save</button></div>
       </form>
     </section>
     <script type="module">
