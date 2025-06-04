@@ -11,7 +11,13 @@ html: .FORCE
 	pandoc -V lang=en -s -t $(SLIDE_FORMAT) presentation1.md -o presentation1.html
 	git add presentation1.html index.html
 
-website: .FORCE
+CITATION.cff: codemeta.json
+	cmt codemeta.json CITATION.cff
+
+about.md: codemeta.json
+	cmt codemeta.json about.md
+
+website: CITATION.cff about.md .FORCE
 	make -f website.mak
 
 cleanweb: .FORCE
