@@ -7,8 +7,9 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="R. S. Doiel, rsdoiel@caltech.edu" />
-  <meta name="keywords" content="microservices, SQLite3, Deno, TypeScript, Dataset" />
-  <title>A recipe for an application, Dataset and CL Web Components</title>
+  <meta name="keywords" content="Dataset, HTML, CSS, JavaScript, Web
+Components" />
+  <title>A recipe for applications: Dataset &amp; Web Components</title>
   <style type="text/css">
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -98,7 +99,7 @@
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">A recipe for an application, Dataset and CL Web
+  <h1 class="title">A recipe for applications: Dataset &amp; Web
 Components</h1>
   <p class="author">
 R. S. Doiel, <a href="mailto:rsdoiel@caltech.edu"
@@ -112,8 +113,17 @@ class="email">rsdoiel@caltech.edu</a>
 <div class="slide" id="TOC">
 
 </div>
-<div id="welcome" class="slide section level1">
-<h1>Welcome</h1>
+<div id="welcome-to-a-recipe-for-applications"
+class="slide section level1">
+<h1>Welcome to “A recipe for applications”</h1>
+<p>Welcome everyone. This is a talk and hands on workshop.</p>
+<blockquote>
+<p>An approach to building web applications using Dataset and Web
+Components</p>
+</blockquote>
+</div>
+<div id="workshop-dataset-web-components" class="slide section level1">
+<h1>Workshop: Dataset &amp; Web Components</h1>
 <h2 id="what-well-do">What we’ll do</h2>
 <ul>
 <li>We’ll build a web application for managing a list of recipes</li>
@@ -139,7 +149,8 @@ class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases</a>
 <h3 id="you-probably-already-have-these-if-not-install-them">You
 probably already have these, if not install them</h3>
 <ul>
-<li>A computer running macOS, Lunix or Raspberry Pi OS</li>
+<li>A computer running macOS, Lunix, Raspberry Pi OS, Windows using
+LSW</li>
 <li>Terminal application</li>
 <li><a href="https://vscodium.com/">Text Editor</a></li>
 <li><a href="https://www.mozilla.org/en-US/firefox/new/">Web Browser</a>
@@ -150,6 +161,14 @@ probably already have these, if not install them</h3>
 <li><a href="https://github.com/caltechlibrary/dataset/releases"
 class="uri">https://github.com/caltechlibrary/dataset/releases</a>, get
 the latest v2 release</li>
+<li>Windows 10/11, You need to use the Linux Subsystem for Windows (LSW)
+<ul>
+<li>Install Go 1.24.3 and compile Dataset from source code then install
+under LWS</li>
+<li><a
+href="https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md"
+class="uri">https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md</a></li>
+</ul></li>
 </ul>
 <p>We can start our first iteration of our application once you have
 these available.</p>
@@ -542,7 +561,7 @@ class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/ht
 </div>
 <div id="part-2.2-what-are-the-attributes-needed-in-a-csv-textarea"
 class="slide section level1">
-<h1>PArt 2.2: What are the attributes needed in a
+<h1>Part 2.2: What are the attributes needed in a
 <code>&lt;csv-textarea&gt;</code>?</h1>
 <ul>
 <li>copy the attributes form the “ingredients” textarea to the

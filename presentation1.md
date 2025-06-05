@@ -1,5 +1,5 @@
 ---
-title: A recipe for an application, Dataset and CL Web Components
+title: "A recipe for applications: Dataset & Web Components"
 author: "R. S. Doiel, <rsdoiel@caltech.edu>"
 institute: |
   Caltech Library,
@@ -16,11 +16,17 @@ place: Caltech
 date: TBD
 section-titles: false
 toc: true
-keywords: [ "microservices", "SQLite3", "Deno", "TypeScript", "Dataset" ]
+keywords: [ "Dataset", "HTML", "CSS", "JavaScript", "Web Components" ]
 url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 ---
 
-# Welcome
+# Welcome to "A recipe for applications"
+
+Welcome everyone. This is a talk and hands on workshop.
+
+> An approach to building web applications using Dataset and Web Components
+
+# Workshop: Dataset & Web Components
 
 ## What we'll do
 
@@ -36,11 +42,12 @@ Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presenta
 
 Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
 
+
 # Getting started
 
 ### You probably already have these, if not install them
 
-- A computer running macOS, Lunix or Raspberry Pi OS
+- A computer running macOS, Lunix, Raspberry Pi OS, Windows using LSW
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
@@ -48,6 +55,9 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 ### Install dataset
 
 - <https://github.com/caltechlibrary/dataset/releases>, get the latest v2 release
+- Windows 10/11, You need to use the Linux Subsystem for Windows (LSW)
+  - Install Go 1.24.3 and compile Dataset from source code then install under LWS
+  - <https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md>
 
 We can start our first iteration of our application once you have these available.
 
@@ -360,7 +370,7 @@ mv -v *.js htdocs2/models/
 
 See: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html>
 
-# PArt 2.2: What are the attributes needed in a `<csv-textarea>`?
+# Part 2.2: What are the attributes needed in a `<csv-textarea>`?
 
 - copy the attributes form the "ingredients" textarea to the `<csv-textarea>`
 - Add an these attributes to `<csv-textarea>`
