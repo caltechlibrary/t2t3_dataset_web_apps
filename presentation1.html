@@ -8,7 +8,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="author" content="R. S. Doiel, rsdoiel@caltech.edu" />
   <meta name="keywords" content="microservices, SQLite3, Deno, TypeScript, Dataset" />
-  <title>Recipe for an application, Dataset and CL Web Components</title>
+  <title>A recipe for an application, Dataset and CL Web Components</title>
   <style type="text/css">
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -98,7 +98,7 @@
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Recipe for an application, Dataset and CL Web
+  <h1 class="title">A recipe for an application, Dataset and CL Web
 Components</h1>
   <p class="author">
 R. S. Doiel, <a href="mailto:rsdoiel@caltech.edu"
@@ -112,13 +112,8 @@ class="email">rsdoiel@caltech.edu</a>
 <div class="slide" id="TOC">
 
 </div>
-<div id="welcome-to-dataset-and-a-web-components"
-class="slide section level1">
-<h1>Welcome to Dataset and a Web Components</h1>
-<ul>
-<li>Dataset provides a turn key web static service and JSON API</li>
-<li>Extending HTML elements using Web Components</li>
-</ul>
+<div id="welcome" class="slide section level1">
+<h1>Welcome</h1>
 <h2 id="what-well-do">What we’ll do</h2>
 <ul>
 <li>We’ll build a web application for managing a list of recipes</li>
@@ -135,64 +130,58 @@ Components</a></li>
 <p>Follow along at <a
 href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html"
 class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html</a></p>
-<p>You can download the presentation in a zip file at <a
+<p>Download the presentation zip file at <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases"
 class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases</a></p>
 </div>
-<div id="getting-started-requirements" class="slide section level1">
-<h1>Getting started, requirements</h1>
+<div id="getting-started" class="slide section level1">
+<h1>Getting started</h1>
 <h3 id="you-probably-already-have-these-if-not-install-them">You
 probably already have these, if not install them</h3>
 <ul>
+<li>A computer running macOS, Lunix or Raspberry Pi OS</li>
 <li>Terminal application</li>
 <li><a href="https://vscodium.com/">Text Editor</a></li>
 <li><a href="https://www.mozilla.org/en-US/firefox/new/">Web Browser</a>
 (I’m assuming Firefox for this tutorial)</li>
 </ul>
-<h3 id="you-will-need-to-install-dataset">You will need to install
-dataset</h3>
+<h3 id="install-dataset">Install dataset</h3>
 <ul>
-<li><a href="https://caltechlibrary.github.io/dataset">Dataset</a>, get
-the latest release</li>
+<li><a href="https://github.com/caltechlibrary/dataset/releases"
+class="uri">https://github.com/caltechlibrary/dataset/releases</a>, get
+the latest v2 release</li>
 </ul>
 <p>We can start our first iteration of our application once you have
 these available.</p>
-</div>
-<div id="getting-started-four-parts" class="slide section level1">
-<h1>Getting started, four parts</h1>
-<ol style="list-style-type: decimal">
-<li>What are we building, how will we build it?</li>
-<li>Setting up our web service</li>
-<li>Creating our static content</li>
-<li>Enhancements with Web Components</li>
-</ol>
 </div>
 <div id="part-1-what-are-we-building" class="slide section level1">
 <h1>Part 1: What are we building?</h1>
 <p>GOAL: A simple web application that lets us curate a list of
 recipes.</p>
+<p>We’re going start from the backend and spend most of our time on the
+front end.</p>
 </div>
 <div id="part-1.1-what-are-the-parts-of-our-application"
 class="slide section level1">
 <h1>Part 1.1: What are the parts of our application?</h1>
 <ol style="list-style-type: decimal">
 <li>A web service for managing the recipe collection</li>
-<li>A way to browse recipes by name</li>
+<li>A page to browse recipes by name</li>
 <li>A page to display a recipe</li>
-<li>A web form for adding or edit our recipes</li>
+<li>A page and web form to add or edit a recipe</li>
 </ol>
 </div>
 <div id="part-1.1-what-is-a-recipe" class="slide section level1">
 <h1>Part 1.1: What is a recipe?</h1>
 <ul>
-<li>A “key”, the unique identifier of a recipe</li>
-<li>A name</li>
+<li>A “key”, the unique identifier of a recipe (url friendly)</li>
+<li>A name (human friendly and readable)</li>
 <li>A list of ingredients and measures (CSV data)</li>
 <li>A procedure describing the preparation process (text)</li>
 </ul>
 </div>
-<div id="part-1.1-strategy" class="slide section level1">
-<h1>Part 1.1: Strategy</h1>
+<div id="part-1.1-basic-strategy" class="slide section level1">
+<h1>Part 1.1: Basic Strategy</h1>
 <ol style="list-style-type: decimal">
 <li>Setting up our web service</li>
 <li>Sketch your app using HTML</li>
@@ -217,19 +206,15 @@ dataset collection.</p>
 <div id="part-1.2-loading-some-sample-data"
 class="slide section level1">
 <h1>Part 1.2: Loading some sample data</h1>
-<p>We can now load some sample data, download <a
-href="recipes.jsonl">recipes.jsonl</a> (see: <a
+<p>Download sample data file <a href="recipes.jsonl">recipes.jsonl</a>
+(see: <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl"
 class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl</a>)</p>
-<p>on macOS or Linux</p>
-<pre class="shell"><code>dataset load recipes.ds &lt;recipes.jsonl</code></pre>
-<p>or Windows</p>
-<pre class="shell"><code>type recipes.jsonl | dataset load recipes.ds</code></pre>
+<pre class="shell"><code>cat recipes.jsonl | dataset load recipes.ds</code></pre>
 </div>
 <div id="part-1.2-verify-we-loaded-our-data-ok"
 class="slide section level1">
 <h1>Part 1.2: Verify we loaded our data OK</h1>
-<p>On macOS, Linux or windows</p>
 <pre class="shell"><code>dataset keys recipes.ds
 dataset read recipes.ds frybread</code></pre>
 </div>
@@ -252,57 +237,52 @@ class="slide section level1">
     &quot;ingredients&quot;: &quot;backing powder,2 tsp\r\nflour,2 cups\r\nhot water,2/3 cups\r\nsalt,1 tsp salt\r\nshortening,2 Tbsp\r\n&quot;,
     &quot;key&quot;: &quot;frybread&quot;,
     &quot;name&quot;: &quot;Fry Bread&quot;,
-    &quot;procedure&quot;: &quot;1. Combine flour, baking powder, and salt in a bowl.\r\n2. Use a pastry blender (or two butter knives) to cut the shortening into the flour.\r\n3. Add the hot water, and mix until the water is incorporated and you get a dough.\r\n4. Turn out the dough on a lightly floured board. Knead the dough until it is soft and smooth.\r\n5. Wrap the dough in plastic, and let the dough rest for 30 minutes.\r\n6. Divide the dough into 6 pieces, roll each into a ball, and roll each into a flat disk with a rolling pin.\r\n7. Brush one side of each disk with melted margarine and place on a barbecue over a 3 Mississippi fire.\r\n8. Brush the opposing side of the bread with margarine and flip the bread on the barbecue.\r\n9. Cook until both sides are golden brown. Serve hot.\r\n\r\n- You can substitute either 1/4 cup plain yogurt, or a 1/4 cup soured milk as a leavening agent\r\ninstead of baking powder. If you do, add 2 hours to the rest time for the dough, and leave\r\nthe dough somewhere warm. You can optionally include the baking powder as well to get a\r\nvery puffy version of frybread. If using yogurt or soured milk for leavening, use 1\2 cup\r\ninstead of 1/3 cup water.\r\n- You can use mayonnaise in place of shortening for a crispy, crunchier texture.\r\n- You can also fry the dough in hot oil over a stovetop. The dough cooks rapidly and will brown\r\nin about 12 seconds and must be turned over to allow the opposite side to brown, then be removed\r\nfrom the oil and placed sideways into a colander or large bowl lined with paper towels to allow\r\nthe oil to drain off the finished product\r\n\r\nurl: https://en.wikibooks.org/wiki/Cookbook:Fry_Bread_I\r\n&quot;,
-    &quot;save&quot;: &quot;&quot;
+    &quot;procedure&quot;: &quot;1. Combine flour, baking powder, and salt in a bowl.\r\n2. Use a pastry blender (or two butter knives) to cut the shortening into the flour.\r\n3. Add the hot water, and mix until the water is incorporated and you get a dough.\r\n4. Turn out the dough on a lightly floured board. Knead the dough until it is soft and smooth.\r\n5. Wrap the dough in plastic, and let the dough rest for 30 minutes.\r\n6. Divide the dough into 6 pieces, roll each into a ball, and roll each into a flat disk with a rolling pin.\r\n7. Brush one side of each disk with melted margarine and place on a barbecue over a 3 Mississippi fire.\r\n8. Brush the opposing side of the bread with margarine and flip the bread on the barbecue.\r\n9. Cook until both sides are golden brown. Serve hot.\r\n\r\n- You can substitute either 1/4 cup plain yogurt, or a 1/4 cup soured milk as a leavening agent\r\ninstead of baking powder. If you do, add 2 hours to the rest time for the dough, and leave\r\nthe dough somewhere warm. You can optionally include the baking powder as well to get a\r\nvery puffy version of frybread. If using yogurt or soured milk for leavening, use 1\2 cup\r\ninstead of 1/3 cup water.\r\n- You can use mayonnaise in place of shortening for a crispy, crunchier texture.\r\n- You can also fry the dough in hot oil over a stovetop. The dough cooks rapidly and will brown\r\nin about 12 seconds and must be turned over to allow the opposite side to brown, then be removed\r\nfrom the oil and placed sideways into a colander or large bowl lined with paper towels to allow\r\nthe oil to drain off the finished product\r\n\r\nurl: https://en.wikibooks.org/wiki/Cookbook:Fry_Bread_I\r\n&quot;
 }</code></pre>
 </div>
-<div id="part-1.2-create-an-static-content-directory-directory"
+<div id="part-1.2-create-the-static-content-directories"
 class="slide section level1">
-<h1>Part 1.2: create an static content directory directory</h1>
+<h1>Part 1.2: create the static content directories</h1>
 <pre class="shell"><code>mkdir htdocs
 mkdir htdocs/modules
 mkdir htdocs/css</code></pre>
 </div>
-<div
-id="part-1.2-setting-up-our-web-service-configuring-the-web-service"
+<div id="part-1.2-setting-up-our-web-service-1"
 class="slide section level1">
-<h1>Part 1.2: Setting up our web service, configuring the web
-service</h1>
+<h1>Part 1.2: Setting up our web service</h1>
 <p><code>datasetd</code> provides a turn key web service defined by a
 simple YAML file. It can host one or more dataset collections. It
 provides a static file service as well as a JSON API for each
-collection. Let’s call this <a
-href="recipes_api.yaml">recipes_api.yaml</a> (see: <a
+collection.</p>
+<p>Create the file <a href="recipes_api.yaml">recipes_api.yaml</a> (see:
+<a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api.yaml"
 class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api.yaml</a>).</p>
 </div>
-<div
-id="part-1.2-setting-up-our-web-service-configuring-the-web-service-1"
-class="slide section level1">
-<h1>Part 1.2: Setting up our web service, configuring the web
-service</h1>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>        select src</span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>        from recipes</span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
+<div id="part-1.2-recipes_api.yaml" class="slide section level1">
+<h1>Part 1.2: recipes_api.yaml</h1>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>        select src</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>        from recipes</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
 </div>
 <div id="part-1.2-starting-and-stopping-the-web-service"
 class="slide section level1">
 <h1>Part 1.2: Starting and stopping the web service</h1>
 <p>Starting the web service.</p>
-<pre class="shell"><code>datasetd recipes_api.yaml</code></pre>
+<pre class="shell"><code>datasetd -debug recipes_api.yaml</code></pre>
 <ul>
 <li>Go do <a href="http://localhost:8001/api/version"
 class="uri">http://localhost:8001/api/version</a></li>
@@ -312,12 +292,12 @@ request?</li>
 terminal session</li>
 </ul>
 </div>
-<div id="part-1.3-creating-our-static-content"
+<div id="part-1.3-what-about-our-static-content"
 class="slide section level1">
-<h1>Part 1.3: Creating our static content</h1>
+<h1>Part 1.3: What about our static content?</h1>
 <p>The web service is running but haven’t populated the htdocs
-directory. What do you see when you go to <a
-href="http://localhost:8001/"
+directory.</p>
+<p>What do you see when you go to <a href="http://localhost:8001/"
 class="uri">http://localhost:8001/</a>?</p>
 </div>
 <div id="part-1.3-what-should-our-recipe-metadata-look-like"
@@ -366,8 +346,9 @@ A page used to add and edit recipes we’ve collected
 </dd>
 </dl>
 </div>
-<div id="part-1.3-populating-our-pages" class="slide section level1">
-<h1>Part 1.3: populating our pages</h1>
+<div id="part-1.3-populating-our-pages-using-javascript"
+class="slide section level1">
+<h1>Part 1.3: Populating our pages using JavaScript</h1>
 <p>We’ll create four modules, one specific to each HTML page and one
 utility module</p>
 <dl>
@@ -397,7 +378,7 @@ object’s key
 <div id="part-1.3-fire-up-our-web-service" class="slide section level1">
 <h1>Part 1.3: Fire up our web service</h1>
 <p>In a terminal run our startup command</p>
-<pre class="shell"><code>datasetd recipes_api.yaml</code></pre>
+<pre class="shell"><code>datasetd -debug recipes_api.yaml</code></pre>
 </div>
 <div id="part-1.3-test-using-your-web-browser"
 class="slide section level1">
@@ -405,15 +386,15 @@ class="slide section level1">
 <ol style="list-style-type: decimal">
 <li>Go to <a href="http://localhost:8001"
 class="uri">http://localhost:8001</a></li>
-<li>In your browser open your “developer tools”</li>
-<li>Reload the page and monitor the loads</li>
-<li>Click through the website</li>
+<li>In your browser turn on your developer tools</li>
+<li>Reload the page and explore using your developer tools</li>
+<li>Click through the site</li>
 </ol>
 </div>
 <div id="part-1.3-debugging-and-improving" class="slide section level1">
 <h1>Part 1.3: Debugging and improving</h1>
 <ol style="list-style-type: decimal">
-<li>There will be issues you need to debug</li>
+<li>Are there issues to debug?</li>
 <li>What happens when you add a recipe?</li>
 <li>What happens when you hen you update a receipt?</li>
 <li>Can any of this be improved?</li>
@@ -424,13 +405,8 @@ class="uri">http://localhost:8001</a></li>
 <p>Let’s take a short break then we’ll comeback and iterate.</p>
 <p>I’m available for questions.</p>
 </div>
-<div id="part-2" class="slide section level1">
-<h1>Part 2</h1>
-<p>We’re going to set aside the prototype remembering what did and
-didn’t work.</p>
-</div>
-<div id="part-2.2-iterating-recipes-2" class="slide section level1">
-<h1>Part 2.2: Iterating, Recipes 2</h1>
+<div id="part-2-recipes-version-2" class="slide section level1">
+<h1>Part 2: Recipes version 2</h1>
 <p>What we are doing next</p>
 <ul>
 <li>Creating a new dataset collection called,
@@ -440,22 +416,18 @@ didn’t work.</p>
 <code>htdocs2</code></li>
 </ul>
 </div>
-<div id="part-2.2-iterating-recipes-2-1" class="slide section level1">
-<h1>Part 2.2: Iterating, Recipes 2</h1>
-<p>On macOS and Linux</p>
+<div id="part-2.1-bootstrap-from-version-1"
+class="slide section level1">
+<h1>Part 2.1: Bootstrap from version 1</h1>
 <pre class="shell"><code>dataset init recipes2.ds
 cp recipes_api.yaml recipes_api2.yaml
 cp -vR htdocs htdocs2</code></pre>
-<p>on Windows</p>
-<pre class="shell"><code>dataset init recipes2.ds
-copy recipes_api.yaml recipes_api2.yaml
-copy -Recurse htdocs htdocs2</code></pre>
 <p>(NOTE: The first line should look familiar, the others are just time
 savers)</p>
 </div>
-<div id="part-2.2-updating-our-yaml-configuration"
+<div id="part-2.1-updating-our-yaml-configuration"
 class="slide section level1">
-<h1>Part 2.2: Updating our YAML configuration</h1>
+<h1>Part 2.1: Updating our YAML configuration</h1>
 <ul>
 <li>edit our <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml">recipes_api2.yaml</a></li>
@@ -469,19 +441,17 @@ href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_
 </ul></li>
 </ul>
 </div>
-<div id="part-2.2-testing-a-new-instance" class="slide section level1">
-<h1>Part 2.2: Testing a new instance</h1>
-<ol style="list-style-type: decimal">
-<li>Test our new instance</li>
-</ol>
-<ol style="list-style-type: lower-alpha">
-<li>what is broken?</li>
+<div id="part-2.1-testing-a-new-instance" class="slide section level1">
+<h1>Part 2.1: Testing a new instance</h1>
+<ul>
+<li>Test our new instance
+<ul>
+<li>What is broken?</li>
 <li>Did we catch all the places with hard coded collection names?</li>
 <li>What about behaviors?</li>
-</ol>
-<ol start="2" style="list-style-type: decimal">
+</ul></li>
 <li>Shutdown down and restart datasetd to debug YAML changes</li>
-</ol>
+</ul>
 <pre class="shell"><code>dataset recipes_api2.yaml</code></pre>
 </div>
 <div id="part-2.2-desirable-changes" class="slide section level1">
@@ -489,27 +459,41 @@ href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_
 <ul>
 <li>Handle form submission sends us to a useless URL, how do we fix
 that?</li>
-<li>Hand entering CSV is cumbersum, can me improve that?</li>
+<li>Typing in comma seperated values is cumbersum, can me improve
+that?</li>
 </ul>
 </div>
-<div id="part-2.2-fixing-the-form-submission"
+<div id="part-2.2-fixing-web-form-submission"
 class="slide section level1">
-<h1>Part 2.2: Fixing the form submission</h1>
+<h1>Part 2.2: Fixing web form submission</h1>
 <ul>
 <li>The <code>utils.js</code> module includes a <code>saveRecipe</code>
 function</li>
-<li>We need an event listener to trigger, what event? which
-element?</li>
+<li>We need an event listener to trigger it
+<ul>
+<li>Which element?</li>
+<li>What event?</li>
+</ul></li>
 </ul>
 </div>
-<div id="part-2.3-anatomy-of-our-saverecipe"
+<div id="part-2.2-update-the-html-for-edit_recipe.html"
 class="slide section level1">
-<h1>Part 2.3: Anatomy of our saveRecipe</h1>
-<ol style="list-style-type: decimal">
-<li>Retrieve the data from the web form</li>
-<li>Use fetch to send the data and receive a response</li>
-<li>Based on the response decide where to go</li>
-</ol>
+<h1>Part 2.2: Update the HTML for edit_recipe.html</h1>
+<p>Add the following at the bottom of the page before the
+<code>&lt;/body&gt;</code>.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+</div>
+<div id="part-2.2-restart-datasetd-and-test"
+class="slide section level1">
+<h1>Part 2.2: Restart datasetd and test</h1>
+<pre class="shell"><code>datasetd -debug recipes_api2.yaml</code></pre>
+<p>Test using your web browser.</p>
 </div>
 <div id="part-2.3-improving-the-ui-with-web-components"
 class="slide section level1">
@@ -530,46 +514,45 @@ Caltech Library</li>
 href="https://github.com/caltechlibrary/CL-web-components/releases"
 class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></p>
 </div>
-<div
-id="part-2.3-copy-the-web-components-to-the-modules-directory-macos-linux"
+<div id="part-2.3-copy-the-web-components-to-the-modules-directory"
 class="slide section level1">
-<h1>Part 2.3: Copy the web components to the modules directory (macOS,
-Linux)</h1>
+<h1>Part 2.3: Copy the web components to the modules directory</h1>
 <ul>
 <li>Unzip just the JavaScript files</li>
-<li>Copy the JavaScript files in the zip file to
+<li>Move the JavaScript files in the zip file to
 <code>htdocs2/modules/</code>.</li>
 </ul>
-<p>Linux, macOS</p>
 <pre class="shell"><code>unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
 mv -v *.js htdocs2/models/</code></pre>
-</div>
-<div
-id="part-2.3-copy-the-web-components-to-the-modules-directory-windows"
-class="slide section level1">
-<h1>Part 2.3: Copy the web components to the modules directory
-(Windows)</h1>
-<ul>
-<li>Unzip just the JavaScript files</li>
-<li>Copy the JavaScript files in the zip file to
-<code>htdocs2/modules/</code>.</li>
-</ul>
-<p>Linux, macOS</p>
-<pre class="shell"><code>unzip $HOME\Downloads\cl-web-components-0.0.6.zip *.js
-move *.js htdocs2\models\</code></pre>
 </div>
 <div id="part-2.2-adding-csvtextarea-to-edit_recipe.html"
 class="slide section level1">
 <h1>Part 2.2: Adding CSVTextarea to edit_recipe.html</h1>
 <ul>
-<li>edit <code>htdocs2/edit_recipe.html</code> to include the
-CSVTextarea module in the document head</li>
-<li>edit <code>htdocs2/edit_recipe.html</code> wrapping the
-“ingredients” textarea with <code>&lt;csv-textarea&gt;</code></li>
+<li>edit <code>htdocs2/edit_recipe.html</code>
+<ul>
+<li>Include the CSVTextarea JavaScript module in the document head</li>
+<li>Wrapping the “ingredients” textarea with
+<code>&lt;csv-textarea&gt;</code></li>
+</ul></li>
 </ul>
 <p>See: <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html"
 class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html</a></p>
+</div>
+<div id="part-2.2-what-are-the-attributes-needed-in-a-csv-textarea"
+class="slide section level1">
+<h1>PArt 2.2: What are the attributes needed in a
+<code>&lt;csv-textarea&gt;</code>?</h1>
+<ul>
+<li>copy the attributes form the “ingredients” textarea to the
+<code>&lt;csv-textarea&gt;</code></li>
+<li>Add an these attributes to <code>&lt;csv-textarea&gt;</code>
+<ul>
+<li><code>column-headings="Ingredients,Units"</code></li>
+<li><code>debug="true"</code></li>
+</ul></li>
+</ul>
 </div>
 <div id="part-2.2-restart-recipes_api2.yaml-and-test"
 class="slide section level1">
@@ -591,15 +574,15 @@ class="slide section level1">
 <p>CSVTextarea has the ability to be updated from CSV text. Let’s do
 that.</p>
 <p>In <code>edit_recipe.js</code> you need to find this.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>}</span></code></pre></div>
+<p>And replace it with something like this.</p>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>}</span></code></pre></div>
-<p>And replace it with something like this.</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="part-2.2-test-and-debug" class="slide section level1">
 <h1>Part 2.2: Test and debug</h1>
@@ -655,8 +638,8 @@ responsibilities?</li>
 </ul></li>
 </ul>
 </div>
-<div id="part-3-my-remomendations" class="slide section level1">
-<h1>Part 3: My Remomendations</h1>
+<div id="part-3-my-recomendations" class="slide section level1">
+<h1>Part 3: My Recomendations</h1>
 <ul>
 <li>Build with the grain of the web
 <ul>
@@ -690,8 +673,8 @@ sites
 </ul></li>
 <li>REST services force us to middleware or Browser JavaScript
 <ul>
-<li>Can we go with a simpler service model?</li>
 <li>Is it reasonable to require JavaScript (or WASM)?</li>
+<li>Is there a simpler abstraction?</li>
 </ul></li>
 </ul>
 </div>
@@ -743,10 +726,11 @@ layout and style</li>
 <li><a
 href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting">JavaScript</a>,
 behaviors and web components</li>
-<li><a href="https://sqlite.org">SQL</a>
+<li><a href="https://sqlite.org">SQL and SQLite</a>
 <ul>
 <li><a href="https://www.sqlitetutorial.net/">SQLite Tutorial</a></li>
 </ul></li>
+<li><a href="https://developer.mozilla.org/en-US">MDN</a></li>
 </ul>
 </div>
 <div id="reference-data-formats" class="slide section level1">
@@ -755,13 +739,6 @@ behaviors and web components</li>
 <li><a href="https://www.json.org">JSON</a></li>
 <li><a href="https://jsonlines.org">JSON Lines</a></li>
 <li><a href="https://yaml.org/">YAML</a></li>
-</ul>
-</div>
-<div id="reference-additional-resources" class="slide section level1">
-<h1>Reference: Additional resources</h1>
-<ul>
-<li><a href="https://developer.mozilla.org/en-US">MDN</a></li>
-<li>LLMs, including ones you can run locally via Ollama</li>
 </ul>
 </div>
 <div id="thank-you-for-listening" class="slide section level1">

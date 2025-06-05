@@ -1,5 +1,5 @@
 ---
-title: Recipe for an application, Dataset and CL Web Components
+title: A recipe for an application, Dataset and CL Web Components
 author: "R. S. Doiel, <rsdoiel@caltech.edu>"
 institute: |
   Caltech Library,
@@ -20,10 +20,7 @@ keywords: [ "microservices", "SQLite3", "Deno", "TypeScript", "Dataset" ]
 url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 ---
 
-# Welcome to Dataset and a Web Components
-
-- Dataset provides a turn key web static service and JSON API
-- Extending HTML elements using Web Components
+# Welcome
 
 ## What we'll do
 
@@ -37,48 +34,44 @@ url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 
 Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
 
-You can download the presentation in a zip file at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
+Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
 
-# Getting started, requirements
+# Getting started
 
 ### You probably already have these, if not install them
 
+- A computer running macOS, Lunix or Raspberry Pi OS
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
 
-### You will need to install dataset
+### Install dataset
 
-- [Dataset](https://caltechlibrary.github.io/dataset), get the latest release
+- <https://github.com/caltechlibrary/dataset/releases>, get the latest v2 release
 
 We can start our first iteration of our application once you have these available.
-
-# Getting started, four parts
-
-1. What are we building, how will we build it?
-2. Setting up our web service
-3. Creating our static content
-4. Enhancements with Web Components
 
 # Part 1: What are we building?
 
 GOAL: A simple web application that lets us curate a list of recipes.
 
+We're going start from the backend and spend most of our time on the front end.
+
 # Part 1.1: What are the parts of our application?
 
 1. A web service for managing the recipe collection
-2. A way to browse recipes by name
+2. A page to browse recipes by name
 3. A page to display a recipe
-4. A web form for adding or edit our recipes
+4. A page and web form to add or edit a recipe
 
 # Part 1.1: What is a recipe?
 
-- A "key", the unique identifier of a recipe
-- A name
+- A "key", the unique identifier of a recipe (url friendly)
+- A name (human friendly and readable)
 - A list of ingredients and measures (CSV data)
 - A procedure describing the preparation process (text)
 
-# Part 1.1: Strategy
+# Part 1.1: Basic Strategy
 
 1. Setting up our web service
 2. Sketch your app using HTML
@@ -100,24 +93,14 @@ dataset init recipes.ds
 
 # Part 1.2: Loading some sample data
 
-We can now load some sample data, download [recipes.jsonl](recipes.jsonl) 
+Download sample data file [recipes.jsonl](recipes.jsonl) 
 (see: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl>)
 
-on macOS or Linux
-
 ~~~shell
-dataset load recipes.ds <recipes.jsonl
-~~~
-
-or Windows
-
-~~~shell
-type recipes.jsonl | dataset load recipes.ds
+cat recipes.jsonl | dataset load recipes.ds
 ~~~
 
 # Part 1.2: Verify we loaded our data OK
-
-On macOS, Linux or windows
 
 ~~~shell
 dataset keys recipes.ds
@@ -144,12 +127,11 @@ $ dataset read recipes.ds frybread
     "ingredients": "backing powder,2 tsp\r\nflour,2 cups\r\nhot water,2/3 cups\r\nsalt,1 tsp salt\r\nshortening,2 Tbsp\r\n",
     "key": "frybread",
     "name": "Fry Bread",
-    "procedure": "1. Combine flour, baking powder, and salt in a bowl.\r\n2. Use a pastry blender (or two butter knives) to cut the shortening into the flour.\r\n3. Add the hot water, and mix until the water is incorporated and you get a dough.\r\n4. Turn out the dough on a lightly floured board. Knead the dough until it is soft and smooth.\r\n5. Wrap the dough in plastic, and let the dough rest for 30 minutes.\r\n6. Divide the dough into 6 pieces, roll each into a ball, and roll each into a flat disk with a rolling pin.\r\n7. Brush one side of each disk with melted margarine and place on a barbecue over a 3 Mississippi fire.\r\n8. Brush the opposing side of the bread with margarine and flip the bread on the barbecue.\r\n9. Cook until both sides are golden brown. Serve hot.\r\n\r\n- You can substitute either 1/4 cup plain yogurt, or a 1/4 cup soured milk as a leavening agent\r\ninstead of baking powder. If you do, add 2 hours to the rest time for the dough, and leave\r\nthe dough somewhere warm. You can optionally include the baking powder as well to get a\r\nvery puffy version of frybread. If using yogurt or soured milk for leavening, use 1\2 cup\r\ninstead of 1/3 cup water.\r\n- You can use mayonnaise in place of shortening for a crispy, crunchier texture.\r\n- You can also fry the dough in hot oil over a stovetop. The dough cooks rapidly and will brown\r\nin about 12 seconds and must be turned over to allow the opposite side to brown, then be removed\r\nfrom the oil and placed sideways into a colander or large bowl lined with paper towels to allow\r\nthe oil to drain off the finished product\r\n\r\nurl: https://en.wikibooks.org/wiki/Cookbook:Fry_Bread_I\r\n",
-    "save": ""
+    "procedure": "1. Combine flour, baking powder, and salt in a bowl.\r\n2. Use a pastry blender (or two butter knives) to cut the shortening into the flour.\r\n3. Add the hot water, and mix until the water is incorporated and you get a dough.\r\n4. Turn out the dough on a lightly floured board. Knead the dough until it is soft and smooth.\r\n5. Wrap the dough in plastic, and let the dough rest for 30 minutes.\r\n6. Divide the dough into 6 pieces, roll each into a ball, and roll each into a flat disk with a rolling pin.\r\n7. Brush one side of each disk with melted margarine and place on a barbecue over a 3 Mississippi fire.\r\n8. Brush the opposing side of the bread with margarine and flip the bread on the barbecue.\r\n9. Cook until both sides are golden brown. Serve hot.\r\n\r\n- You can substitute either 1/4 cup plain yogurt, or a 1/4 cup soured milk as a leavening agent\r\ninstead of baking powder. If you do, add 2 hours to the rest time for the dough, and leave\r\nthe dough somewhere warm. You can optionally include the baking powder as well to get a\r\nvery puffy version of frybread. If using yogurt or soured milk for leavening, use 1\2 cup\r\ninstead of 1/3 cup water.\r\n- You can use mayonnaise in place of shortening for a crispy, crunchier texture.\r\n- You can also fry the dough in hot oil over a stovetop. The dough cooks rapidly and will brown\r\nin about 12 seconds and must be turned over to allow the opposite side to brown, then be removed\r\nfrom the oil and placed sideways into a colander or large bowl lined with paper towels to allow\r\nthe oil to drain off the finished product\r\n\r\nurl: https://en.wikibooks.org/wiki/Cookbook:Fry_Bread_I\r\n"
 }
 ~~~
 
-# Part 1.2: create an static content directory directory
+# Part 1.2: create the static content directories
 
 ~~~shell
 mkdir htdocs
@@ -157,14 +139,16 @@ mkdir htdocs/modules
 mkdir htdocs/css
 ~~~
 
-# Part 1.2: Setting up our web service, configuring the web service
+# Part 1.2: Setting up our web service
 
 `datasetd` provides a turn key web service defined by a simple YAML file. It can host
 one or more dataset collections. It provides a static file service as well as a JSON API
-for each collection. Let's call this [recipes_api.yaml](recipes_api.yaml)
+for each collection. 
+
+Create the file [recipes_api.yaml](recipes_api.yaml)
 (see: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api.yaml>).
 
-# Part 1.2: Setting up our web service, configuring the web service
+# Part 1.2: recipes_api.yaml
 
 ~~~yaml
 #!/usr/bin/env -S datasetd -debug
@@ -189,16 +173,18 @@ collections:
 Starting the web service.
 
 ~~~shell
-datasetd recipes_api.yaml
+datasetd -debug recipes_api.yaml
 ~~~
 
 - Go do <http://localhost:8001/api/version>
 - Look at the terminal window, do you see the log message for the request?
 - You can shutdown the service by press control and C (Ctrl-C) in the terminal session
 
-# Part 1.3: Creating our static content
+# Part 1.3: What about our static content?
 
-The web service is running but haven't populated the htdocs directory. What do you see when you go to <http://localhost:8001/>? 
+The web service is running but haven't populated the htdocs directory.
+
+What do you see when you go to <http://localhost:8001/>? 
 
 # Part 1.3: What should our recipe metadata look like?
 
@@ -227,7 +213,7 @@ We'll need a submit button to save a new or edited recipe.
 [htdocs/edit_recipe.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/edit_recipe.html)
 : A page used to add and edit recipes we've collected
 
-# Part 1.3: populating our pages
+# Part 1.3: Populating our pages using JavaScript
 
 We'll create four modules, one specific to each HTML page and one utility module
 
@@ -248,19 +234,19 @@ We'll create four modules, one specific to each HTML page and one utility module
 In a terminal run our startup command 
 
 ~~~shell
-datasetd recipes_api.yaml
+datasetd -debug recipes_api.yaml
 ~~~
 
 # Part 1.3: Test using your web browser
 
 1. Go to <http://localhost:8001>
-2. In your browser open your "developer tools"
-3. Reload the page and monitor the loads
-4. Click through the website
+2. In your browser turn on your developer tools
+3. Reload the page and explore using your developer tools
+4. Click through the site
 
 # Part 1.3: Debugging and improving
 
-1. There will be issues you need to debug
+1. Are there issues to debug?
 2. What happens when you add a recipe?
 3. What happens when you hen you update a receipt?
 4. Can any of this be improved?
@@ -271,11 +257,7 @@ Let's take a short break then we'll comeback and iterate.
 
 I'm available for questions.
 
-# Part 2
-
-We're going to set aside the prototype remembering what did and didn't work. 
-
-# Part 2.2: Iterating, Recipes 2
+# Part 2:  Recipes version 2
 
 What we are doing next
 
@@ -283,9 +265,7 @@ What we are doing next
 - Creating a new, `recipes_api2.yaml`
 - Creating a new directory structure for our static content called, `htdocs2`
 
-# Part 2.2: Iterating, Recipes 2
-
-On macOS and Linux 
+# Part 2.1: Bootstrap from version 1
 
 ~~~shell
 dataset init recipes2.ds
@@ -293,17 +273,9 @@ cp recipes_api.yaml recipes_api2.yaml
 cp -vR htdocs htdocs2
 ~~~
 
-on Windows
-
-~~~shell
-dataset init recipes2.ds
-copy recipes_api.yaml recipes_api2.yaml
-copy -Recurse htdocs htdocs2
-~~~
-
 (NOTE: The first line should look familiar, the others are just time savers)
 
-# Part 2.2: Updating our YAML configuration
+# Part 2.1: Updating our YAML configuration
 
 - edit our [recipes_api2.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
 - update the `htdocs` reference
@@ -313,13 +285,13 @@ copy -Recurse htdocs htdocs2
   - did we hard code the collection name in HTML?
   - did we hard code the collection name in JavaScript?
 
-# Part 2.2: Testing a new instance
+# Part 2.1: Testing a new instance
 
-1. Test our new instance
-  a. what is broken?
-  b. Did we catch all the places with hard coded collection names?
-  c. What about behaviors?
-2. Shutdown down and restart datasetd to debug YAML changes
+- Test our new instance
+  - What is broken?
+  - Did we catch all the places with hard coded collection names?
+  - What about behaviors?
+- Shutdown down and restart datasetd to debug YAML changes
 
 ~~~shell
 dataset recipes_api2.yaml
@@ -328,18 +300,35 @@ dataset recipes_api2.yaml
 # Part 2.2: Desirable changes
 
 - Handle form submission sends us to a useless URL, how do we fix that?
-- Hand entering CSV is cumbersum, can me improve that?
+- Typing in comma seperated values is cumbersum, can me improve that?
 
-# Part 2.2: Fixing the form submission
+# Part 2.2: Fixing web form submission
 
 - The `utils.js` module includes a `saveRecipe` function
-- We need an event listener to trigger, what event? which element?
+- We need an event listener to trigger it
+  - Which element?
+  - What event?
 
-# Part 2.3: Anatomy of our saveRecipe
+# Part 2.2: Update the HTML for edit_recipe.html
 
-1. Retrieve the data from the web form
-2. Use fetch to send the data and receive a response
-3. Based on the response decide where to go
+Add the following at the bottom of the page before the `</body>`.
+
+~~~HTML
+<script type="module">
+  import { saveRecipe } from './modules/utils.js';
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.addEventListener('submit', saveRecipe);
+  });
+</script>
+~~~
+
+# Part 2.2: Restart datasetd and test
+
+~~~shell
+datasetd -debug recipes_api2.yaml
+~~~
+
+Test using your web browser.
 
 # Part 2.3: Improving the UI with Web Components
 
@@ -353,37 +342,30 @@ dataset recipes_api2.yaml
 
 <https://github.com/caltechlibrary/CL-web-components/releases>
 
-
-# Part 2.3: Copy the web components to the modules directory (macOS, Linux)
+# Part 2.3: Copy the web components to the modules directory
 
 - Unzip just the JavaScript files
-- Copy the JavaScript files in the zip file to `htdocs2/modules/`.
-
-Linux, macOS
+- Move the JavaScript files in the zip file to `htdocs2/modules/`.
 
 ~~~shell
 unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
 mv -v *.js htdocs2/models/
 ~~~
 
-# Part 2.3: Copy the web components to the modules directory (Windows)
-
-- Unzip just the JavaScript files
-- Copy the JavaScript files in the zip file to `htdocs2/modules/`.
-
-Linux, macOS
-
-~~~shell
-unzip $HOME\Downloads\cl-web-components-0.0.6.zip *.js
-move *.js htdocs2\models\
-~~~
-
 # Part 2.2: Adding CSVTextarea to edit_recipe.html
 
-- edit `htdocs2/edit_recipe.html` to include the CSVTextarea module in the document head
-- edit `htdocs2/edit_recipe.html` wrapping the "ingredients" textarea with `<csv-textarea>`
+- edit `htdocs2/edit_recipe.html`
+  - Include the CSVTextarea JavaScript module in the document head
+  - Wrapping the "ingredients" textarea with `<csv-textarea>`
 
 See: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html>
+
+# PArt 2.2: What are the attributes needed in a `<csv-textarea>`?
+
+- copy the attributes form the "ingredients" textarea to the `<csv-textarea>`
+- Add an these attributes to `<csv-textarea>`
+  - `column-headings="Ingredients,Units"`
+  - `debug="true"`
 
 # Part 2.2: Restart recipes_api2.yaml and test
 
@@ -448,7 +430,7 @@ if (data["ingredients"] !== undefined) {
 - Is progressive enhancement is still relevant in 2025?
   - Is it OK to require JavaScript in a web page?
 
-# Part 3: My Remomendations
+# Part 3: My Recomendations
 
 - Build with the grain of the web
   - Building blocks are HTML, CSS, JavaScript and HTTP protocol
@@ -466,8 +448,8 @@ if (data["ingredients"] !== undefined) {
 - I think Web Components ultimately simplify things
   - Trade off: individual compontents can be complex
 - REST services force us to middleware or Browser JavaScript
-  - Can we go with a simpler service model?
   - Is it reasonable to require JavaScript (or WASM)?
+  - Is there a simpler abstraction?
 
 # Reference: Dataset
 
@@ -493,19 +475,15 @@ if (data["ingredients"] !== undefined) {
 - [HTML5](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content), structured content
 - [CSS](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics), layout and style
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting), behaviors and web components
-- [SQL](https://sqlite.org)
+- [SQL and SQLite](https://sqlite.org)
   - [SQLite Tutorial](https://www.sqlitetutorial.net/)
+- [MDN](https://developer.mozilla.org/en-US)
 
 # Reference: Data formats
 
 - [JSON](https://www.json.org)
 - [JSON Lines](https://jsonlines.org)
 - [YAML](https://yaml.org/)
-
-# Reference: Additional resources
-
-- [MDN](https://developer.mozilla.org/en-US)
-- LLMs, including ones you can run locally via Ollama
 
 # Thank you for listening
 
