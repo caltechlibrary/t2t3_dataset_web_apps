@@ -311,6 +311,17 @@ request?</li>
 terminal session</li>
 </ul>
 </div>
+<div id="part-1.2-starting-and-stopping-the-web-service-1"
+class="slide section level1">
+<h1>Part 1.2: Starting and stopping the web service</h1>
+<ul>
+<li>Tired to typing <code>datasetd -debug recipes_api.yaml</code>?</li>
+<li>Make the YAML file executable!</li>
+</ul>
+<pre class="shell"><code>chmod 775 recipes_api.yaml</code></pre>
+<p>Now you can shorten start up to</p>
+<pre class="shell"><code>./recipes_api.yaml</code></pre>
+</div>
 <div id="part-1.3-what-about-our-static-content"
 class="slide section level1">
 <h1>Part 1.3: What about our static content?</h1>
@@ -500,13 +511,13 @@ class="slide section level1">
 <h1>Part 2.2: Update the HTML for edit_recipe.html</h1>
 <p>Add the following at the bottom of the page before the
 <code>&lt;/body&gt;</code>.</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
 <div id="part-2.2-restart-datasetd-and-test"
 class="slide section level1">
@@ -593,15 +604,15 @@ class="slide section level1">
 <p>CSVTextarea has the ability to be updated from CSV text. Let’s do
 that.</p>
 <p>In <code>edit_recipe.js</code> you need to find this.</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>}</span></code></pre></div>
 <p>And replace it with something like this.</p>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="part-2.2-test-and-debug" class="slide section level1">
 <h1>Part 2.2: Test and debug</h1>

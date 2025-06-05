@@ -190,6 +190,21 @@ datasetd -debug recipes_api.yaml
 - Look at the terminal window, do you see the log message for the request?
 - You can shutdown the service by press control and C (Ctrl-C) in the terminal session
 
+# Part 1.2: Starting and stopping the web service
+
+- Tired to typing `datasetd -debug recipes_api.yaml`?
+- Make the YAML file executable!
+
+~~~shell
+chmod 775 recipes_api.yaml
+~~~
+
+Now you can shorten start up to
+
+~~~shell
+./recipes_api.yaml
+~~~
+
 # Part 1.3: What about our static content?
 
 The web service is running but haven't populated the htdocs directory.
