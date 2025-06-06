@@ -47,7 +47,7 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 
 ### You probably already have these, if not install them
 
-- A computer running macOS, Lunix, Raspberry Pi OS, Windows using LSW
+- A computer running macOS, Lunix, Raspberry Pi OS, Windows using WSL (Windows Subsystem for Linux)
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
@@ -55,7 +55,7 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 ### Install dataset
 
 - <https://github.com/caltechlibrary/dataset/releases>, get the latest v2 release
-- Windows 10/11, You need to use the Linux Subsystem for Windows (LSW)
+- Windows 10/11, You need to use the Linux Subsystem for Windows (WSL)
   - Install Go 1.24.3 and compile Dataset from source code then install under LWS
   - <https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md>
 
