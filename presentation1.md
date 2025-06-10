@@ -175,9 +175,9 @@ collections:
     keys: true
     create: true
     # When we successfully create (or update via a POST) an object display it
-    create_success: display_recipe.html
+    create_success: http://localhost:8001/display_recipe.html
     # When we fail go back to the current page.
-    create_error: edit_recipe.html
+    create_error: http://localhost:8001/edit_recipe.html
     read: true
     update: true
     delete: true
@@ -346,8 +346,8 @@ datasetd recipes_api2.yaml
 
 # Part 2.2: Desirable changes
 
-- Handle form submission sends us to a useless URL, how do we fix that?
-- Typing in comma seperated values is cumbersum, can me improve that?
+- Typing in comma seperated values is cumbersum, can me improve that
+- We're going to submit the edit form as a JSON encoded document
 
 # Part 2.2: Fixing web form submission
 
