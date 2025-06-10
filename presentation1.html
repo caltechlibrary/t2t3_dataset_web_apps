@@ -149,8 +149,7 @@ class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases</a>
 <h3 id="you-probably-already-have-these-if-not-install-them">You
 probably already have these, if not install them</h3>
 <ul>
-<li>A computer running macOS, Lunix, Raspberry Pi OS, Windows using WSL
-(Windows Subsystem for Linux)</li>
+<li>A computer running macOS, Lunix, Raspberry Pi OS, Windows</li>
 <li>Terminal application</li>
 <li><a href="https://vscodium.com/">Text Editor</a></li>
 <li><a href="https://www.mozilla.org/en-US/firefox/new/">Web Browser</a>
@@ -158,17 +157,14 @@ probably already have these, if not install them</h3>
 </ul>
 <h3 id="install-dataset">Install dataset</h3>
 <ul>
-<li><a href="https://github.com/caltechlibrary/dataset/releases"
-class="uri">https://github.com/caltechlibrary/dataset/releases</a>, get
-the latest v2 release</li>
-<li>Windows 10/11, You need to use the Linux Subsystem for Windows (WSL)
+<li>See <a href="https://caltechlibrary.github.io/dataset/INSTALL.html"
+class="uri">https://caltechlibrary.github.io/dataset/INSTALL.html</a>
 <ul>
-<li>Install Go 1.24.3 and compile Dataset from source code then install
-under LWS</li>
-<li><a
-href="https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md"
-class="uri">https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md</a></li>
+<li>If you have problems you can download the zip files from here <a
+href="https://github.com/caltechlibrary/dataset/releases"
+class="uri">https://github.com/caltechlibrary/dataset/releases</a></li>
 </ul></li>
+<li>You need to be running the latest v2 release (&gt;= 2.2.7)</li>
 </ul>
 <p>We can start our first iteration of our application once you have
 these available.</p>
@@ -221,6 +217,7 @@ class="slide section level1">
 <p>We use the <code>dataset</code> command line program to initialize a
 dataset collection.</p>
 <pre class="shell"><code>dataset init recipes.ds</code></pre>
+<p>(Linux, macOS and Windows)</p>
 </div>
 <div id="part-1.2-loading-some-sample-data"
 class="slide section level1">
@@ -230,6 +227,8 @@ class="slide section level1">
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl"
 class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl</a>)</p>
 <pre class="shell"><code>cat recipes.jsonl | dataset load recipes.ds</code></pre>
+<p>On Windows:</p>
+<pre class="pwsh"><code>type recipes.jsonl | dataset load recipes.ds</code></pre>
 </div>
 <div id="part-1.2-verify-we-loaded-our-data-ok"
 class="slide section level1">
@@ -280,22 +279,22 @@ class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/re
 </div>
 <div id="part-1.2-recipes_api.yaml" class="slide section level1">
 <h1>Part 1.2: recipes_api.yaml</h1>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>        select src</span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>        from recipes</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">htdocs</span><span class="kw">:</span><span class="at"> htdocs</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">collections</span><span class="kw">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes.ds</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="at">    </span><span class="fu">read</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>        select src</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>        from recipes</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
 </div>
 <div id="part-1.2-starting-and-stopping-the-web-service"
 class="slide section level1">
@@ -318,6 +317,7 @@ class="slide section level1">
 <li>Tired to typing <code>datasetd -debug recipes_api.yaml</code>?</li>
 <li>Make the YAML file executable!</li>
 </ul>
+<p>(on macOS, Linux or Window’s WSL)</p>
 <pre class="shell"><code>chmod 775 recipes_api.yaml</code></pre>
 <p>Now you can shorten start up to</p>
 <pre class="shell"><code>./recipes_api.yaml</code></pre>
@@ -452,6 +452,10 @@ class="slide section level1">
 <pre class="shell"><code>dataset init recipes2.ds
 cp recipes_api.yaml recipes_api2.yaml
 cp -vR htdocs htdocs2</code></pre>
+<p>On Windows:</p>
+<pre class="pwsh"><code>dataset init recipes2.ds
+copy recipes_api.yaml recipes_api2.yaml
+copy -Recurse htdocs htdocs2</code></pre>
 <p>(NOTE: The first line should look familiar, the others are just time
 savers)</p>
 </div>
@@ -482,7 +486,8 @@ href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_
 </ul></li>
 <li>Shutdown down and restart datasetd to debug YAML changes</li>
 </ul>
-<pre class="shell"><code>dataset recipes_api2.yaml</code></pre>
+<pre class="shell"><code>datasetd recipes_api2.yaml</code></pre>
+<p>(NOTE: note the “d” at the end of “datasetd”)</p>
 </div>
 <div id="part-2.2-desirable-changes" class="slide section level1">
 <h1>Part 2.2: Desirable changes</h1>
@@ -511,13 +516,13 @@ class="slide section level1">
 <h1>Part 2.2: Update the HTML for edit_recipe.html</h1>
 <p>Add the following at the bottom of the page before the
 <code>&lt;/body&gt;</code>.</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
 <div id="part-2.2-restart-datasetd-and-test"
 class="slide section level1">
@@ -604,15 +609,15 @@ class="slide section level1">
 <p>CSVTextarea has the ability to be updated from CSV text. Let’s do
 that.</p>
 <p>In <code>edit_recipe.js</code> you need to find this.</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>}</span></code></pre></div>
 <p>And replace it with something like this.</p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="part-2.2-test-and-debug" class="slide section level1">
 <h1>Part 2.2: Test and debug</h1>

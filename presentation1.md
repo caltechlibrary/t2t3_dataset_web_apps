@@ -42,22 +42,20 @@ Follow along at <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presenta
 
 Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_dataset_web_apps/releases>
 
-
 # Getting started
 
 ### You probably already have these, if not install them
 
-- A computer running macOS, Lunix, Raspberry Pi OS, Windows using WSL (Windows Subsystem for Linux)
+- A computer running macOS, Lunix, Raspberry Pi OS, Windows
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
 
 ### Install dataset
 
-- <https://github.com/caltechlibrary/dataset/releases>, get the latest v2 release
-- Windows 10/11, You need to use the Linux Subsystem for Windows (WSL)
-  - Install Go 1.24.3 and compile Dataset from source code then install under LWS
-  - <https://github.com/caltechlibrary/dataset/blob/main/INSTALL.md>
+- See <https://caltechlibrary.github.io/dataset/INSTALL.html>
+  - If you have problems you can download the zip files from here <https://github.com/caltechlibrary/dataset/releases>
+- You need to be running the latest v2 release (>= 2.2.7)
 
 We can start our first iteration of our application once you have these available.
 
@@ -101,6 +99,8 @@ We use the `dataset` command line program to initialize a dataset collection.
 dataset init recipes.ds
 ~~~
 
+(Linux, macOS and Windows)
+
 # Part 1.2: Loading some sample data
 
 Download sample data file [recipes.jsonl](recipes.jsonl) 
@@ -108,6 +108,12 @@ Download sample data file [recipes.jsonl](recipes.jsonl)
 
 ~~~shell
 cat recipes.jsonl | dataset load recipes.ds
+~~~
+
+On Windows:
+
+~~~pwsh
+type recipes.jsonl | dataset load recipes.ds
 ~~~
 
 # Part 1.2: Verify we loaded our data OK
@@ -194,6 +200,8 @@ datasetd -debug recipes_api.yaml
 
 - Tired to typing `datasetd -debug recipes_api.yaml`?
 - Make the YAML file executable!
+
+(on macOS, Linux or Window's WSL)
 
 ~~~shell
 chmod 775 recipes_api.yaml
@@ -298,6 +306,14 @@ cp recipes_api.yaml recipes_api2.yaml
 cp -vR htdocs htdocs2
 ~~~
 
+On Windows:
+
+~~~pwsh
+dataset init recipes2.ds
+copy recipes_api.yaml recipes_api2.yaml
+copy -Recurse htdocs htdocs2
+~~~
+
 (NOTE: The first line should look familiar, the others are just time savers)
 
 # Part 2.1: Updating our YAML configuration
@@ -319,8 +335,10 @@ cp -vR htdocs htdocs2
 - Shutdown down and restart datasetd to debug YAML changes
 
 ~~~shell
-dataset recipes_api2.yaml
+datasetd recipes_api2.yaml
 ~~~
+
+(NOTE: note the "d" at the end of "datasetd")
 
 # Part 2.2: Desirable changes
 
