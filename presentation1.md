@@ -174,6 +174,10 @@ collections:
   - dataset: recipes.ds
     keys: true
     create: true
+    # When we successfully create (or update via a POST) an object display it
+    create_success: display_recipe.html
+    # When we fail go back to the current page.
+    create_error: edit_recipe.html
     read: true
     update: true
     delete: true
