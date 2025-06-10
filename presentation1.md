@@ -524,6 +524,7 @@ if (data["ingredients"] !== undefined) {
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting), behaviors and web components
 - [SQL and SQLite](https://sqlite.org)
   - [SQLite Tutorial](https://www.sqlitetutorial.net/)
+  - Or typing into your favorite LLM, but be prepared to validate the recommendations
 - [MDN](https://developer.mozilla.org/en-US)
 
 # Reference: Data formats
