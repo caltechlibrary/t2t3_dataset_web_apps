@@ -23,7 +23,7 @@ programming_language:
   - SQL
 
 keywords:
-  - web applicaitons
+  - web applications
   - dataset
   - JSON API
   - web components
