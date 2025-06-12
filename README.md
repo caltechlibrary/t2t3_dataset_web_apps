@@ -2,14 +2,14 @@
 
 # t2t3_dataset_web_apps (1st Draft)
 
-This is a presentation intended for to to DLD development group at Caltech Library. It showing how to develop web applicaitons easily using Dataset and CL Web Components.
+This is a workshop presentation for the DLD development group at Caltech Library. It showing how to develop web applications easily using Dataset and CL Web Components.
 
 - [presentation](presentation1.md)
 
 ## Release Notes
 
 - version: 0.0.4
-- status: wip
+- status: concept
 - released: 2025-06-12
 
 ### Authors
