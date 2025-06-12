@@ -12,7 +12,7 @@ authors:
 
 
 repository_code: https://github.com/caltechlibrary/t2t3_dataset_web_apps
-version: 0.0.3
+version: 0.0.4
 license_url: https://caltechlibrary.github.io/t2t3_dataset_web_apps/LICENSE
 
 programming_language:
@@ -29,19 +29,15 @@ keywords:
   - web components
   - presentation
 
-date_released: 2025-06-04
+date_released: 2025-06-12
 ---
 
 About this software
 ===================
 
-## t2t3_dataset_web_apps 0.0.3
+## t2t3_dataset_web_apps 0.0.4
 
-First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications.
-
-Merged in CSVTextarea example to htdocs/edit_recipe.html, htdocs/modules/utils.js.
-
-Let&#x27;s of copyedits since last release.
+First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications. It is being presented to the DLD development group via Zoom, 2025-06-12.
 
 ### Authors
 
@@ -77,7 +73,7 @@ It presents the construction process to build a simple recipe collection system.
 - Terminal Application
 - Web Browser
 - Text Editor
-- Dataset &gt;&#x3D; v2
+- Dataset &gt;&#x3D; v2.2.7
 
 
 ### Software Suggestions
@@ -86,6 +82,6 @@ It presents the construction process to build a simple recipe collection system.
 - jq
 - yq
 - htmlq
-- CMTools &gt;&#x3D; 0.0.29
+- CMTools &gt;&#x3D; 0.0.33
 
 
