@@ -9,9 +9,9 @@ urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: 2025-06-04
-draft: true
-pubDate: TBD
+updateDate: 2025-06-12
+draft: false
+pubDate: 2025-06-12
 place: Caltech
 date: TBD
 section-titles: false
@@ -46,7 +46,7 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 
 ### You probably already have these, if not install them
 
-- A computer running macOS, Lunix, Raspberry Pi OS, Windows
+- A computer running macOS, Linux, Raspberry Pi OS, Windows
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
@@ -63,7 +63,7 @@ We can start our first iteration of our application once you have these availabl
 
 GOAL: A simple web application that lets us curate a list of recipes.
 
-We're going start from the backend and spend most of our time on the front end.
+We're going start from the back end and spend most of our time on the front end.
 
 # Part 1.1: What are the parts of our application?
 
@@ -346,7 +346,7 @@ datasetd recipes_api2.yaml
 
 # Part 2.2: Desirable changes
 
-- Typing in comma seperated values is cumbersum, can me improve that
+- Typing in comma separated values is cumbersome, can me improve that
 - We're going to submit the edit form as a JSON encoded document
 
 # Part 2.2: Fixing web form submission
@@ -477,7 +477,7 @@ if (data["ingredients"] !== undefined) {
 - Is progressive enhancement is still relevant in 2025?
   - Is it OK to require JavaScript in a web page?
 
-# Part 3: My Recomendations
+# Part 3: My Recommendations
 
 - Build with the grain of the web
   - Building blocks are HTML, CSS, JavaScript and HTTP protocol
@@ -493,7 +493,7 @@ if (data["ingredients"] !== undefined) {
 - Web Components offer the possibility of consistent interfaces across sites
   - They can help with accessibility
 - I think Web Components ultimately simplify things
-  - Trade off: individual compontents can be complex
+  - Trade off: individual components can be complex
 - REST services force us to middleware or Browser JavaScript
   - Is it reasonable to require JavaScript (or WASM)?
   - Is there a simpler abstraction?
@@ -501,7 +501,7 @@ if (data["ingredients"] !== undefined) {
 # Reference: Dataset
 
 - [Dataset Project](https://caltechlibrary.github.io/dataset)
-- [Dataset Repostitory](https://github.com/caltechlibrary/dataset)
+- [Dataset Repository](https://github.com/caltechlibrary/dataset)
 - [Getting help with Dataset](https://github.com/caltechlibrary/dataset/issues)
 
 # Reference: CL-web-components
@@ -537,6 +537,6 @@ if (data["ingredients"] !== undefined) {
 
 - View presentation: <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
 - View the repository: <https://github.com/caltechlibrary/t2t3_dataset_web_apps>
-- Comment on this spresentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
+- Comment on this presentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
 - Author: R. S. Doiel, <mailto:rsdoiel@caltech.edu>
 
