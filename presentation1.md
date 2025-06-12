@@ -113,7 +113,7 @@ cat recipes.jsonl | dataset load recipes.ds
 On Windows:
 
 ~~~pwsh
-type recipes.jsonl | dataset load recipes.ds
+Get-Content recipes.jsonl | dataset load recipes.ds
 ~~~
 
 # Part 1.2: Verify we loaded our data OK
