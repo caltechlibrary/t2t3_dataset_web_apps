@@ -12,8 +12,8 @@ createDate: 2025-05-29
 updateDate: 2025-06-12
 draft: false
 pubDate: 2025-06-12
-place: Caltech
-date: TBD
+place: Caltech Library (Zoom)
+date: 2025-06-12
 section-titles: false
 toc: true
 keywords: [ "Dataset", "HTML", "CSS", "JavaScript", "Web Components" ]
