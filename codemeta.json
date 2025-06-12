@@ -53,7 +53,7 @@
     "CMTools >= 0.0.33"
   ],
   "version": "0.0.4",
-  "developmentStatus": "wip",
+  "developmentStatus": "draft",
   "issueTracker": "https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues",
   "releaseNotes": "First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications. It is being presented to the DLD development group via Zoom, 2025-06-12.",
   "copyrightYear": 2025,
