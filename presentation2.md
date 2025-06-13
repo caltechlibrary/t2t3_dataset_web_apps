@@ -103,6 +103,8 @@ This will display something like, "Hi There! 09:27:23 GMT-0700 (Pacific Daylight
 
 # Part 2.1: "hello-clock.js" defines the web component
 
+Create [htdocs/modules/hello-clock.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/hello-clock.js)
+
 ~~~javascript
 // Define our new element as a class
 class HelloClock extends HTMLElement {
@@ -118,9 +120,36 @@ class HelloClock extends HTMLElement {
 customElements.define( 'hello-clock', HelloClock );
 ~~~
 
+# Part 2.1: Now lets create an HTML Page using "Hello Clock"
+
+- [htdocs/clock.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/clock.html)
+
+~~~html
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Hello Clock Example</title>
+        <link rel="style" href="css/style.css">
+        <script type="module" src="modules/hello-clock.js"></script>
+    </head>
+    <body>
+        <h1>Hello Clock Example</h1>
+        <hello-clock>Hi there!</hello-clock>
+    </body>
+</html>
+~~~
+
 # Part 2.1: Fire up our web service and test "Hello Clock"
 
+~~~shell
+dataset -debug recipes_api.yaml
+~~~
 
+Point your web browser at <http://localhost:8001/clock.html>
+
+# Part 2.1: Congradulations
+
+## You've built your first Web Component!!!!
 
 # Part 2.2:  Recipes version 2
 
@@ -344,6 +373,13 @@ if (data["ingredients"] !== undefined) {
 : Wraps an HTML table making it sort-able and filterable on a column
 
 - Getting help with CL-web-components, <https://github.com/caltechlibrary/CL-web-components/issues>.
+
+# Reference: Web Components
+
+- [MDN Examples on GitHub](https://github.com/mdn/web-components-examples)
+- [Examples of Accessible Components](https://github.com/scottaohara/accessible_components)
+- [Awesome Standalones](https://github.com/davatron5000/awesome-standalones)
+- [W3C Design System](https://design-system.w3.org/)
 
 # Reference: Programming Languages
 
