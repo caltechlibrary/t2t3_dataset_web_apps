@@ -1,16 +1,17 @@
 
 
-# t2t3_dataset_web_apps
+# Dataset & Web Components
 
 This is a workshop presentation for the DLD development group at Caltech Library. It showing how to develop web applications easily using Dataset and CL Web Components.
 
-- [presentation](presentation1.md)
+- [Part 1](presentation1.md), using Dataset to build a simple web application from HTML, CSS, JavaScript and YAML
+- [Part 2](presentation2.md), Web Components, enhancing the browser experience
 
 ## Release Notes
 
-- version: 0.0.4
+- version: 0.0.5
 - status: draft
-- released: 2025-06-12
+- released: TBD
 
 ### Authors
 

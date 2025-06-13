@@ -12,7 +12,7 @@ authors:
 
 
 repository_code: https://github.com/caltechlibrary/t2t3_dataset_web_apps
-version: 0.0.4
+version: 0.0.5
 license_url: https://caltechlibrary.github.io/t2t3_dataset_web_apps/LICENSE
 
 programming_language:
@@ -23,7 +23,7 @@ programming_language:
   - SQL
 
 keywords:
-  - web applications
+  - web applicaitons
   - dataset
   - JSON API
   - web components
@@ -35,9 +35,9 @@ date_released: 2025-06-12
 About this software
 ===================
 
-## t2t3_dataset_web_apps 0.0.4
+## t2t3_dataset_web_apps 0.0.5
 
-First draft of T2T3 workshop for using Dataset and CL Web Components to build web applications. It is being presented to the DLD development group via Zoom, 2025-06-12.
+Starting the second draft of this workshop. Split workshop into two parts, building web applications with dataset and enhancing the browser experience with web components. Adding suggestions from first presentation.
 
 ### Authors
 

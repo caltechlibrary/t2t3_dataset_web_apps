@@ -14,7 +14,7 @@
       <form id="edit-recipe" autocomplete="off" accept-charset="utf-8" method="POST" action="./api/recipes.ds/object">
         <div>
           <label set="key">Key</label>
-          <input id="key" name="key" type="text" value=""
+          <input id="key" name="key" type="text" value="" pattern="^[a-zA-Z0-9_-]+$"
           title="Unique identifier for recipe" placeholder="lower case unique text" size="60">
         </div>
 
