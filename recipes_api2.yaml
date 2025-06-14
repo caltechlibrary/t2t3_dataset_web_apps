@@ -1,15 +1,21 @@
 #!/usr/bin/env -S datasetd -debug
-host: localhost:8002
+host: localhost:8001
+#
+# **** NOTE: Use a new static content directory for Recipes, V2 8 ****
+#
 htdocs: htdocs2
 collections:
-  - dataset: recipes2.ds
+  - dataset: recipes.ds
     keys: true
     create: true
+    # Define the POST handling and setup redirects
+    create_success: http://localhost:8001/display_recipe.html
+    create_error: http://localhost:8001/edit_recipe.html
     read: true
     update: true
-    delete: true
+    delete: false
     query:
       list_recipes: |
         select src
-        from recipes2
+        from recipes
         order by src->>'name'

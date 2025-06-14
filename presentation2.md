@@ -27,24 +27,19 @@ url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 
 Welcome everyone. This is part 2 of a hands on workshop, enhancing the user experience through web components.
 
+## What we'll learn
+
 - What are Web Components?
 - Why use Web Components?
 - Anatomy of Web Components
 - Using Web Compontents
 
-# Workshop: "A recipe for applications"
-
 ## What we'll do
 
-- We'll evolve our recipes app from simple HTML into a rich recipe curation tool
-- We'll continue working with HTML, JavaScript, JSON and YAML
-
-## What we'll learn
-
-- What Web Components are
-- Why use Web Components
-- The basic anatomy of a Web Component
-- How to use [CL Web Components](https://github.com/caltechlibraryCL-web-components)
+- Setup up a new static content directory for update our [recipes_api.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
+- Create our first web component, "`<hello-clock></hello-clock>`"
+- Develop an A to Z web component, "`<a-to-z-list></a-to-z-list>`"
+- Use the [`<csv-textarea></csv-textarea>`](https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingrediant lists
 
 # Workshop: "A recipe for applications"
 
@@ -64,14 +59,73 @@ Welcome everyone. This is part 2 of a hands on workshop, enhancing the user expe
 
 We can start our second iteration of our application once you have these available.
 
-# Part 2.1: The What of Web Components
+# Part 2.1: Setting up for our new recipes app
+
+## Next steps
+
+1. copy the `htdocs` directory to `htdocs2`
+2. copy `recipes_api.yaml` to `recipes_api2.yaml`
+3. update `recipes_api2.yaml` to point to our `htdocs` content directory
+
+# Part 2.1: Copying htdocs and recipes_api.yaml
+
+On macOS, Linux and Windows using WSL
+
+~~~shell
+cp -fR htdocs htdocs2
+cp recipes_api.yaml recipes_api2.yaml
+~~~
+
+On Windows in PowerShell
+
+~~~pwsh
+copy -Recurse htdocs htdocs
+copy recipes_api.yaml recipes_api2.yaml
+~~~
+
+# Part 2.1: Update recipes_api2.yaml
+
+Update the "`htdocs`" attribute to "`htdocs2`".
+
+~~~yaml
+#!/usr/bin/env -S datasetd -debug
+host: localhost:8001
+htdocs: htdocs2
+collections:
+  - dataset: recipes.ds
+    keys: true
+    create: true
+    create_success: http://localhost:8001/display_recipe.html
+    create_error: http://localhost:8001/edit_recipe.html
+    read: true
+    update: true
+    delete: false
+    query:
+      list_recipes: |
+        select src
+        from recipes
+        order by src->>'name'
+~~~
+
+# Part 2.3: Testing a new instance
+
+- Test our new instance
+- Shutdown down and restart datasetd to debug YAML changes
+
+~~~shell
+datasetd recipes_api2.yaml
+~~~
+
+We're have our web service working, time for Web Components.
+
+# Part 2.2: The "What" of Web Components
 
 - Web Components are a W3C standard to allowing you to extend HTML
   - (Extentions inherit, include accessibility features)
 - A Web Component encapsulates the HTML, CSS and JavaScript
 - Web Components are re-usable of blocks of structure, function and presentation
 
-# Part 2.1: The Why of Web Components
+# Part 2.2: The "Why" of Web Components
 
 - Web components provide a sustainable way to extend HTML language to fit the needs your site or application
 - They simplify use because they are expressed as HTML elements
@@ -81,7 +135,7 @@ We can start our second iteration of our application once you have these availab
 - They can help normalize user experience through providing predictable elements on which to structure sites
 - They can are compatible with progressive enhancement techniques
 
-# Part 2.1: The Anatomy of a Web Component
+# Part 2.2: The Anatomy of a Web Component
 
 - A component is implemented as a JavaScript class
   - The class extends an existing HTML element (inheriting its features)
@@ -89,7 +143,7 @@ We can start our second iteration of our application once you have these availab
 - Is registered using the `customElements.define()` method
   - Example: `customElements.define( 'hello-clock', HelloClock );`
 
-# Part 2.1: The "Hello Clock" Web Component
+# Part 2.2: The "Hello Clock" Web Component
 
 - Let's create a web component called "hello-clock" ("htdocs/modules/hello-cock.js")
 - "hello-clock" will extended the HTML element
@@ -101,7 +155,7 @@ We can start our second iteration of our application once you have these availab
 
 This will display something like, "Hi There! 09:27:23 GMT-0700 (Pacific Daylight Time)".
 
-# Part 2.1: "hello-clock.js" defines the web component
+# Part 2.2: "hello-clock.js" defines the web component
 
 Create [htdocs/modules/hello-clock.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/hello-clock.js)
 
@@ -120,7 +174,7 @@ class HelloClock extends HTMLElement {
 customElements.define( 'hello-clock', HelloClock );
 ~~~
 
-# Part 2.1: Now lets create an HTML Page using "Hello Clock"
+# Part 2.2: Now lets create an HTML Page using "Hello Clock"
 
 - [htdocs/clock.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/clock.html)
 
@@ -139,81 +193,477 @@ customElements.define( 'hello-clock', HelloClock );
 </html>
 ~~~
 
-# Part 2.1: Fire up our web service and test "Hello Clock"
+# Part 2.2: Fire up our web service and test "Hello Clock"
 
-~~~shell
-dataset -debug recipes_api.yaml
-~~~
+1. Point your web browser at <http://localhost:8001/clock.html>
+2. Open your developer tools and reload the page
+3. Notice the logs provided by Dataset Web Service
 
-Point your web browser at <http://localhost:8001/clock.html>
-
-# Part 2.1: Congradulations
+# Part 2.2: Congradulations
 
 ## You've built your first Web Component!!!!
 
-# Part 2.2:  Recipes version 2
+Let's take a quick break and stretch before moving forward
 
-What we are doing next
+# Part 2.3: Building an A to Z list web component
 
-- Creating a new, `recipes_api2.yaml`
-- We'll re-use our dataset collection called, `recipes.ds`
-- Creating a new directory structure for our static content called, `htdocs2`
+Q: What does the A to Z list web component do?
 
-# Part 2.1: Bootstrap from version 1
+A: Wraps a standard UL list providing A to Z navigation.
 
-~~~shell
-dataset init recipes2.ds
-cp recipes_api.yaml recipes_api2.yaml
-cp -vR htdocs htdocs2
+# Part 2.3: Building an A to Z list web component
+
+1. Create an HTML to test with, `htdocs2/a-to-z-list.html`
+2. Create our Web Component, `htdocs2/modules/a-to-z-list.js`
+
+# Part 2.3: Building an A to Z list web component
+
+Here's the HTML we'll use for our test page, `a-to-z-list.html`.
+
+~~~html
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>A to Z List Clock Example</title>
+        <link rel="style" href="css/style.css">
+        <script type="module" src="modules/a-to-z-list.js"></script>
+    </head>
+    <body>
+        <h1>A to Z List Example</h1>
+
+        <a-to-z-list>
+            <ul>
+                <li>Alex</li> <li>Betty</li> <li>Connor</li> <li>David</li>
+                <li>Edwina</li> <li>Fiona</li> <li>George</li> <li>Harry</li>
+                <li>Ishmael</li> <li>Leonardo</li> <li>Millie</li> <li>Nellie</li>
+                <li>Ollie</li> <li>Petra</li> <li>Quincy</li> <li>Rowino</li> <li>Selvina</li>
+                <li>Terry</li> <li>Ulma</li> <li>Victorio</li> <li>Willamina</li> <li>Xavier</li>
+                <li>Zoran</li>
+            </ul>
+        </a-to-z-list>
+    </body>
+</html>
 ~~~
 
-On Windows:
+# Part 2.3: Building an A to Z list web component
 
-~~~pwsh
-dataset init recipes2.ds
-copy recipes_api.yaml recipes_api2.yaml
-copy -Recurse htdocs htdocs2
+Start out with a minimal Class definition and customElement definition
+
+~~~javascript
+/**
+ * a-to-z-list.js, this wrap a standard UL list providing A to Z navigation list
+ */
+export class AToZList extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+  }
+
+}
+customElements.define('a-to-z-list', AToZList);
+ ~~~
+
+NOTE: the constructor and that the web component does do any thing yet.
+
+# Part 2.3: Introducing Shadow DOM
+
+You can build your web component in the Shadow DOM that way you can sprinkle into your document as needed. We need to include that in our contrustor.
+
+~~~JavaScript
+export class AToZList extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+  }
+}
+customElements.define('a-to-z-list', AToZList);
 ~~~
 
-(NOTE: The first line should look familiar, the others are just time savers)
+Reload you web page, what does does it look like?
 
-# Part 2.1: Updating our YAML configuration
 
-- edit our [recipes_api2.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
-- update the `htdocs` reference
-- update the port number in hosts to 8002
-- update the dataset to `recipes2.ds`
-- What additional files need to change?
-  - did we hard code the collection name in HTML?
-  - did we hard code the collection name in JavaScript?
+# Part 2.3: What do we want the callback to do? 
 
-# Part 2.1: Testing a new instance
+We use the `connectedCallback()` method to render our component from the Shaddow DOM where it got ready.
 
-- Test our new instance
-  - What is broken?
-  - Did we catch all the places with hard coded collection names?
-  - What about behaviors?
-- Shutdown down and restart datasetd to debug YAML changes
+~~~JavaScript
+export class AToZList extends HTMLElement {
+  constructor() {
+    super();
+    // This next line engages the Shadow DOM, what does this do to the display?
+    this.attachShadow({ mode: 'open' });
+  }
 
-~~~shell
-datasetd recipes_api2.yaml
+  connectedCallback() {
+  }
+
+}
+customElements.define('a-to-z-list', AToZList);
 ~~~
 
-(NOTE: note the "d" at the end of "datasetd")
+What happened in our web page?
 
-# Part 2.2: Desirable changes
+Part 2.3: Basic Structure of our component using Showdow Dom
+
+~~~JavaScript
+export class AToZList extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+      <style>
+        /* Basic styles */
+        menu {
+          list-style-type: none;
+          padding: 0;
+        }
+      </style>
+      <menu id="menu"></menu>
+      <div id="list-container"></div>
+    `;
+
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
+}
+
+customElements.define('a-to-z-list', AToZList);
+~~~
+
+# Part 2.3: Display Items
+
+Objective: Display the list items in the component without any categorization.
+
+~~~JavaScript
+render() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <style>
+      /* Basic styles */
+      menu {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+    <menu id="menu"></menu>
+    <div id="list-container"></div>
+  `;
+
+  this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+  const listContainer = this.shadowRoot.querySelector('#list-container');
+  const ulElement = this.querySelector('ul');
+
+  if (ulElement) {
+    listContainer.appendChild(ulElement.cloneNode(true));
+  }
+}
+~~~
+
+Part 2.3: Categorize Items by Letter
+
+Objective: Organize items by their starting letter.
+
+~~~JavaScript
+render() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <style>
+      /* Basic styles */
+      menu {
+        list-style-type: none;
+        padding: 0;
+      }
+      .letter-section {
+        list-style-type: none;
+      }
+    </style>
+    <menu id="menu"></menu>
+    <div id="list-container"></div>
+  `;
+
+  this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+  const listContainer = this.shadowRoot.querySelector('#list-container');
+  const ulElement = this.querySelector('ul');
+
+  if (!ulElement) return;
+
+  const items = Array.from(ulElement.querySelectorAll('li'));
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const sections = {};
+
+  items.forEach(item => {
+    const firstLetter = item.textContent.trim()[0].toUpperCase();
+    if (!sections[firstLetter]) sections[firstLetter] = [];
+    sections[firstLetter].push(item);
+  });
+
+  Object.keys(sections).forEach(letter => {
+    const section = document.createElement('ul');
+    section.classList.add('letter-section');
+    section.id = `section-${letter}`;
+
+    sections[letter].forEach(item => {
+      section.appendChild(item.cloneNode(true));
+    });
+
+    listContainer.appendChild(section);
+  });
+}
+~~~
+
+Part 2.3: Add Navigation Menu
+
+Objective: Add a navigation menu to jump to sections by letter.
+
+~~~JavaScript
+render() {
+  // Previous code remains the same until the sections loop
+
+  const menu = this.shadowRoot.querySelector('#menu');
+
+  Object.keys(sections).forEach(letter => {
+    const menuItem = document.createElement('li');
+    const menuLink = document.createElement('a');
+    menuLink.href = `#section-${letter}`;
+    menuLink.textContent = letter;
+    menuItem.appendChild(menuLink);
+    menu.appendChild(menuItem);
+
+    // Rest of the section creation code
+  });
+}
+~~~
+
+# Part 2.3: Add Scrolling and Back to Menu Link
+
+Objective: Implement smooth scrolling and a "Back to Menu" link.
+
+~~~JavaScript
+scrollToSection(section) {
+  const yOffset = -100;
+  const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+render() {
+  // Previous code remains the same
+
+  const backToMenuLink = this.shadowRoot.querySelector('.back-to-menu');
+  if (backToMenuLink) {
+    backToMenuLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.scrollToSection(menu);
+    });
+  }
+
+  // Add event listeners to menu links for smooth scrolling
+  const menuLinks = this.shadowRoot.querySelectorAll('menu li a');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const targetSection = this.shadowRoot.querySelector(link.getAttribute('href'));
+      this.scrollToSection(targetSection);
+    });
+  });
+}
+~~~
+
+Part 2.3: Final Styling and Features
+
+Objective: Add final styling and conditional rendering based on attributes.
+
+~~~JavaScript
+render() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <style>
+      menu {
+        list-style-type: none;
+        padding: 0;
+      }
+      menu li {
+        display: inline;
+        margin-right: 10px;
+      }
+      .letter-section {
+        list-style-type: none;
+      }
+      .letter-section li {
+        text-decoration: none;
+        font-weight: none;
+      }
+      .back-to-menu {
+        display: block;
+        margin-top: 20px;
+      }
+    </style>
+    <menu id="menu"></menu>
+    <div id="list-container"></div>
+    ${this.hasAttribute('long') ? '<a class="back-to-menu" href="#menu">Back to Menu</a>' : ''}
+  `;
+
+  // Rest of the render method remains the same
+}
+~~~
+
+# Part 2.3: A final working A to Z list
+
+~~~JavaScript
+/**
+ * a-to-z-list.js, this wraps a standard UL list providing A to Z navigation list
+ */
+export class AToZList extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    const template = document.createElement('template');
+    template.innerHTML = `
+      <style>
+        menu {
+          list-style-type: none;
+          padding: 0;
+        }
+        menu li {
+          display: inline;
+          margin-right: 10px;
+        }
+        .letter-section {
+          list-style-type: none;
+        }
+        .letter-section li {
+          text-decoration: none;
+          font-weight: normal;
+        }
+        .back-to-menu {
+          display: block;
+          margin-top: 20px;
+        }
+      </style>
+      <menu id="menu"></menu>
+      <div id="list-container"></div>
+      ${this.hasAttribute('long') ? '<a class="back-to-menu" href="#menu">Back to Menu</a>' : ''}
+    `;
+
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+    const listContainer = this.shadowRoot.querySelector('#list-container');
+    const menu = this.shadowRoot.querySelector('#menu');
+
+    const ulElement = this.querySelector('ul');
+    if (!ulElement) return;
+
+    const items = Array.from(ulElement.querySelectorAll('li'));
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const sections = {};
+
+    items.forEach(item => {
+      const firstLetter = item.textContent.trim()[0].toUpperCase();
+      if (!sections[firstLetter]) {
+        sections[firstLetter] = [];
+      }
+      sections[firstLetter].push(item);
+    });
+
+    alphabet.split('').forEach(letter => {
+      if (sections[letter]) {
+        const menuItem = document.createElement('li');
+        const menuLink = document.createElement('a');
+        menuLink.href = `#section-${letter}`;
+        menuLink.textContent = letter;
+        menuLink.addEventListener('click', (event) => {
+          event.preventDefault();
+          const targetSection = this.shadowRoot.querySelector(`#section-${letter}`);
+          this.scrollToSection(targetSection);
+        });
+        menuItem.appendChild(menuLink);
+        menu.appendChild(menuItem);
+
+        const section = document.createElement('ul');
+        section.classList.add('letter-section');
+        section.id = `section-${letter}`;
+        const sectionHeading = document.createElement('li');
+        const sectionHeadingLink = document.createElement('a');
+        sectionHeadingLink.href = `#menu`;
+        sectionHeadingLink.textContent = letter;
+        sectionHeadingLink.addEventListener('click', (event) => {
+          event.preventDefault();
+          this.scrollToSection(menu);
+        });
+        sectionHeading.appendChild(sectionHeadingLink);
+        section.appendChild(sectionHeading);
+
+        sections[letter].forEach(item => {
+          const clonedItem = item.cloneNode(true);
+          section.appendChild(clonedItem);
+        });
+        listContainer.appendChild(section);
+      }
+    });
+
+    const backToMenuLink = this.shadowRoot.querySelector('.back-to-menu');
+    if (backToMenuLink) {
+      backToMenuLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.scrollToSection(menu);
+      });
+    }
+  }
+
+  scrollToSection(section) {
+    const yOffset = -100;
+    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth'
+    });
+  }
+}
+
+customElements.define('a-to-z-list', AToZList);
+~~~
+
+# Part 2.4: Using existing Web Components, `<csv-textarea></csv-textarea>`
+
+- [CL-web-components]() provides a nice [CSV Textarea]()
+- Copy the component into your modules directory
+- Update you HTML markup
+- Test
+
+# Part 2.4: What does `<csv-textarea></csv-textara>` do?
 
 - Typing in comma separated values is cumbersome, can me improve that
 - We're going to submit the edit form as a JSON encoded document
 
-# Part 2.2: Fixing web form submission
+# Part 2.4: Fixing web form submission
 
 - The `utils.js` module includes a `saveRecipe` function
 - We need an event listener to trigger it
   - Which element?
   - What event?
 
-# Part 2.2: Update the HTML for edit_recipe.html
+# Part 2.4: Update the HTML for edit_recipe.html
 
 Add the following at the bottom of the page before the `</body>`.
 
@@ -226,27 +676,19 @@ Add the following at the bottom of the page before the `</body>`.
 </script>
 ~~~
 
-# Part 2.2: Restart datasetd and test
-
-~~~shell
-datasetd -debug recipes_api2.yaml
-~~~
-
-Test using your web browser.
-
-# Part 2.3: Improving the UI with Web Components
+# Part 2.5: Using an existing Web Component
 
 1. Extend the HTML elements available
 2. Implement components as JavaScript Modules
 
-# Part 2.3: CL-web-components
+# Part 2.5: CL-web-components
 
 - CL-web-components, a collection of web components designed for Caltech Library
 - Use your web browser retrieve the latest release
 
 <https://github.com/caltechlibrary/CL-web-components/releases>
 
-# Part 2.3: Copy the web components to the modules directory
+# Part 2.5: Copy the web components to the modules directory
 
 - Unzip just the JavaScript files
 - Move the JavaScript files in the zip file to `htdocs2/modules/`.
@@ -256,7 +698,7 @@ unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
 mv -v *.js htdocs2/models/
 ~~~
 
-# Part 2.2: Adding CSVTextarea to edit_recipe.html
+# Part 2.5: Adding CSVTextarea to edit_recipe.html
 
 - edit `htdocs2/edit_recipe.html`
   - Include the CSVTextarea JavaScript module in the document head
@@ -264,14 +706,14 @@ mv -v *.js htdocs2/models/
 
 See: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html>
 
-# Part 2.2: What are the attributes needed in a `<csv-textarea>`?
+# Part 2.5: What are the attributes needed in a `<csv-textarea>`?
 
 - copy the attributes form the "ingredients" textarea to the `<csv-textarea>`
 - Add an these attributes to `<csv-textarea>`
   - `column-headings="Ingredients,Units"`
   - `debug="true"`
 
-# Part 2.2: Restart recipes_api2.yaml and test
+# Part 2.5: Restart recipes_api2.yaml and test
 
 Start up our web service
 
@@ -283,7 +725,7 @@ dataset recipes_api2.yaml
 2. Turn on your developer tools
 3. Test the web component, what's the problem you see?
 
-# Part 2.2: Getting the table populated, update `utils.js`
+# Part 2.5: Getting the table populated, update `utils.js`
 
 CSVTextarea has the ability to be updated from CSV text. Let's do that.
 
@@ -303,7 +745,7 @@ if (data["ingredients"] !== undefined) {
 }
 ~~~
 
-# Part 2.2: Test and debug
+# Part 2.5: Test and debug
 
 - Do you find other problems?
 

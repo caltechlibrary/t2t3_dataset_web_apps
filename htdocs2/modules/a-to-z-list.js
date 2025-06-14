@@ -1,4 +1,7 @@
-class AToZUL extends HTMLElement {
+/**
+ * a-to-z-list.js, this wraps a standard UL list providing A to Z navigation list
+ */
+export class AToZList extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -25,7 +28,7 @@ class AToZUL extends HTMLElement {
         }
         .letter-section li {
           text-decoration: none;
-          font-weight: none;         
+          font-weight: normal;
         }
         .back-to-menu {
           display: block;
@@ -86,7 +89,7 @@ class AToZUL extends HTMLElement {
         section.appendChild(sectionHeading);
 
         sections[letter].forEach(item => {
-          const clonedItem = item.cloneNode(true); // Clone the item to preserve nested HTML
+          const clonedItem = item.cloneNode(true);
           section.appendChild(clonedItem);
         });
         listContainer.appendChild(section);
@@ -103,7 +106,7 @@ class AToZUL extends HTMLElement {
   }
 
   scrollToSection(section) {
-    const yOffset = -100; // Adjust this value to control the offset from the top
+    const yOffset = -100;
     const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
     window.scrollTo({
@@ -113,6 +116,4 @@ class AToZUL extends HTMLElement {
   }
 }
 
-customElements.define('a-to-z-ul', AToZUL);
-
-export { AToZUL };
+customElements.define('a-to-z-list', AToZList);
