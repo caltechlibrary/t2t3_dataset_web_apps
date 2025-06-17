@@ -251,12 +251,11 @@ Here's the HTML we'll use for our test page, `a-to-z-list.html`.
 
 # Part 2.3: Building an A to Z list web component
 
+See [a-to-z-list_v0.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v0.js)
+
 Start out with a minimal Class definition and customElement definition
 
-~~~javascript
-/**
- * a-to-z-list.js, this wrap a standard UL list providing A to Z navigation list
- */
+~~~JavaScript
 export class AToZList extends HTMLElement {
   constructor() {
     super();
@@ -264,14 +263,15 @@ export class AToZList extends HTMLElement {
 
   connectedCallback() {
   }
-
 }
 customElements.define('a-to-z-list', AToZList);
- ~~~
+~~~
 
 NOTE: the constructor and that the web component does do any thing yet.
 
 # Part 2.3: Introducing Shadow DOM
+
+See [a-to-z-list_v1.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v1.js)
 
 You can build your web component in the Shadow DOM that way you can sprinkle into your document as needed. We need to include that in our contrustor.
 
@@ -282,10 +282,8 @@ export class AToZList extends HTMLElement {
     // This next line engages the Shadow DOM
     this.attachShadow({ mode: 'open' });
   }
-
   connectedCallback() {
   }
-
 }
 customElements.define('a-to-z-list', AToZList);
 ~~~
@@ -293,6 +291,8 @@ customElements.define('a-to-z-list', AToZList);
 Reload you web page, what does does it look like?
 
 # Part 2.3: What do we want the callback to do? 
+
+See [a-to-z-list_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js)
 
 We use the `connectedCallback()` method to to call a render method. This is what makes our Shaddow DOM ready. What happened in our web page?
 
@@ -304,17 +304,13 @@ export class AToZList extends HTMLElement {
 
   render() {
     const template = document.createElement('template');
-    template.innerHTML = `
-      <style>
+    template.innerHTML = `<style>
+        /* Basic styles */
         menu { list-style-type: none; padding: 0; }
-        menu li { display: inline; margin-right: 10px; }
-        .letter-section { list-style-type: none; }
-        .letter-section li { text-decoration: none; font-weight: none; }
-        .back-to-menu { display: block; margin-top: 20px; }
       </style>
       <menu id="menu"></menu>
-      <div id="list-container">This is where our A to List will go</div>
-    `;
+      <div id="list-container">This is where our A to List will go</div>`;
+
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
@@ -322,6 +318,8 @@ customElements.define('a-to-z-list', AToZList);
 ~~~
 
 # Part 2.3: Basic Structure of our component using Showdow Dom
+
+See [a-to-z-list_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js)
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -345,6 +343,8 @@ customElements.define('a-to-z-list', AToZList);
 ~~~
 
 # Part 2.3: Display Items
+
+See [a-to-z-list_v3.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v3.js)
 
 Objective: Display the list items in the component without any categorization.
 
@@ -370,6 +370,8 @@ render() {
 ~~~
 
 # Part 2.3: Categorize Items by Letter
+
+See [a-to-z-list_v4.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v4.js)
 
 Objective: Organize items by their starting letter.
 
@@ -400,8 +402,8 @@ render() {
     if (!sections[firstLetter]) sections[firstLetter] = [];
     sections[firstLetter].push(item);
   });
-  // NOTE: Next slide will start updateing here
   Object.keys(sections).forEach(letter => {
+    // NOTE: Menu setup will go here
     const section = document.createElement('ul');
     section.classList.add('letter-section');
     section.id = `section-${letter}`;
@@ -417,11 +419,14 @@ render() {
 
 # Part 2.3: Add Navigation Menu
 
+See [a-to-z-list_v5.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v5.js)
+
 Objective: Add a navigation menu to jump to sections by letter.
 
 ~~~JavaScript
 render() {
-  // Previous code remains the same until the sections loop
+  // Previous code remains the same until the sections loop but we
+  // need to grab the menu element in the template.
   const menu = this.shadowRoot.querySelector('#menu');
 
   Object.keys(sections).forEach(letter => {
@@ -439,16 +444,11 @@ render() {
 
 # Part 2.3: Add Scrolling and Back to Menu Link
 
+See [a-to-z-list_v6.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v6.js)
+
 Objective: Implement smooth scrolling and a "Back to Menu" link.
 
 ~~~JavaScript
-scrollToSection(section) {
-  const yOffset = -100;
-  const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-  window.scrollTo({ top: y, behavior: 'smooth' });
-}
-
 render() {
   // Previous code remains the same
 
@@ -468,11 +468,20 @@ render() {
       const targetSection = this.shadowRoot.querySelector(link.getAttribute('href'));
       this.scrollToSection(targetSection);
     });
-  });
+  }); 
+}
+
+scrollToSection(section) {
+  const yOffset = -100;
+  const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  window.scrollTo({ top: y, behavior: 'smooth' });
 }
 ~~~
 
 # Part 2.3: Final Styling and Features
+
+See [a-to-z-list_v7.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v7.js)
 
 Objective: Add final styling and conditional rendering based on attributes.
 
@@ -498,7 +507,7 @@ render() {
 
 # Part 2.3: A final working A to Z list
 
-See [a-to-z-list.js](htdocs2/modules/a-to-z-list.js)
+See [a-to-z-list.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list.js)
 
 ~~~JavaScript
 /**
