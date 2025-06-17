@@ -25,16 +25,20 @@ url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 
 # Welcome to "A recipe for applications"
 
-Welcome everyone. This is part 2 of a hands on workshop, enhancing the user experience through web components.
+Welcome everyone,
 
-## What we'll learn
+This presentation builds on web we built in the Part 1.
+
+This workshop is focused on enhancing our application using Web Components.
+
+# What we'll learn
 
 - What are Web Components?
 - Why use Web Components?
 - Anatomy of Web Components
 - Using Web Compontents
 
-## What we'll do
+# What we'll do
 
 - Setup up a new static content directory for update our [recipes_api.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
 - Create our first web component, "`<hello-clock></hello-clock>`"
@@ -54,7 +58,7 @@ Welcome everyone. This is part 2 of a hands on workshop, enhancing the user expe
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/)
-- [Dataset >= 2.2.7](https://caltechlibrary.github.io/dataset/INSTALL.html)
+- [Dataset >= 2.2.8](https://caltechlibrary.github.io/dataset/INSTALL.html) (you may need to install the new version)
 - The YAML, HTML and JavaScript you developed from Part I
 
 We can start our second iteration of our application once you have these available.
@@ -121,31 +125,31 @@ We're have our web service working, time for Web Components.
 # Part 2.2: The "What" of Web Components
 
 - Web Components are a W3C standard to allowing you to extend HTML
-  - (Extentions inherit, include accessibility features)
-- A Web Component encapsulates the HTML, CSS and JavaScript
+  - (Web Components inherit, include accessibility features)
+- A Web Component encapsulates the HTML, CSS and JavaScript use to create a new HTML Element
+  - (They encourage sensible code re-use)
 - Web Components are re-usable of blocks of structure, function and presentation
 
 # Part 2.2: The "Why" of Web Components
 
-- Web components provide a sustainable way to extend HTML language to fit the needs your site or application
+- Web components provide a sustainable way to extend HTML language to fit your needs
 - They simplify use because they are expressed as HTML elements
 - Web components cleanly encapsule HTML, CSS and JavaScript
-  - They do not inter with other resources or elements on your page!
-- They encourage code sensible re-use
-- They can help normalize user experience through providing predictable elements on which to structure sites
-- They can are compatible with progressive enhancement techniques
+  - They do not interfer with other resources or elements on your page!
+  - They are compatible with progressive enhancement techniques
+- They can help normalize user experience as a part of your design system
 
 # Part 2.2: The Anatomy of a Web Component
 
 - A component is implemented as a JavaScript class
   - The class extends an existing HTML element (inheriting its features)
 - The class contains a `connectedCallback()` method
-- Is registered using the `customElements.define()` method
+- The component is "registered" using the `customElements.define()` method
   - Example: `customElements.define( 'hello-clock', HelloClock );`
 
 # Part 2.2: The "Hello Clock" Web Component
 
-- Let's create a web component called "hello-clock" ("htdocs/modules/hello-cock.js")
+- Let's create a web component called "hello-clock" ("htdocs/modules/hello-clock.js")
 - "hello-clock" will extended the HTML element
 - It will display a hello message and the time
 
@@ -275,69 +279,68 @@ You can build your web component in the Shadow DOM that way you can sprinkle int
 export class AToZList extends HTMLElement {
   constructor() {
     super();
+    // This next line engages the Shadow DOM
+    this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
   }
+
 }
 customElements.define('a-to-z-list', AToZList);
 ~~~
 
 Reload you web page, what does does it look like?
 
-
 # Part 2.3: What do we want the callback to do? 
 
-We use the `connectedCallback()` method to render our component from the Shaddow DOM where it got ready.
+We use the `connectedCallback()` method to to call a render method. This is what makes our Shaddow DOM ready. What happened in our web page?
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
-  constructor() {
-    super();
-    // This next line engages the Shadow DOM, what does this do to the display?
-    this.attachShadow({ mode: 'open' });
-  }
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
 
-  connectedCallback() {
-  }
-
-}
-customElements.define('a-to-z-list', AToZList);
-~~~
-
-What happened in our web page?
-
-Part 2.3: Basic Structure of our component using Showdow Dom
-
-~~~JavaScript
-export class AToZList extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-  }
-
-  connectedCallback() {
-    this.render();
-  }
+  connectedCallback() { this.render(); }
 
   render() {
     const template = document.createElement('template');
     template.innerHTML = `
       <style>
-        /* Basic styles */
-        menu {
-          list-style-type: none;
-          padding: 0;
-        }
+        menu { list-style-type: none; padding: 0; }
+        menu li { display: inline; margin-right: 10px; }
+        .letter-section { list-style-type: none; }
+        .letter-section li { text-decoration: none; font-weight: none; }
+        .back-to-menu { display: block; margin-top: 20px; }
       </style>
       <menu id="menu"></menu>
-      <div id="list-container"></div>
+      <div id="list-container">This is where our A to List will go</div>
     `;
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
+}
+customElements.define('a-to-z-list', AToZList);
+~~~
+
+# Part 2.3: Basic Structure of our component using Showdow Dom
+
+~~~JavaScript
+export class AToZList extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); }
+
+  connectedCallback() { this.render(); }
+
+  render() {
+    const template = document.createElement('template');
+    template.innerHTML = `<style>
+        /* Basic styles */
+        menu { list-style-type: none; padding: 0; }
+      </style>
+      <menu id="menu"></menu>
+      <div id="list-container"></div>`;
 
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
-
 customElements.define('a-to-z-list', AToZList);
 ~~~
 
@@ -348,17 +351,12 @@ Objective: Display the list items in the component without any categorization.
 ~~~JavaScript
 render() {
   const template = document.createElement('template');
-  template.innerHTML = `
-    <style>
+  template.innerHTML = `<style>
       /* Basic styles */
-      menu {
-        list-style-type: none;
-        padding: 0;
-      }
+      menu { list-style-type: none; padding: 0; }
     </style>
     <menu id="menu"></menu>
-    <div id="list-container"></div>
-  `;
+    <div id="list-container"></div>`;
 
   this.shadowRoot.appendChild(template.content.cloneNode(true));
 
@@ -371,27 +369,20 @@ render() {
 }
 ~~~
 
-Part 2.3: Categorize Items by Letter
+# Part 2.3: Categorize Items by Letter
 
 Objective: Organize items by their starting letter.
 
 ~~~JavaScript
 render() {
   const template = document.createElement('template');
-  template.innerHTML = `
-    <style>
+  template.innerHTML = `<style>
       /* Basic styles */
-      menu {
-        list-style-type: none;
-        padding: 0;
-      }
-      .letter-section {
-        list-style-type: none;
-      }
+      menu { list-style-type: none; padding: 0; }
+      .letter-section { list-style-type: none; }
     </style>
     <menu id="menu"></menu>
-    <div id="list-container"></div>
-  `;
+    <div id="list-container"></div>`;
 
   this.shadowRoot.appendChild(template.content.cloneNode(true));
 
@@ -409,7 +400,7 @@ render() {
     if (!sections[firstLetter]) sections[firstLetter] = [];
     sections[firstLetter].push(item);
   });
-
+  // NOTE: Next slide will start updateing here
   Object.keys(sections).forEach(letter => {
     const section = document.createElement('ul');
     section.classList.add('letter-section');
@@ -424,14 +415,13 @@ render() {
 }
 ~~~
 
-Part 2.3: Add Navigation Menu
+# Part 2.3: Add Navigation Menu
 
 Objective: Add a navigation menu to jump to sections by letter.
 
 ~~~JavaScript
 render() {
   // Previous code remains the same until the sections loop
-
   const menu = this.shadowRoot.querySelector('#menu');
 
   Object.keys(sections).forEach(letter => {
@@ -482,7 +472,7 @@ render() {
 }
 ~~~
 
-Part 2.3: Final Styling and Features
+# Part 2.3: Final Styling and Features
 
 Objective: Add final styling and conditional rendering based on attributes.
 
@@ -491,25 +481,11 @@ render() {
   const template = document.createElement('template');
   template.innerHTML = `
     <style>
-      menu {
-        list-style-type: none;
-        padding: 0;
-      }
-      menu li {
-        display: inline;
-        margin-right: 10px;
-      }
-      .letter-section {
-        list-style-type: none;
-      }
-      .letter-section li {
-        text-decoration: none;
-        font-weight: none;
-      }
-      .back-to-menu {
-        display: block;
-        margin-top: 20px;
-      }
+      menu { list-style-type: none; padding: 0; }
+      menu li { display: inline; margin-right: 10px; }
+      .letter-section { list-style-type: none; }
+      .letter-section li { text-decoration: none; font-weight: none; }
+      .back-to-menu { display: block; margin-top: 20px; }
     </style>
     <menu id="menu"></menu>
     <div id="list-container"></div>
@@ -521,6 +497,8 @@ render() {
 ~~~
 
 # Part 2.3: A final working A to Z list
+
+See [a-to-z-list.js](htdocs2/modules/a-to-z-list.js)
 
 ~~~JavaScript
 /**
@@ -540,25 +518,11 @@ export class AToZList extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
       <style>
-        menu {
-          list-style-type: none;
-          padding: 0;
-        }
-        menu li {
-          display: inline;
-          margin-right: 10px;
-        }
-        .letter-section {
-          list-style-type: none;
-        }
-        .letter-section li {
-          text-decoration: none;
-          font-weight: normal;
-        }
-        .back-to-menu {
-          display: block;
-          margin-top: 20px;
-        }
+        menu { list-style-type: none; padding: 0; }
+        menu li { display: inline; margin-right: 10px; }
+        .letter-section { list-style-type: none; }
+        .letter-section li { text-decoration: none; font-weight: normal; }
+        .back-to-menu { display: block; margin-top: 20px; }
       </style>
       <menu id="menu"></menu>
       <div id="list-container"></div>
@@ -643,6 +607,7 @@ export class AToZList extends HTMLElement {
 
 customElements.define('a-to-z-list', AToZList);
 ~~~
+
 
 # Part 2.4: Using existing Web Components, `<csv-textarea></csv-textarea>`
 
