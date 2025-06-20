@@ -5,3 +5,6 @@ workshop/
 *.swp
 *.bak
 *.ds
+# Ignore the following for part2 of workshop
+htdocs/a-to-z-list.html
+htdocs/modules/a-to-z-list.js

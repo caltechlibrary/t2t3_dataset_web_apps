@@ -30,22 +30,13 @@ function populateUL(ul, data) {
  * listRecipes contacts the JSON API and populates the URL list identified using the id "recipe_list".
  */
 async function listRecipes() {
-  /*
-  const ul = document.getElementqById("recipe-list");
+  const ul = document.getElementById("recipe-list");
   // Clear our UL list
   ul.innerHTML = "";
   // Get our list
   const data = await getRecipes();
   // Now populate it with "data"
   populateUL(ul, data);
-  */
- const aToZList = document.querySelector('a-to-z-list');
- console.log(aToZList);
- const ul = document.createElement('ul');
- const data = await getRecipes();
- populateUL(ul, data);
- aToZList.innerHTML = ul.outerHTML;
-// aToZList.render()
 }
 
 /**

@@ -1,0 +1,24 @@
+#!/usr/bin/env -S datasetd -debug
+# Host and port to listen on
+host: localhost:8001
+# location of our static content
+htdocs: htdocs1
+# Define the collections supported in our application
+collections:
+  # Define the permissions and behavior of the API For our recipe collection
+  - dataset: recipes.ds
+    keys: true
+    create: true
+    # When we successfully create or update via a form using a POST method
+    # display the updated object
+    create_success: http://localhost:8001/display_recipe.html
+    # When we fail go back to the current page.
+    create_error: http://localhost:8001/edit_recipe.html
+    read: true
+    update: true
+    delete: false
+    query:
+      list_recipes: |
+        select src
+        from recipes
+        order by src->>'name'
