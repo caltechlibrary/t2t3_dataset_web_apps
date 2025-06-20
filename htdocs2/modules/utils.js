@@ -69,6 +69,8 @@ export async function saveRecipe(event) {
   // Prevent the default form submission
   event.preventDefault();
   const ingredientsTextarea = document.getElementById('ingredients');
+  // NOTE: We need to cause the ingredients list to update one final time before getting the form data.
+  ingredientsTextarea.toTextarea();
 
   // Retrieve and setup data for submission
   const form = event.target;
@@ -78,9 +80,6 @@ export async function saveRecipe(event) {
   // NOTE: In our form we called the submit button "save", so that's what we remove.
   formData.delete("save"); //formData.delete("submit");
   formData.delete("cancel");
-  // We need to turn the value held by our custom element into a CSV data ..
-  formData.set('ingredients', ingredientsTextarea.toCSV());
-  //return ; // DEBUG
 
   // Convert FormData to URL-encoded string
   const urlEncodedData = new URLSearchParams(formData).toString();
