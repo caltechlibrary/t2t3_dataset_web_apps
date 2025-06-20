@@ -12,7 +12,7 @@ authors:
 
 
 repository_code: https://github.com/caltechlibrary/t2t3_dataset_web_apps
-version: 0.0.5
+version: 0.0.6
 license_url: https://caltechlibrary.github.io/t2t3_dataset_web_apps/LICENSE
 
 programming_language:
@@ -29,15 +29,16 @@ keywords:
   - web components
   - presentation
 
-date_released: 2025-06-12
+date_released: 2025-06-20
 ---
 
 About this software
 ===================
 
-## t2t3_dataset_web_apps 0.0.5
+## t2t3_dataset_web_apps 0.0.6
 
-Starting the second draft of this workshop. Split workshop into two parts, building web applications with dataset and enhancing the browser experience with web components. Adding suggestions from first presentation.
+Starting the second draft of this workshop. Split workshop into two parts, building web applications with dataset and enhancing the browser experience with web components. Adding 
+suggestions from first presentation.
 
 ### Authors
 

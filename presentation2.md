@@ -12,8 +12,8 @@ urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: 2025-06-13
-draft: false
+updateDate: 2025-06-20
+draft: true
 pubDate: TBD
 place: Caltech Library (Zoom)
 date: TBD
@@ -36,14 +36,14 @@ This workshop is focused on enhancing our application using Web Components.
 - What are Web Components?
 - Why use Web Components?
 - Anatomy of Web Components
-- Using Web Compontents
+- Using Web Components
 
 # What we'll do
 
 - Setup up a new static content directory for update our [recipes_api.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
 - Create our first web component, "`<hello-clock></hello-clock>`"
 - Develop an A to Z web component, "`<a-to-z-list></a-to-z-list>`"
-- Use the [`<csv-textarea></csv-textarea>`](https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingrediant lists
+- Use the [`<csv-textarea></csv-textarea>`](https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
 
 # Workshop: "A recipe for applications"
 
@@ -109,7 +109,7 @@ datasetd recipes_api.yaml
 
 - Web components provide a sustainable way to extend HTML to fit our needs
 - They simplify use because they are expressed as HTML elements
-- Web components **cleanly encapsule** HTML, CSS and JavaScript
+- Web components **cleanly encapsulate** HTML, CSS and JavaScript
   - They are impact is constrained to the elements inside!
   - They are compatible with progressive enhancement techniques
   - They can normalize user experience as a part of a design system
@@ -138,10 +138,10 @@ This will display something like, "Hi There! 09:27:23 GMT-0700 (Pacific Daylight
 
 Create [htdocs/modules/hello-clock.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/hello-clock.js)
 
-~~~javascript
+~~~JavaScript
 // Define our new element as a class
 class HelloClock extends HTMLElement {
-  // Hook used by browser to instanciate the element in the page
+  // Hook used by browser to instantiate the element in the page
   connectedCallback() {
     // Get the current time as an object
     const d = new Date();
@@ -178,7 +178,7 @@ customElements.define( 'hello-clock', HelloClock );
 2. Open your developer tools and reload the page
 3. Notice the logs provided by Dataset Web Service
 
-# Part 2.2: Congradulations
+# Part 2.2: Congratulations
 
 ## You've built your first Web Component!!!!
 
@@ -203,7 +203,7 @@ touch htdocs/a-to-z-list.html htdocs/modules/a-to-z-list.js
 
 Windows:
 
-~~~pswh
+~~~pwsh
 New-Item -Path htdocs/a-to-z-list.html ; New-Item htdocs/modules/a-to-z-list.js
 ~~~
 
@@ -260,7 +260,7 @@ NOTE: the constructor and that the web component does do any thing yet. Open the
 
 (source [a-to-z-list_v1.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v1.js))
 
-You can build your web component in the Shadow DOM that way you can sprinkle it into your document as needed. We need to include that in our contrustor.
+You can build your web component in the Shadow DOM that way you can sprinkle it into your document as needed. We need to include that in our constructor.
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -281,7 +281,7 @@ Reload you web page, what does does it look like?
 
 (source [a-to-z-list_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js))
 
-We use the `connectedCallback()` method to to call a render method. This is what makes our Shaddow DOM ready.
+We use the `connectedCallback()` method to to call a render method. This is what makes our Shadow DOM ready.
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -306,7 +306,7 @@ customElements.define('a-to-z-list', AToZList);
 
 What happened in our web page?
 
-# Part 2.3: Basic Structure of our component using Showdow Dom
+# Part 2.3: Basic Structure of our component using Shadow DOM
 
 (source [a-to-z-list_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js))
 
@@ -613,7 +613,7 @@ customElements.define('a-to-z-list', AToZList);
 - The trivial `hello-clock`
 - The more complex `a-to-z-list`
 
-Congradulations! Time to update our application.
+Congratulations! Time to update our application.
 
 # Part 2.4: Using our A to Z list
 
@@ -644,7 +644,7 @@ Congradulations! Time to update our application.
 # Part 2.4: Think about the innerHTML, look at `index_recipes.js`
 
 `listRecipes()`
-: Gets the outer element, retrieves data and then envokes `populateUL()`
+: Gets the outer element, retrieves data and then invokes `populateUL()`
 
 `populateUL()`
 : Populates the UL lists with the data
@@ -653,9 +653,9 @@ Congradulations! Time to update our application.
 
 - It should get the handle for the `<a-to-z-list></a-to-z-list>`
 - It should retrieve the data
-- It envoke `populateUL()` but populate that innerHTML!
+- It invoke `populateUL()` but populate that innerHTML!
 
-# Part 2.4: Taking advantage of inheritting HTML element
+# Part 2.4: Taking advantage of inheriting HTML element
 
 (source [index_recipes_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js))
 
@@ -699,7 +699,7 @@ What does the updates look like?
 - Display elements can mutate, we should support them when implementing display components
   - The JavaScript defining a web component extends HTML, that should be the focus
   - The page level JavaScript is about adding behaviors at the page level
-  - Balance the areas of responsiblities
+  - Balance the areas of responsibilities
 
 # Part 2.5: Using the CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
 
@@ -776,7 +776,7 @@ Include our web component module in the head.
 
 # Part 2.5: Update the HTML for edit_recipe.html
 
-Wrap our ingrediants `textarea`  in a `csv-textarea`.
+Wrap our ingredients `textarea`  in a `csv-textarea`.
 
 ~~~html
   <csv-textarea id="ingredients" name="ingredients"          
@@ -808,107 +808,23 @@ Add the following at the bottom of the page before the `</body>`.
 - What issue do you find?
 - How could you improve this?
 
-# Part 2.6: Using an existing Web Components
-
-1. They extend the HTML elements available
-2. They are implement components as JavaScript Modules
-
-# Part 2.6: CL-web-components
-
-- CL-web-components, a collection of web components designed for Caltech Library
-- Right now they are experimental and subject to change
-- They are intended to grow as our design requirements formalize
-- Use your web browser retrieve the latest release
-
-<https://github.com/caltechlibrary/CL-web-components/releases>
-
-# Part 2.6: Copy the web components to the modules directory
-
-- Unzip just the JavaScript files
-- Move the JavaScript files in the zip file to `htdocs2/modules/`.
-
-~~~shell
-unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
-mv -v *.js htdocs2/models/
-~~~
-
-# Part 2.6: Adding CSVTextarea to edit_recipe.html
-
-- edit `htdocs2/edit_recipe.html`
-  - Include the CSVTextarea JavaScript module in the document head
-  - Wrapping the "ingredients" textarea with `<csv-textarea>`
-
-See: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html>
-
-# Part 2.5: What are the attributes needed in a `<csv-textarea>`?
-
-- copy the attributes form the "ingredients" textarea to the `<csv-textarea>`
-- Add an these attributes to `<csv-textarea>`
-  - `column-headings="Ingredients,Units"`
-  - `debug="true"`
-
-# Part 2.5: Restart recipes_api2.yaml and test
-
-Start up our web service
-
-~~~
-dataset recipes_api2.yaml
-~~~
-
-1. Point your browser at <http://localhost:8002/edit_recipe.html>
-2. Turn on your developer tools
-3. Test the web component, what's the problem you see?
-
-# Part 2.5: Getting the table populated, update `utils.js`
-
-CSVTextarea has the ability to be updated from CSV text. Let's do that.
-
-In `edit_recipe.js` you need to find this.
-
-~~~JavaScript
-if (data["ingredients"] !== undefined) {
-  ingredientsTextarea.innerHTML = data["ingredients"];
-}
-~~~
-
-And replace it with something like this.
-
-~~~JavaScript
-if (data["ingredients"] !== undefined) {
-  ingredientsTextarea.fromCSV(data['ingredients']);
-}
-~~~
-
-# Part 2.5: Test and debug
-
-- Do you find other problems?
-
 # Part 3: Exploring further
 
 - The server side can be turn key using a JavaScript web page
   - When is it a good idea?
   - When is be an bad idea?
-- Moving from a single layer stack to a two or three layer stack
-  - Dataset behind a front end web server
-  - Dataset behind middle ware
-- Is this approach sustainable?
+  - Should there be more layers?
+  - Can we get away with static only sites?
 
-# Part 3: Exploring Human Interfaces
-
-- Why bother with Web Components? 
-  - What's missing?
-- What are the assumptions in this approach? 
-  - Are they valid?
-
-# Part 3: Exploring Human Interfaces
+# Part 3: Exploring further
 
 - The traditional division of responsibilities in the browser is
   - HTML for structured data markup
   - CSS for visual design and layout
   - JavaScript to orchestrate behaviors
 - Does Web components contradict that the division of responsibilities?
-- Is progressive enhancement is still relevant in 2025?
-  - Is it OK to require JavaScript in a web page?
+- Is progressive enhancement still relevant in 2025?
+- Is it OK to require JavaScript in a web page?
 
 # Part 3: My Recommendations
 
@@ -920,17 +836,6 @@ if (data["ingredients"] !== undefined) {
   - data validation with middle ware (localhost: Go, TypeScript or Python)
   - object storage with Dataset (localhost)
 
-# Part 3: What I am still mulling over?
-
-- Dataset can shrink the stack but does not remove the need for middleware (yet)
-- Web Components offer the possibility of consistent interfaces across sites
-  - They can help with accessibility
-- I think Web Components ultimately simplify things
-  - Trade off: individual components can be complex
-- REST services force us to middleware or Browser JavaScript
-  - Is it reasonable to require JavaScript (or WASM)?
-  - Is there a simpler abstraction?
-
 # Reference: Dataset
 
 - [Dataset Project](https://caltechlibrary.github.io/dataset)
@@ -939,13 +844,13 @@ if (data["ingredients"] !== undefined) {
 
 # Reference: CL-web-components
 
-[CSVTextarea](https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js)
+[csv-textarea](https://github.com/caltechlibrary/CL-web-components/blob/main/csv-textarea.js)
 : Wraps a textarea element and presents a editable table of cells
 
-[AToZUL](https://github.com/caltechlibrary/CL-web-components/blob/main/a_to_z_ul.js)
+[a-to-z-list](https://github.com/caltechlibrary/CL-web-components/blob/main/a-to-z-list.js)
 : Wraps a UL list and creates an A to Z list
 
-[SortableTable](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_table.js)
+[sortable-table](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable-table.js)
 : Wraps an HTML table making it sort-able and filterable on a column
 
 - Getting help with CL-web-components, <https://github.com/caltechlibrary/CL-web-components/issues>.
@@ -954,7 +859,7 @@ if (data["ingredients"] !== undefined) {
 
 - [MDN Examples on GitHub](https://github.com/mdn/web-components-examples)
 - [Examples of Accessible Components](https://github.com/scottaohara/accessible_components)
-- [Awesome Standalones](https://github.com/davatron5000/awesome-standalones)
+- [Awesome Standalone](https://github.com/davatron5000/awesome-standalones)
 - [W3C Design System](https://design-system.w3.org/)
 
 # Reference: Programming Languages

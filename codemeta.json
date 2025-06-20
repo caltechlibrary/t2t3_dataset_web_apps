@@ -12,8 +12,8 @@
     }
   ],
   "dateCreated": "2025-05-30",
-  "dateModified": "2025-06-13",
-  "datePublished": "2025-06-12",
+  "dateModified": "2025-06-20",
+  "datePublished": "2025-06-20",
   "description": "The repository contains a presentation introducing web application construction using\nDataset and Web Components. It is intended for the T2T3 series at Caltech Library.\n\nIt presents the construction process to build a simple recipe collection system.",
   "funder": [
     {
@@ -52,10 +52,10 @@
     "htmlq",
     "CMTools >= 0.0.33"
   ],
-  "version": "0.0.5",
+  "version": "0.0.6",
   "developmentStatus": "draft",
   "issueTracker": "https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues",
-  "releaseNotes": "Starting the second draft of this workshop. Split workshop into two parts, building web applications with dataset and enhancing the browser experience with web components. Adding suggestions from first presentation.",
+  "releaseNotes": "Starting the second draft of this workshop. Split workshop into two parts, building web applications with dataset and enhancing the browser experience with web components. Adding \nsuggestions from first presentation.",
   "copyrightYear": 2025,
   "copyrightHolder": "California Institute of Technology"
 }

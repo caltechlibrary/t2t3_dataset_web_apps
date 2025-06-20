@@ -127,7 +127,7 @@ Components.</p>
 <li>What are Web Components?</li>
 <li>Why use Web Components?</li>
 <li>Anatomy of Web Components</li>
-<li>Using Web Compontents</li>
+<li>Using Web Components</li>
 </ul>
 </div>
 <div id="what-well-do" class="slide section level1">
@@ -143,7 +143,7 @@ href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_
 href="https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html"><code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></a>
 from <a
 href="https://github.com/caltechlibrary/CL-web-components/releases">CL-web-components</a>
-for our ingrediant lists</li>
+for our ingredient lists</li>
 </ul>
 </div>
 <div id="workshop-a-recipe-for-applications"
@@ -232,7 +232,7 @@ class="slide section level1">
 <li>Web components provide a sustainable way to extend HTML to fit our
 needs</li>
 <li>They simplify use because they are expressed as HTML elements</li>
-<li>Web components <strong>cleanly encapsule</strong> HTML, CSS and
+<li>Web components <strong>cleanly encapsulate</strong> HTML, CSS and
 JavaScript
 <ul>
 <li>They are impact is constrained to the elements inside!</li>
@@ -281,7 +281,7 @@ href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/m
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">// Define our new element as a class</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="kw">class</span> HelloClock <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="co">// Hook used by browser to instanciate the element in the page</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="co">// Hook used by browser to instantiate the element in the page</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">connectedCallback</span>() {</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="co">// Get the current time as an object</span></span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    <span class="kw">const</span> d <span class="op">=</span> <span class="kw">new</span> <span class="bu">Date</span>()<span class="op">;</span></span>
@@ -324,8 +324,8 @@ class="uri">http://localhost:8001/hello-clock.html</a></li>
 <li>Notice the logs provided by Dataset Web Service</li>
 </ol>
 </div>
-<div id="part-2.2-congradulations" class="slide section level1">
-<h1>Part 2.2: Congradulations</h1>
+<div id="part-2.2-congratulations" class="slide section level1">
+<h1>Part 2.2: Congratulations</h1>
 <h2 id="youve-built-your-first-web-component">You’ve built your first
 Web Component!!!!</h2>
 <p>Let’s take a quick break and stretch before moving forward</p>
@@ -348,7 +348,7 @@ class="slide section level1">
 <p>macOS and Linux:</p>
 <pre class="shell"><code>touch htdocs/a-to-z-list.html htdocs/modules/a-to-z-list.js</code></pre>
 <p>Windows:</p>
-<pre class="pswh"><code>New-Item -Path htdocs/a-to-z-list.html ; New-Item htdocs/modules/a-to-z-list.js</code></pre>
+<pre class="pwsh"><code>New-Item -Path htdocs/a-to-z-list.html ; New-Item htdocs/modules/a-to-z-list.js</code></pre>
 </div>
 <div id="part-2.3-building-an-a-to-z-list-web-component-2"
 class="slide section level1">
@@ -405,7 +405,7 @@ yet. Open the web page.</p>
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v1.js">a-to-z-list_v1.js</a>)</p>
 <p>You can build your web component in the Shadow DOM that way you can
 sprinkle it into your document as needed. We need to include that in our
-contrustor.</p>
+constructor.</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AToZList <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">constructor</span>() {</span>
@@ -425,7 +425,7 @@ class="slide section level1">
 <p>(source <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js">a-to-z-list_v2.js</a>)</p>
 <p>We use the <code>connectedCallback()</code> method to to call a
-render method. This is what makes our Shaddow DOM ready.</p>
+render method. This is what makes our Shadow DOM ready.</p>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AToZList <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">constructor</span>() { <span class="kw">super</span>()<span class="op">;</span> <span class="kw">this</span><span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span> }</span>
@@ -447,9 +447,9 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12
 <span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
 <p>What happened in our web page?</p>
 </div>
-<div id="part-2.3-basic-structure-of-our-component-using-showdow-dom"
+<div id="part-2.3-basic-structure-of-our-component-using-shadow-dom"
 class="slide section level1">
-<h1>Part 2.3: Basic Structure of our component using Showdow Dom</h1>
+<h1>Part 2.3: Basic Structure of our component using Shadow DOM</h1>
 <p>(source <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js">a-to-z-list_v2.js</a>)</p>
 <div class="sourceCode" id="cb13"><pre
@@ -750,7 +750,7 @@ class="slide section level1">
 <li>The trivial <code>hello-clock</code></li>
 <li>The more complex <code>a-to-z-list</code></li>
 </ul>
-<p>Congradulations! Time to update our application.</p>
+<p>Congratulations! Time to update our application.</p>
 </div>
 <div id="part-2.4-using-our-a-to-z-list" class="slide section level1">
 <h1>Part 2.4: Using our A to Z list</h1>
@@ -801,7 +801,7 @@ class="slide section level1">
 <dl>
 <dt><code>listRecipes()</code></dt>
 <dd>
-Gets the outer element, retrieves data and then envokes
+Gets the outer element, retrieves data and then invokes
 <code>populateUL()</code>
 </dd>
 <dt><code>populateUL()</code></dt>
@@ -816,13 +816,13 @@ Populates the UL lists with the data
 <li>It should get the handle for the
 <code>&lt;a-to-z-list&gt;&lt;/a-to-z-list&gt;</code></li>
 <li>It should retrieve the data</li>
-<li>It envoke <code>populateUL()</code> but populate that
+<li>It invoke <code>populateUL()</code> but populate that
 innerHTML!</li>
 </ul>
 </div>
-<div id="part-2.4-taking-advantage-of-inheritting-html-element"
+<div id="part-2.4-taking-advantage-of-inheriting-html-element"
 class="slide section level1">
-<h1>Part 2.4: Taking advantage of inheritting HTML element</h1>
+<h1>Part 2.4: Taking advantage of inheriting HTML element</h1>
 <p>(source <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js">index_recipes_v2.js</a>)</p>
 <div class="sourceCode" id="cb20"><pre
@@ -880,7 +880,7 @@ implementing display components
 the focus</li>
 <li>The page level JavaScript is about adding behaviors at the page
 level</li>
-<li>Balance the areas of responsiblities</li>
+<li>Balance the areas of responsibilities</li>
 </ul></li>
 </ul>
 </div>
@@ -922,7 +922,7 @@ function</li>
 <div id="part-2.5-retrieving-csv-textarae.js"
 class="slide section level1">
 <h1>Part 2.5: Retrieving csv-textarae.js</h1>
-<p>On macOS or Linux use cURL.</p>
+<p>On macOS or Linux.</p>
 <pre class="shell"><code>curl -L -o htdocs/modules/csv-textarea.js \\
   https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js </code></pre>
 <p>On Windows</p>
@@ -933,9 +933,21 @@ class="slide section level1">
 <div id="part-2.5-fixing-web-form-submission"
 class="slide section level1">
 <h1>Part 2.5: Fixing web form submission</h1>
+<p>The <a
+href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/utils.js">utils.js</a>
+needs a<code>saveRecipe</code> function.</p>
+<p>macOS and Linux</p>
+<pre class="shell"><code>curl -L -o htdocs/modules/utils.js \\
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js</code></pre>
+<p>Windows</p>
+<pre class="pwsh"><code>irm `
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js `
+  -Output htdocs/modules/utils.js</code></pre>
+</div>
+<div id="part-2.5-fixing-web-form-submission-1"
+class="slide section level1">
+<h1>Part 2.5: Fixing web form submission</h1>
 <ul>
-<li>The <code>utils.js</code> module includes a <code>saveRecipe</code>
-function</li>
 <li>We need an event listener to trigger it
 <ul>
 <li>Which element?</li>
@@ -943,114 +955,52 @@ function</li>
 </ul></li>
 </ul>
 </div>
+<div id="part-2.5-update-the-head-of-edit_replace.html"
+class="slide section level1">
+<h1>Part 2.5: Update the HEAD of edit_replace.html</h1>
+<p>Include our web component module in the head.</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/csv-textarea.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/edit_recipe.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span></code></pre></div>
+</div>
 <div id="part-2.5-update-the-html-for-edit_recipe.html"
+class="slide section level1">
+<h1>Part 2.5: Update the HTML for edit_recipe.html</h1>
+<p>Wrap our ingredients <code>textarea</code> in a
+<code>csv-textarea</code>.</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">csv-textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot">          </span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="ot">    title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="ot">    cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="ot"> </span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="ot">    column-headings</span><span class="op">=</span><span class="st">&quot;Ingredients,Units&quot;</span><span class="ot"> debug</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="ot">      title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="ot">      cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">csv-textarea</span><span class="dt">&gt;</span></span></code></pre></div>
+</div>
+<div id="part-2.5-update-the-html-for-edit_recipe.html-1"
 class="slide section level1">
 <h1>Part 2.5: Update the HTML for edit_recipe.html</h1>
 <p>Add the following at the bottom of the page before the
 <code>&lt;/body&gt;</code>.</p>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
-</div>
-<div id="part-2.6-using-an-existing-web-components"
-class="slide section level1">
-<h1>Part 2.6: Using an existing Web Components</h1>
-<ol style="list-style-type: decimal">
-<li>They extend the HTML elements available</li>
-<li>They are implement components as JavaScript Modules</li>
-</ol>
-</div>
-<div id="part-2.6-cl-web-components" class="slide section level1">
-<h1>Part 2.6: CL-web-components</h1>
-<ul>
-<li>CL-web-components, a collection of web components designed for
-Caltech Library</li>
-<li>Right now they are experimental and subject to change</li>
-<li>They are intended to grow as our design requirements formalize</li>
-<li>Use your web browser retrieve the latest release</li>
-</ul>
-<p><a
-href="https://github.com/caltechlibrary/CL-web-components/releases"
-class="uri">https://github.com/caltechlibrary/CL-web-components/releases</a></p>
-</div>
-<div id="part-2.6-copy-the-web-components-to-the-modules-directory"
-class="slide section level1">
-<h1>Part 2.6: Copy the web components to the modules directory</h1>
-<ul>
-<li>Unzip just the JavaScript files</li>
-<li>Move the JavaScript files in the zip file to
-<code>htdocs2/modules/</code>.</li>
-</ul>
-<pre class="shell"><code>unzip $HOME/Downloads/cl-web-components-0.0.6.zip *.js
-mv -v *.js htdocs2/models/</code></pre>
-</div>
-<div id="part-2.6-adding-csvtextarea-to-edit_recipe.html"
-class="slide section level1">
-<h1>Part 2.6: Adding CSVTextarea to edit_recipe.html</h1>
-<ul>
-<li>edit <code>htdocs2/edit_recipe.html</code>
-<ul>
-<li>Include the CSVTextarea JavaScript module in the document head</li>
-<li>Wrapping the “ingredients” textarea with
-<code>&lt;csv-textarea&gt;</code></li>
-</ul></li>
-</ul>
-<p>See: <a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html"
-class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/edit_recipe.html</a></p>
-</div>
-<div id="part-2.5-what-are-the-attributes-needed-in-a-csv-textarea"
-class="slide section level1">
-<h1>Part 2.5: What are the attributes needed in a
-<code>&lt;csv-textarea&gt;</code>?</h1>
-<ul>
-<li>copy the attributes form the “ingredients” textarea to the
-<code>&lt;csv-textarea&gt;</code></li>
-<li>Add an these attributes to <code>&lt;csv-textarea&gt;</code>
-<ul>
-<li><code>column-headings="Ingredients,Units"</code></li>
-<li><code>debug="true"</code></li>
-</ul></li>
-</ul>
-</div>
-<div id="part-2.5-restart-recipes_api2.yaml-and-test"
-class="slide section level1">
-<h1>Part 2.5: Restart recipes_api2.yaml and test</h1>
-<p>Start up our web service</p>
-<pre><code>dataset recipes_api2.yaml</code></pre>
-<ol style="list-style-type: decimal">
-<li>Point your browser at <a
-href="http://localhost:8002/edit_recipe.html"
-class="uri">http://localhost:8002/edit_recipe.html</a></li>
-<li>Turn on your developer tools</li>
-<li>Test the web component, what’s the problem you see?</li>
-</ol>
-</div>
-<div id="part-2.5-getting-the-table-populated-update-utils.js"
-class="slide section level1">
-<h1>Part 2.5: Getting the table populated, update
-<code>utils.js</code></h1>
-<p>CSVTextarea has the ability to be updated from CSV text. Let’s do
-that.</p>
-<p>In <code>edit_recipe.js</code> you need to find this.</p>
-<div class="sourceCode" id="cb26"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> data[<span class="st">&quot;ingredients&quot;</span>]<span class="op">;</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>}</span></code></pre></div>
-<p>And replace it with something like this.</p>
 <div class="sourceCode" id="cb27"><pre
-class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="cf">if</span> (data[<span class="st">&quot;ingredients&quot;</span>] <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  ingredientsTextarea<span class="op">.</span><span class="fu">fromCSV</span>(data[<span class="st">&#39;ingredients&#39;</span>])<span class="op">;</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>}</span></code></pre></div>
+class="sourceCode html"><code class="sourceCode html"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
-<div id="part-2.5-test-and-debug" class="slide section level1">
-<h1>Part 2.5: Test and debug</h1>
+<div id="part-2.5-test-updates" class="slide section level1">
+<h1>Part 2.5: Test updates</h1>
 <ul>
-<li>Do you find other problems?</li>
+<li>What issue do you find?</li>
+<li>How could you improve this?</li>
 </ul>
 </div>
 <div id="part-3-exploring-further" class="slide section level1">
@@ -1060,32 +1010,13 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb27
 <ul>
 <li>When is it a good idea?</li>
 <li>When is be an bad idea?</li>
-</ul></li>
-<li>Moving from a single layer stack to a two or three layer stack
-<ul>
-<li>Dataset behind a front end web server</li>
-<li>Dataset behind middle ware</li>
-</ul></li>
-<li>Is this approach sustainable?</li>
-</ul>
-</div>
-<div id="part-3-exploring-human-interfaces"
-class="slide section level1">
-<h1>Part 3: Exploring Human Interfaces</h1>
-<ul>
-<li>Why bother with Web Components?
-<ul>
-<li>What’s missing?</li>
-</ul></li>
-<li>What are the assumptions in this approach?
-<ul>
-<li>Are they valid?</li>
+<li>Should there be more layers?</li>
+<li>Can we get away with static only sites?</li>
 </ul></li>
 </ul>
 </div>
-<div id="part-3-exploring-human-interfaces-1"
-class="slide section level1">
-<h1>Part 3: Exploring Human Interfaces</h1>
+<div id="part-3-exploring-further-1" class="slide section level1">
+<h1>Part 3: Exploring further</h1>
 <ul>
 <li>The traditional division of responsibilities in the browser is
 <ul>
@@ -1095,10 +1026,8 @@ class="slide section level1">
 </ul></li>
 <li>Does Web components contradict that the division of
 responsibilities?</li>
-<li>Is progressive enhancement is still relevant in 2025?
-<ul>
+<li>Is progressive enhancement still relevant in 2025?</li>
 <li>Is it OK to require JavaScript in a web page?</li>
-</ul></li>
 </ul>
 </div>
 <div id="part-3-my-recommendations" class="slide section level1">
@@ -1119,28 +1048,6 @@ Python)</li>
 </ul></li>
 </ul>
 </div>
-<div id="part-3-what-i-am-still-mulling-over"
-class="slide section level1">
-<h1>Part 3: What I am still mulling over?</h1>
-<ul>
-<li>Dataset can shrink the stack but does not remove the need for
-middleware (yet)</li>
-<li>Web Components offer the possibility of consistent interfaces across
-sites
-<ul>
-<li>They can help with accessibility</li>
-</ul></li>
-<li>I think Web Components ultimately simplify things
-<ul>
-<li>Trade off: individual components can be complex</li>
-</ul></li>
-<li>REST services force us to middleware or Browser JavaScript
-<ul>
-<li>Is it reasonable to require JavaScript (or WASM)?</li>
-<li>Is there a simpler abstraction?</li>
-</ul></li>
-</ul>
-</div>
 <div id="reference-dataset" class="slide section level1">
 <h1>Reference: Dataset</h1>
 <ul>
@@ -1156,17 +1063,17 @@ help with Dataset</a></li>
 <h1>Reference: CL-web-components</h1>
 <dl>
 <dt><a
-href="https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js">CSVTextarea</a></dt>
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/csv-textarea.js">csv-textarea</a></dt>
 <dd>
 Wraps a textarea element and presents a editable table of cells
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/CL-web-components/blob/main/a_to_z_ul.js">AToZUL</a></dt>
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/a-to-z-list.js">a-to-z-list</a></dt>
 <dd>
 Wraps a UL list and creates an A to Z list
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/CL-web-components/blob/main/sortable_table.js">SortableTable</a></dt>
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/sortable-table.js">sortable-table</a></dt>
 <dd>
 Wraps an HTML table making it sort-able and filterable on a column
 </dd>
@@ -1187,7 +1094,7 @@ href="https://github.com/scottaohara/accessible_components">Examples of
 Accessible Components</a></li>
 <li><a
 href="https://github.com/davatron5000/awesome-standalones">Awesome
-Standalones</a></li>
+Standalone</a></li>
 <li><a href="https://design-system.w3.org/">W3C Design System</a></li>
 </ul>
 </div>
