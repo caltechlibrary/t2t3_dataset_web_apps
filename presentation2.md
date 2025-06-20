@@ -716,14 +716,79 @@ Next steps
   - [csv-textarea.js](https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js)
 2. Copy the component into your modules directory
 3. Update your HTML markup
-4. Test
+4. Update `utils.js` by adding a `saveRecipe` function
+5. Test
+
+# Part 2.5: Retrieving csv-textarae.js
+
+On macOS or Linux.
+
+~~~shell
+curl -L -o htdocs/modules/csv-textarea.js \\
+  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js 
+~~~
+
+On Windows
+
+~~~pwsh
+irm `
+  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js `
+  -Outfile ./htdocs/modules/csv-textarea.js
+~~~
 
 # Part 2.5: Fixing web form submission
 
-- The `utils.js` module includes a `saveRecipe` function
+The [utils.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/utils.js) needs a`saveRecipe` function.
+
+macOS and Linux
+
+~~~shell
+curl -L -o htdocs/modules/utils.js \\
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js
+~~~
+
+Windows
+
+~~~pwsh
+irm `
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js `
+  -Output htdocs/modules/utils.js
+~~~
+
+# Part 2.5: Fixing web form submission
+
 - We need an event listener to trigger it
   - Which element?
   - What event?
+
+# Part 2.5: Update the HEAD of edit_replace.html
+
+Include our web component module in the head.
+
+~~~html
+  <head>
+    <title>A recipe collection</title>
+    <link rel="style" href="css/style.css">
+    <script type="module" src="modules/csv-textarea.js"></script>
+    <script type="module" src="modules/edit_recipe.js"></script>
+  </head>
+~~~
+
+# Part 2.5: Update the HTML for edit_recipe.html
+
+Wrap our ingrediants `textarea`  in a `csv-textarea`.
+
+~~~html
+  <csv-textarea id="ingredients" name="ingredients"          
+    title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+    cols="60"rows="10" 
+    column-headings="Ingredients,Units" debug="true">
+    <textarea id="ingredients" name="ingredients"
+      title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+      cols="60"rows="10">
+    </textarea>
+  </csv-textarea>
+~~~
 
 # Part 2.5: Update the HTML for edit_recipe.html
 
@@ -737,6 +802,11 @@ Add the following at the bottom of the page before the `</body>`.
   });
 </script>
 ~~~
+
+# Part 2.5: Test updates
+
+- What issue do you find?
+- How could you improve this?
 
 # Part 2.6: Using an existing Web Components
 

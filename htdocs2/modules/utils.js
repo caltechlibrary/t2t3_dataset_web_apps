@@ -20,7 +20,7 @@ export function getKey() {
 // apiURL is the path to the API relative to the modules directory. 
 // The browser will resolve the request to the a specific part or hostname.
 // NOTE: the dataset collection needed to be updated in the path compared to version 1!!!!
-const apiBaseURL = "../api/recipes2.ds";
+const apiBaseURL = "../api/recipes.ds";
 
 /**
  * getRecipes retieves a list of recipes using the query API we defined in recipes_api.yaml.
