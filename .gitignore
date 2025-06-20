@@ -10,3 +10,4 @@ htdocs/a-to-z-list.html
 htdocs/modules/a-to-z-list.js
 htdocs/edit_recipe.html
 htdocs/modules/csv-textarea.js
+htdocs/modules/utils.js
