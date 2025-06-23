@@ -138,7 +138,7 @@ dataset init recipes.ds
 # Part 1.2: Loading some sample data
 
 Download sample data file [recipes.jsonl](recipes.jsonl) 
-(see: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl>)
+(see: <https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl>)
 
 ~~~shell
 cat recipes.jsonl | dataset load recipes.ds
@@ -215,7 +215,7 @@ NOTE: Dataset web service can host many collections at the same time.
 
 YAML is a superset of JSON that is easy to read and easy to type.
 
-1. Create a file, using your text editor called [recipes_api.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api.yaml)
+1. Create a file, using your text editor called [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml)
 2. Type in `host: localhost:8001`
 
 ~~~yaml
@@ -314,11 +314,10 @@ collections:
   - dataset: recipes
     keys: true
     create: true
+    # Create redirectos do double duty as a POST also supports update.
     create_success: http://localhost:8001/display_recipe.html
     create_error: http://localhost:8001/edit_recipe.html
     update: true
-    update_success: http://localhost:8001/display_recipe.html
-    update_error: http://localhost:8001/edit_recipe.html
     delete: false
     query:
       list_recipes: |
@@ -357,6 +356,22 @@ collections:
         select src
         from recipes
         order by src->>'name'
+~~~
+
+# Part 1.2: recipes_api.yaml
+
+On macOS and Linux you can cURL the `recipes_api.yaml` using the following statement.
+
+~~~shell
+curl -o recipes_api.yaml \\
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml
+~~~
+
+On Windows
+
+~~~pwsh
+irm -OutFile recipes_api.yaml \\
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml
 ~~~
 
 # Part 1.2: Starting and stopping the web service
@@ -414,29 +429,30 @@ We'll need a submit button to save a new or edited recipe.
 
 # Part 1.3: What are our web pages?
 
-[htdocs/index.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/index.html)
+[htdocs/index.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs1/index.html "you may retrieve the contents via curl or irm")
 : Display a list of our recipes
 
-[htdocs/display_recipe.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/display_recipe.html)
+
+[htdocs/display_recipe.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/display_recipe.html "you may retrieve the contents via curl or irm")
 : A page that shows the recipe
 
-[htdocs/edit_recipe.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/edit_recipe.html)
+[htdocs/edit_recipe.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/edit_recipe.html "you may retrieve the contents via curl or irm")
 : A page used to add and edit recipes we've collected
 
 # Part 1.3: Populating our pages using JavaScript
 
 We'll create four modules, one specific to each HTML page and one utility module
 
-[htdocs/modules/index_recipes.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/index_recipes.js)
+[htdocs/modules/index_recipes.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs1/modules/index_recipes.js "you may retrieve the contents via curl or irm")
 : Display a list of our recipes
 
-[htdocs/modules/display_recipe.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/display_recipe.js)
+[htdocs/modules/display_recipe.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/modules/display_recipe.js "you may retrieve the contents via curl or irm")
 : A page that shows the recipe
 
-[htdocs/modules/edit_recipe.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/edit_recipe.js)
+[htdocs/modules/edit_recipe.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/modules/edit_recipe.js "you may retrieve the contents via curl or irm")
 : A page used to add and edit recipes we've collected
 
-[htdocs/modules/utils.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/utils.js)
+[htdocs/modules/utils.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs1/modules/utils.js "you may retrieve the contents via curl or irm")
 : This module handles retrieving data from the JSON API and finding the object's key
 
 # Part 1.3: Fire up our web service

@@ -271,8 +271,8 @@ class="slide section level1">
 <h1>Part 1.2: Loading some sample data</h1>
 <p>Download sample data file <a href="recipes.jsonl">recipes.jsonl</a>
 (see: <a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl"
-class="uri">https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes.jsonl</a>)</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl"
+class="uri">https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl</a>)</p>
 <pre class="shell"><code>cat recipes.jsonl | dataset load recipes.ds</code></pre>
 <p>On Windows:</p>
 <pre class="pwsh"><code>Get-Content recipes.jsonl | dataset load recipes.ds</code></pre>
@@ -352,7 +352,7 @@ class="slide section level1">
 <p>YAML is a superset of JSON that is easy to read and easy to type.</p>
 <ol style="list-style-type: decimal">
 <li>Create a file, using your text editor called <a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api.yaml">recipes_api.yaml</a></li>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml">recipes_api.yaml</a></li>
 <li>Type in <code>host: localhost:8001</code></li>
 </ol>
 <div class="sourceCode" id="cb8"><pre
@@ -458,17 +458,16 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href=
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes</span></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="at">    </span><span class="fu">create_success</span><span class="kw">:</span><span class="at"> http://localhost:8001/display_recipe.html</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="at">    </span><span class="fu">create_error</span><span class="kw">:</span><span class="at"> http://localhost:8001/edit_recipe.html</span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="at">    </span><span class="fu">update_success</span><span class="kw">:</span><span class="at"> http://localhost:8001/display_recipe.html</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="at">    </span><span class="fu">update_error</span><span class="kw">:</span><span class="at"> http://localhost:8001/edit_recipe.html</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>        select src</span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>        from recipes</span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">    # Create redirectos do double duty as a POST also supports update.</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="at">    </span><span class="fu">create_success</span><span class="kw">:</span><span class="at"> http://localhost:8001/display_recipe.html</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="at">    </span><span class="fu">create_error</span><span class="kw">:</span><span class="at"> http://localhost:8001/edit_recipe.html</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="at">    </span><span class="fu">delete</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="at">    </span><span class="fu">query</span><span class="kw">:</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="fu">      list_recipes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>        select src</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>        from recipes</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
 </div>
 <div id="part-1.2-recipes_api.yaml" class="slide section level1">
 <h1>Part 1.2: recipes_api.yaml</h1>
@@ -498,6 +497,16 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href=
 <span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>        select src</span>
 <span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>        from recipes</span>
 <span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>        order by src-&gt;&gt;&#39;name&#39;</span></code></pre></div>
+</div>
+<div id="part-1.2-recipes_api.yaml-1" class="slide section level1">
+<h1>Part 1.2: recipes_api.yaml</h1>
+<p>On macOS and Linux you can cURL the <code>recipes_api.yaml</code>
+using the following statement.</p>
+<pre class="shell"><code>curl -o recipes_api.yaml \\
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml</code></pre>
+<p>On Windows</p>
+<pre class="pwsh"><code>irm -OutFile recipes_api.yaml \\
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml</code></pre>
 </div>
 <div id="part-1.2-starting-and-stopping-the-web-service"
 class="slide section level1">
@@ -566,17 +575,20 @@ Free text describing how to prepare the dish. Held by a
 <h1>Part 1.3: What are our web pages?</h1>
 <dl>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/index.html">htdocs/index.html</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs1/index.html"
+title="you may retrieve the contents via curl or irm">htdocs/index.html</a></dt>
 <dd>
 Display a list of our recipes
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/display_recipe.html">htdocs/display_recipe.html</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/display_recipe.html"
+title="you may retrieve the contents via curl or irm">htdocs/display_recipe.html</a></dt>
 <dd>
 A page that shows the recipe
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/edit_recipe.html">htdocs/edit_recipe.html</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/edit_recipe.html"
+title="you may retrieve the contents via curl or irm">htdocs/edit_recipe.html</a></dt>
 <dd>
 A page used to add and edit recipes we’ve collected
 </dd>
@@ -589,22 +601,26 @@ class="slide section level1">
 utility module</p>
 <dl>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/index_recipes.js">htdocs/modules/index_recipes.js</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs1/modules/index_recipes.js"
+title="you may retrieve the contents via curl or irm">htdocs/modules/index_recipes.js</a></dt>
 <dd>
 Display a list of our recipes
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/display_recipe.js">htdocs/modules/display_recipe.js</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/modules/display_recipe.js"
+title="you may retrieve the contents via curl or irm">htdocs/modules/display_recipe.js</a></dt>
 <dd>
 A page that shows the recipe
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/edit_recipe.js">htdocs/modules/edit_recipe.js</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main//htdocs1/modules/edit_recipe.js"
+title="you may retrieve the contents via curl or irm">htdocs/modules/edit_recipe.js</a></dt>
 <dd>
 A page used to add and edit recipes we’ve collected
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/utils.js">htdocs/modules/utils.js</a></dt>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs1/modules/utils.js"
+title="you may retrieve the contents via curl or irm">htdocs/modules/utils.js</a></dt>
 <dd>
 This module handles retrieving data from the JSON API and finding the
 object’s key

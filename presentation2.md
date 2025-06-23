@@ -40,7 +40,7 @@ This workshop is focused on enhancing our application using Web Components.
 
 # What we'll do
 
-- Setup up a new static content directory for update our [recipes_api.yaml](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/recipes_api2.yaml)
+- Setup up a new static content directory for update our [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api2.yaml "you may retrieve this file with curl or irm")
 - Create our first web component, "`<hello-clock></hello-clock>`"
 - Develop an A to Z web component, "`<a-to-z-list></a-to-z-list>`"
 - Use the [`<csv-textarea></csv-textarea>`](https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
@@ -136,7 +136,7 @@ This will display something like, "Hi There! 09:27:23 GMT-0700 (Pacific Daylight
 
 # Part 2.2: "hello-clock.js" defines the web component
 
-Create [htdocs/modules/hello-clock.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/modules/hello-clock.js)
+Create [htdocs/modules/hello-clock.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/hello-clock.js "you may retrieve this file using curl or irm")
 
 ~~~JavaScript
 // Define our new element as a class
@@ -155,7 +155,7 @@ customElements.define( 'hello-clock', HelloClock );
 
 # Part 2.2: Now lets create an HTML Page using "Hello Clock"
 
-- [htdocs/hello-clock.html](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs/hello-clock.html)
+- [htdocs/hello-clock.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/hello-clock.html "you may retrieve this file using curl or irm")
 
 ~~~html
 <!DOCTYPE html>
@@ -209,7 +209,7 @@ New-Item -Path htdocs/a-to-z-list.html ; New-Item htdocs/modules/a-to-z-list.js
 
 # Part 2.3: Building an A to Z list web component
 
-Here's the HTML we'll use for our test page, `a-to-z-list.html`.
+Here's the HTML we'll use for our test page, [a-to-z-list.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/a-to-z-list.html "you may retrieve this file using curl or irm").
 
 ~~~html
 <!DOCTYPE html>
@@ -238,7 +238,7 @@ Here's the HTML we'll use for our test page, `a-to-z-list.html`.
 
 # Part 2.3: Building an A to Z list web component
 
-(source [a-to-z-list_v0.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v0.js))
+(source [a-to-z-list_v0.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v0.js "you may retrieve this file using curl or irm"))
 
 Start out with a minimal Class definition and customElement definition
 
@@ -258,7 +258,7 @@ NOTE: the constructor and that the web component does do any thing yet. Open the
 
 # Part 2.3: Introducing Shadow DOM
 
-(source [a-to-z-list_v1.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v1.js))
+(source [a-to-z-list_v1.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v1.js "you may retrieve this file using curl or irm"))
 
 You can build your web component in the Shadow DOM that way you can sprinkle it into your document as needed. We need to include that in our constructor.
 
@@ -279,7 +279,7 @@ Reload you web page, what does does it look like?
 
 # Part 2.3: What do we want the callback to do? 
 
-(source [a-to-z-list_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js))
+(source [a-to-z-list_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file using curl or irm"))
 
 We use the `connectedCallback()` method to to call a render method. This is what makes our Shadow DOM ready.
 
@@ -308,7 +308,7 @@ What happened in our web page?
 
 # Part 2.3: Basic Structure of our component using Shadow DOM
 
-(source [a-to-z-list_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js))
+(source [a-to-z-list_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -333,7 +333,7 @@ customElements.define('a-to-z-list', AToZList);
 
 # Part 2.3: Display Items
 
-(source [a-to-z-list_v3.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v3.js))
+(source [a-to-z-list_v3.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v3.js "you may retrieve this file using curl or irm"))
 
 Objective: Display the list items in the component without any categorization.
 
@@ -362,7 +362,7 @@ What happened in our web page?
 
 # Part 2.3: Categorize Items by Letter
 
-(source [a-to-z-list_v4.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v4.js))
+(source [a-to-z-list_v4.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v4.js "you may retrieve this file using curl or irm"))
 
 Objective: Organize items by their starting letter.
 
@@ -410,7 +410,7 @@ render() {
 
 # Part 2.3: Add Navigation Menu
 
-(source [a-to-z-list_v5.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v5.js))
+(source [a-to-z-list_v5.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v5.js "you may retrieve this file using curl or irm"))
 
 Objective: Add a navigation menu to jump to sections by letter.
 
@@ -435,7 +435,7 @@ render() {
 
 # Part 2.3: Add Scrolling and Back to Menu Link
 
-(source [a-to-z-list_v6.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v6.js))
+(source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
 
 Objective: Implement smooth scrolling and a "Back to Menu" link.
 
@@ -472,7 +472,7 @@ scrollToSection(section) {
 
 # Part 2.3: Final Styling and Features
 
-(source [a-to-z-list_v7.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v7.js))
+(source [a-to-z-list_v7.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v7.js "you may retrieve this file using curl or irm"))
 
 Objective: Add final styling and conditional rendering based on attributes.
 
@@ -498,7 +498,7 @@ render() {
 
 # Part 2.3: A final working A to Z list
 
-(source [a-to-z-list.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list.js))
+(source [a-to-z-list.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 /**
@@ -657,7 +657,7 @@ Congratulations! Time to update our application.
 
 # Part 2.4: Taking advantage of inheriting HTML element
 
-(source [index_recipes_v2.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v2.js))
+(source [index_recipes_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file with curl or irm"))
 
 ~~~JavaScript
 async function listRecipes() {
@@ -690,8 +690,8 @@ What does the updates look like?
 1. Update our component to use a mutation observer
 2. Remove our render call from `index_recipes.js`.
 
-(source [a-to-z-list_v8.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/a-to-z-list_v8.js))
-(source [index_recipes_v3.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/index_recipes_v3.js))
+(source [a-to-z-list_v8.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v8.js "you may retrieve this file with curl or irm"))
+(source [index_recipes_v3.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/index_recipes_v3.js "you may retrieve this file with curl or irm"))
 
 # Part 2.4: Lessons learned
 
@@ -713,7 +713,7 @@ What does `<csv-textarea></csv-textara>` do?
 Next steps
 
 1. Go to [CL-web-components](https://github.com/caltechlibrary/CL-web-components) 
-  - [csv-textarea.js](https://github.com/caltechlibrary/CL-web-components/blob/main/csvtextarea.js)
+  - [csv-textarea.js](https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js "you may retrieve this file with curl or irm")
 2. Copy the component into your modules directory
 3. Update your HTML markup
 4. Update `utils.js` by adding a `saveRecipe` function
@@ -738,7 +738,7 @@ irm `
 
 # Part 2.5: Fixing web form submission
 
-The [utils.js](https://github.com/caltechlibrary/t2t3_dataset_web_apps/blob/main/htdocs2/modules/utils.js) needs a`saveRecipe` function.
+The [utils.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js "you may retrieve this file using curl or irm") needs a`saveRecipe` function.
 
 macOS and Linux
 
