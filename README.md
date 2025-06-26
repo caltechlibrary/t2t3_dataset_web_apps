@@ -9,7 +9,7 @@ This is a workshop presentation for the DLD development group at Caltech Library
 
 ## Release Notes
 
-- version: 0.0.5
+- version: 0.0.8
 - status: draft
 - released: TBD
 
@@ -22,11 +22,11 @@ This is a workshop presentation for the DLD development group at Caltech Library
 - Terminal Application
 - Web Browser
 - Text Editor
-- Dataset &gt;&#x3D; v2.2.7
+- Dataset &gt;&#x3D; v2.2.8
+- cURL (irm running Windows/PowerShell)
 
 ## Software Suggestions
 
-- curl
 - jq
 - yq
 - htmlq
