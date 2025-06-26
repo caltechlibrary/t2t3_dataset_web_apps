@@ -15,8 +15,8 @@ authors:
 
 
 repository-code: "https://github.com/caltechlibrary/t2t3_dataset_web_apps"
-version: 0.0.7
-date-released: 2025-06-23
+version: 0.0.8
+date-released: 2025-06-26
 
 license-url: "https://caltechlibrary.github.io/t2t3_dataset_web_apps/LICENSE"
 keywords:

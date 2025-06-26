@@ -863,7 +863,7 @@ Populates the UL lists with the data
 <ul>
 <li>It could get the handle for the
 <code>&lt;a-to-z-list&gt;&lt;/a-to-z-list&gt;</code></li>
-<li><code>listReceipes()</code> triggers retrieving the data</li>
+<li><code>listRecipes()</code> triggers retrieving the data</li>
 <li>It invokes <code>populateUL()</code> which populates that
 innerHTML!</li>
 </ul>
@@ -939,20 +939,24 @@ level</li>
 </ul>
 </div>
 <div
-id="part-2.5-using-the-csv-textarea-web-component-csv-textareacsv-textarea"
+id="part-2.5-introducing-csv-textarea-web-component-csv-textareacsv-textarea"
 class="slide section level1">
-<h1>Part 2.5: Using the CSV Textarea Web Component,
+<h1>Part 2.5: Introducing CSV Textarea Web Component,
 <code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></h1>
-<p>What does <code>&lt;csv-textarea&gt;&lt;/csv-textara&gt;</code>
-do?</p>
+<ul>
+<li>What does <code>&lt;csv-textarea&gt;&lt;/csv-textara&gt;</code> do?
 <ul>
 <li>Typing in comma separated values is cumbersome, can me improve
-that</li>
-<li>We’re going to submit the edit form as a JSON encoded document</li>
+that?</li>
+<li>The web component presents a table view based on the CSV content in
+the wrapped textarea</li>
+<li>If the web browser has JavaScript disabled the textarea still works
+for typing in comma delimited data</li>
+</ul></li>
 </ul>
 </div>
 <div
-id="part-2.5-using-the-csv-textarea-web-component-csv-textareacsv-textarea-1"
+id="part-2.5-using-the-csv-textarea-web-component-csv-textareacsv-textarea"
 class="slide section level1">
 <h1>Part 2.5: Using the CSV Textarea Web Component,
 <code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></h1>
@@ -978,12 +982,27 @@ function</li>
 class="slide section level1">
 <h1>Part 2.5: Retrieving csv-textarae.js</h1>
 <p>On macOS or Linux.</p>
-<pre class="shell"><code>curl -L -o htdocs/modules/csv-textarea.js \\
+<pre class="shell"><code>curl -L -o htdocs/modules/csv-textarea.js \
   https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js </code></pre>
 <p>On Windows</p>
 <pre class="pwsh"><code>irm `
   https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js `
   -Outfile ./htdocs/modules/csv-textarea.js</code></pre>
+</div>
+<div
+id="part-2.5-using-the-csv-textarea-web-component-csv-textareacsv-textarea-1"
+class="slide section level1">
+<h1>Part 2.5: Using the CSV Textarea Web Component,
+<code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></h1>
+<p>What happens when I press “save” button?</p>
+<ul>
+<li>Does the submit process need change?</li>
+<li>What are the options?
+<ul>
+<li>submit as a URL encoded document?</li>
+<li>submit as JSON encoded document?</li>
+</ul></li>
+</ul>
 </div>
 <div id="part-2.5-fixing-web-form-submission"
 class="slide section level1">
@@ -993,7 +1012,7 @@ href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/ref
 title="you may retrieve this file using curl or irm">utils.js</a> needs
 a<code>saveRecipe</code> function.</p>
 <p>macOS and Linux</p>
-<pre class="shell"><code>curl -L -o htdocs/modules/utils.js \\
+<pre class="shell"><code>curl -L -o htdocs/modules/utils.js \
   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js</code></pre>
 <p>Windows</p>
 <pre class="pwsh"><code>irm `
@@ -1055,24 +1074,13 @@ class="sourceCode html"><code class="sourceCode html"><span id="cb29-1"><a href=
 <div id="part-2.5-test-updates" class="slide section level1">
 <h1>Part 2.5: Test updates</h1>
 <ul>
-<li>What issue do you find?</li>
-<li>How could you improve this?</li>
+<li>What issues do you find?</li>
+<li>How could we improve this?</li>
 </ul>
 </div>
-<div id="part-3-exploring-further" class="slide section level1">
-<h1>Part 3: Exploring further</h1>
-<ul>
-<li>The server side can be turn key using a JavaScript web page
-<ul>
-<li>When is it a good idea?</li>
-<li>When is be an bad idea?</li>
-<li>Should there be more layers?</li>
-<li>Can we get away with static only sites?</li>
-</ul></li>
-</ul>
-</div>
-<div id="part-3-exploring-further-1" class="slide section level1">
-<h1>Part 3: Exploring further</h1>
+<div id="part-3-exploring-further-browser-side"
+class="slide section level1">
+<h1>Part 3: Exploring further, browser side</h1>
 <ul>
 <li>The traditional division of responsibilities in the browser is
 <ul>
@@ -1080,27 +1088,43 @@ class="sourceCode html"><code class="sourceCode html"><span id="cb29-1"><a href=
 <li>CSS for visual design and layout</li>
 <li>JavaScript to orchestrate behaviors</li>
 </ul></li>
-<li>Does Web components contradict that the division of
-responsibilities?</li>
-<li>Is progressive enhancement still relevant in 2025?</li>
-<li>Is it OK to require JavaScript in a web page?</li>
+</ul>
+<p>Do web components contradict the division of responsibilities?</p>
+<p>Is it OK to require JavaScript in a web page?</p>
+<p>Is progressive enhancement still relevant in 2025?</p>
+</div>
+<div id="part-3-exploring-further-server-side"
+class="slide section level1">
+<h1>Part 3: Exploring further, server side</h1>
+<ul>
+<li>Our application pushed processing browser side
+<ul>
+<li>When is this a good idea?</li>
+<li>When is this an bad idea?</li>
+</ul></li>
+<li>Could our web app be used to render a static public site?
+<ul>
+<li>How would that be done?</li>
+</ul></li>
+<li>What if the web service needs to be public facing?</li>
 </ul>
 </div>
-<div id="part-3-my-recommendations" class="slide section level1">
-<h1>Part 3: My Recommendations</h1>
+<div id="part-3-what-ive-learned" class="slide section level1">
+<h1>Part 3: What I’ve learned</h1>
 <ul>
 <li>Build with the grain of the web
 <ul>
-<li>Building blocks are HTML, CSS, JavaScript and HTTP protocol</li>
+<li>Building blocks are HTML, CSS, JavaScript, Web Components and HTTP
+protocol</li>
 </ul></li>
 <li>Take advantage of localhost</li>
-<li>Production, build in layers
+<li>Target production by building in layers
 <ul>
-<li>access control with front end web service (Apache+Shibboleth,
+<li>access control: front end web service (Apache+Shibboleth,
 NginX+Shibboleth)</li>
-<li>data validation with middle ware (localhost: Go, TypeScript or
+<li>data validation: middle ware (localhost: Go, TypeScript or
 Python)</li>
-<li>object storage with Dataset (localhost)</li>
+<li>object storage: Dataset (localhost)</li>
 </ul></li>
 </ul>
 </div>

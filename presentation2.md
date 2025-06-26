@@ -687,7 +687,7 @@ Congratulations! Time to update our application.
 # Part 2.4: Review `listRecipes()`
 
 - It could get the handle for the `<a-to-z-list></a-to-z-list>`
-- `listReceipes()` triggers retrieving the data
+- `listRecipes()` triggers retrieving the data
 - It invokes `populateUL()` which populates that innerHTML!
 
 **We can keep our component general with by adapting how `listRecipes()` works**
@@ -739,12 +739,12 @@ What does the updates look like?
   - The page level JavaScript is about adding behaviors at the page level
   - Balance the areas of responsibilities
 
-# Part 2.5: Using the CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
+# Part 2.5: Introducing CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
 
-What does `<csv-textarea></csv-textara>` do?
-
-- Typing in comma separated values is cumbersome, can me improve that
-- We're going to submit the edit form as a JSON encoded document
+- What does `<csv-textarea></csv-textara>` do?
+  - Typing in comma separated values is cumbersome, can me improve that?
+  - The web component presents a table view based on the CSV content in the wrapped textarea
+  - If the web browser has JavaScript disabled the textarea still works for typing in comma delimited data
 
 # Part 2.5: Using the CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
 
@@ -762,7 +762,7 @@ Next steps
 On macOS or Linux.
 
 ~~~shell
-curl -L -o htdocs/modules/csv-textarea.js \\
+curl -L -o htdocs/modules/csv-textarea.js \
   https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js 
 ~~~
 
@@ -774,6 +774,15 @@ irm `
   -Outfile ./htdocs/modules/csv-textarea.js
 ~~~
 
+# Part 2.5: Using the CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
+
+What happens when I press "save" button?
+
+- Does the submit process need change? 
+- What are the options?
+  - submit as a URL encoded document?
+  - submit as JSON encoded document?
+
 # Part 2.5: Fixing web form submission
 
 The [utils.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js "you may retrieve this file using curl or irm") needs a`saveRecipe` function.
@@ -781,7 +790,7 @@ The [utils.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web
 macOS and Linux
 
 ~~~shell
-curl -L -o htdocs/modules/utils.js \\
+curl -L -o htdocs/modules/utils.js \
   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js
 ~~~
 
@@ -843,36 +852,40 @@ Add the following at the bottom of the page before the `</body>`.
 
 # Part 2.5: Test updates
 
-- What issue do you find?
-- How could you improve this?
+- What issues do you find?
+- How could we improve this?
 
-# Part 3: Exploring further
-
-- The server side can be turn key using a JavaScript web page
-  - When is it a good idea?
-  - When is be an bad idea?
-  - Should there be more layers?
-  - Can we get away with static only sites?
-
-# Part 3: Exploring further
+# Part 3: Exploring further, browser side
 
 - The traditional division of responsibilities in the browser is
   - HTML for structured data markup
   - CSS for visual design and layout
   - JavaScript to orchestrate behaviors
-- Does Web components contradict that the division of responsibilities?
-- Is progressive enhancement still relevant in 2025?
-- Is it OK to require JavaScript in a web page?
 
-# Part 3: My Recommendations
+Do web components contradict the division of responsibilities?
+
+Is it OK to require JavaScript in a web page?
+
+Is progressive enhancement still relevant in 2025?
+
+# Part 3: Exploring further, server side
+
+- Our application pushed processing browser side
+  - When is this a good idea?
+  - When is this an bad idea?
+- Could our web app be used to render a static public site?
+  - How would that be done?
+- What if the web service needs to be public facing?
+
+# Part 3: What I've learned
 
 - Build with the grain of the web
-  - Building blocks are HTML, CSS, JavaScript and HTTP protocol
+  - Building blocks are HTML, CSS, JavaScript, Web Components and HTTP protocol
 - Take advantage of localhost
-- Production, build in layers
-  - access control with front end web service (Apache+Shibboleth, NginX+Shibboleth)
-  - data validation with middle ware (localhost: Go, TypeScript or Python)
-  - object storage with Dataset (localhost)
+- Target production by building in layers
+  - access control: front end web service (Apache+Shibboleth, NginX+Shibboleth)
+  - data validation: middle ware (localhost: Go, TypeScript or Python)
+  - object storage: Dataset (localhost)
 
 # Reference: Dataset
 

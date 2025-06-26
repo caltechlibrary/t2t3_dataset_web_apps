@@ -12,8 +12,8 @@
     }
   ],
   "dateCreated": "2025-05-30",
-  "dateModified": "2025-06-23",
-  "datePublished": "2025-06-23",
+  "dateModified": "2025-06-26",
+  "datePublished": "2025-06-26",
   "description": "The repository contains a presentation introducing web application construction using\nDataset and Web Components. It is intended for the T2T3 series at Caltech Library.\n\nIt presents the construction process to build a simple recipe collection system.",
   "funder": [
     {
@@ -43,7 +43,8 @@
     "Terminal Application",
     "Web Browser",
     "Text Editor",
-    "Dataset >= v2.2.8"
+    "Dataset >= v2.2.8",
+    "curl (or irm using PowerShell)"
   ],
   "softwareSuggestions": [
     "curl",
@@ -52,10 +53,10 @@
     "htmlq",
     "CMTools >= 0.0.33"
   ],
-  "version": "0.0.7",
+  "version": "0.0.8",
   "developmentStatus": "draft",
   "issueTracker": "https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues",
-  "releaseNotes": "Starting the second draft of this workshop. Split workshop into two parts, building web applications with dataset and enhancing the browser experience with web components. Adding \nsuggestions from first presentation.\n\nUpdated links to example source files to use the GitHub raw URLs. This allows easy retrieval with curl (macOS and Linux) or irm (Windows and PowerShell).",
+  "releaseNotes": "This is the second draft of this workshop. Split workshop into two parts. Part one, build a web applications with dataset. Part two, enhance the browser experience with web components.\n\nUpdated links to example source files to use the GitHub raw URLs. This allows easy retrieval with curl (macOS and Linux) or irm (Windows and PowerShell).",
   "copyrightYear": 2025,
   "copyrightHolder": "California Institute of Technology"
 }
