@@ -7,7 +7,7 @@ abstract: |
 institute: |
   Caltech Library,
   Digital Library Development
-description: T2T3 presentation
+description: workshop presentation
 urlcolor: blue
 linkstyle: bold
 aspectratio: 169
@@ -42,7 +42,7 @@ This workshop is focused on enhancing our application using Web Components.
 
 - Setup up a new static content directory for update our [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api2.yaml "you may retrieve this file with curl or irm")
 - Create our first web component, "`<hello-clock></hello-clock>`"
-- Develop an A to Z web component, "`<a-to-z-list></a-to-z-list>`"
+- Develop an A to Z web component, "`<a-to-z-list></a-to-z-list>`" (for listing our recipes)
 - Use the [`<csv-textarea></csv-textarea>`](https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
 
 # Workshop: "A recipe for applications"
@@ -58,7 +58,8 @@ This workshop is focused on enhancing our application using Web Components.
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/)
-- [Dataset >= 2.2.7](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
+- [Dataset >= 2.2.8](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
+- cURL or irm
 - The YAML, HTML and JavaScript you developed from Part I
 
 # Part 2.1: Setting up
@@ -84,14 +85,16 @@ copy -Recurse htdocs htdocs1
 copy recipes_api.yaml recipes_api1.yaml
 ~~~
 
-NOTE: If you want to compare version you'll need to update 
-the `htdocs` attribute in `recipes_api1.yaml`.
+HOME WORK: Make `recipes_api1.yaml` work. Change the
+the `htdocs` attribute to point to `htdocs1` directory.
+Compare version 1 with the results of the workshop.
+Discuss amoung friends.
 
 # Part 2.1: Starting up our web service
 
-- We're have a working web service from last session. 
-- We're building on that browser side
-- Time to dive into Web Components!
+- The web service should work last session, 
+- We'll be building on that browser side
+  - Ready to dive into Web Components?
 
 ~~~shell
 datasetd recipes_api.yaml
@@ -110,7 +113,7 @@ datasetd recipes_api.yaml
 - Web components provide a sustainable way to extend HTML to fit our needs
 - They simplify use because they are expressed as HTML elements
 - Web components **cleanly encapsulate** HTML, CSS and JavaScript
-  - They are impact is constrained to the elements inside!
+  - Their impact is constrained
   - They are compatible with progressive enhancement techniques
   - They can normalize user experience as a part of a design system
 
@@ -125,7 +128,7 @@ datasetd recipes_api.yaml
 # Part 2.2: The "Hello Clock" Web Component
 
 - Let's create a web component called "hello-clock" ("htdocs/modules/hello-clock.js")
-- "hello-clock" will extended the HTML element
+- "hello-clock" will extends "HTML element"
 - It will display a hello message and the time
 
 ~~~html
@@ -192,7 +195,7 @@ A: Wraps a standard UL list providing A to Z navigation.
 
 # Part 2.3: Building an A to Z list web component
 
-1. Create an HTML to test with, `htdocs/a-to-z-list.html`
+1. Create an HTML file for testing, `htdocs/a-to-z-list.html`
 2. Create our Web Component, `htdocs/modules/a-to-z-list.js`
 
 macOS and Linux:
@@ -281,7 +284,7 @@ Reload you web page, what does does it look like?
 
 (source [a-to-z-list_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file using curl or irm"))
 
-We use the `connectedCallback()` method to to call a render method. This is what makes our Shadow DOM ready.
+We use the `connectedCallback()` method to to call a render method. This is what makes our Shadow DOM take control.
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -428,20 +431,38 @@ render() {
     menuItem.appendChild(menuLink);
     menu.appendChild(menuItem);
 
-    // Rest of the section creation code
+    // Rest of the section linking code goes here
   });
 }
 ~~~
 
-# Part 2.3: Add Scrolling and Back to Menu Link
+# Part 2.3: Complete our section linking
 
 (source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
 
-Objective: Implement smooth scrolling and a "Back to Menu" link.
+~~~JavaScript
+  // Section linking inside the `Object.keys(sections).forEach(letter => {` loop
+  const section = document.createElement('ul');
+      section.classList.add('letter-section');
+      section.id = `section-${letter}`;
+
+      sections[letter].forEach(item => {
+        section.appendChild(item.cloneNode(true));
+      });
+
+      listContainer.appendChild(section);
+  });
+~~~
+
+# Part 2.3: Add Back to Menu Link
+
+(source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
+
+Objective: Implement "Back to Menu" link.
 
 ~~~JavaScript
 render() {
-  // Previous code remains the same
+  // This code goes below the `Object.keys(section).foreach( ...` loop
 
   const backToMenuLink = this.shadowRoot.querySelector('.back-to-menu');
   if (backToMenuLink) {
@@ -461,7 +482,17 @@ render() {
     });
   }); 
 }
+~~~
 
+
+# Part 2.3: Improve Scrolling
+
+(source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
+
+Objective: Implement smooth scrolling by providing a new method
+
+~~~JavaScript
+// This is a new method, it can go after the render method in our class
 scrollToSection(section) {
   const yOffset = -100;
   const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
@@ -470,7 +501,7 @@ scrollToSection(section) {
 }
 ~~~
 
-# Part 2.3: Final Styling and Features
+# Part 2.3: Styling
 
 (source [a-to-z-list_v7.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v7.js "you may retrieve this file using curl or irm"))
 
@@ -639,7 +670,9 @@ Congratulations! Time to update our application.
 - Context, re-use and complexity are our constraints
   - Is this problem a "common case"? Is there an easy solution?
   - Is an increase in complexity worth supporting the common case?
-  - Do we make a custom element for this app that includes the index_recipes functions?
+  - Do we drop the common case for unique element and build in a index_recipes function?
+
+**Before picking a path review our existing codebase against our constraints**
 
 # Part 2.4: Think about the innerHTML, look at `index_recipes.js`
 
@@ -649,11 +682,15 @@ Congratulations! Time to update our application.
 `populateUL()`
 : Populates the UL lists with the data
 
-# Part 2.4: Updating `listRecipes()`
+**Are either easy to adapt to our component?**
 
-- It should get the handle for the `<a-to-z-list></a-to-z-list>`
-- It should retrieve the data
-- It invoke `populateUL()` but populate that innerHTML!
+# Part 2.4: Review `listRecipes()`
+
+- It could get the handle for the `<a-to-z-list></a-to-z-list>`
+- `listReceipes()` triggers retrieving the data
+- It invokes `populateUL()` which populates that innerHTML!
+
+**We can keep our component general with by adapting how `listRecipes()` works**
 
 # Part 2.4: Taking advantage of inheriting HTML element
 
@@ -667,7 +704,8 @@ async function listRecipes() {
  const data = await getRecipes();
  populateUL(ul, data);
  aToZList.innerHTML = ul.outerHTML;
- // NOTE: we need to cause the aToZList to render again, ugly?
+ // NOTE: we need to render the aToZList render method still.
+ // Isnit this a bit ugly?
  aToZList.render()
 }
 ~~~
@@ -676,7 +714,7 @@ What does the updates look like?
 
 # Part 2.4: Problems?
 
-- Ordering is weird, why?
+- Is ordering is weird? Why?
 - Do we always have to called `aToZList.render()` to update?
 
 # Part 2.4: Ordering problem
@@ -696,7 +734,7 @@ What does the updates look like?
 # Part 2.4: Lessons learned
 
 - Remember that our web components, inherit from HTML, we can treat them like HTML elements
-- Display elements can mutate, we should support them when implementing display components
+- Display elements can mutate, we should support mutation even when implementing display only components
   - The JavaScript defining a web component extends HTML, that should be the focus
   - The page level JavaScript is about adding behaviors at the page level
   - Balance the areas of responsibilities

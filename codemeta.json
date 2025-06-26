@@ -43,7 +43,7 @@
     "Terminal Application",
     "Web Browser",
     "Text Editor",
-    "Dataset >= v2.2.7"
+    "Dataset >= v2.2.8"
   ],
   "softwareSuggestions": [
     "curl",

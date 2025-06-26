@@ -117,7 +117,7 @@ class="email">rsdoiel@caltech.edu</a>
 <div id="welcome-to-a-recipe-for-applications"
 class="slide section level1">
 <h1>Welcome to “A recipe for applications”</h1>
-<p>Welcome everyone. This is a talk part 1 of a hands on workshop.</p>
+<p>Welcome everyone. This is a hands on workshop (part 1).</p>
 <blockquote>
 <p>An approach to building web applications using Dataset</p>
 </blockquote>
@@ -153,6 +153,9 @@ probably already have these, if not install them</h3>
 <li><a href="https://vscodium.com/">Text Editor</a></li>
 <li><a href="https://www.mozilla.org/en-US/firefox/new/">Web Browser</a>
 (I’m assuming Firefox for this tutorial)</li>
+<li><a href="https://curl.se/">cURL</a> (macOS/Linux) or <a
+href="https://learn.microsoft.com/en-us/powershell/module/?term=irm">irm</a>
+(Windows)</li>
 </ul>
 <h3 id="install-dataset">Install dataset</h3>
 <ul>
@@ -163,7 +166,7 @@ class="uri">https://caltechlibrary.github.io/dataset/INSTALL.html</a>
 href="https://github.com/caltechlibrary/dataset/releases"
 class="uri">https://github.com/caltechlibrary/dataset/releases</a></li>
 </ul></li>
-<li>You need to be running the latest v2 release (&gt;= 2.2.7)</li>
+<li>You need to be running the latest v2 release (&gt;= 2.2.8)</li>
 </ul>
 <p>We can start our first iteration of our application once you have
 these available.</p>
@@ -193,7 +196,7 @@ these available.</p>
 <p>GOAL: A simple web application that lets us curate a list of
 recipes.</p>
 <ul>
-<li>Start with the web service (band end)</li>
+<li>Start with the web service (back end)</li>
 <li>Finish with the browser (front end, browser side)</li>
 </ul>
 </div>
@@ -213,7 +216,7 @@ class="slide section level1">
 <ul>
 <li>A “key”, the unique identifier of a recipe (url friendly)</li>
 <li>A name (human friendly and readable)</li>
-<li>A list of ingredients and measures (CSV data)</li>
+<li>A list of ingredients and their quantities (CSV data)</li>
 <li>A procedure describing the preparation process (text)</li>
 </ul>
 </div>
@@ -232,7 +235,7 @@ class="slide section level1">
 <ol style="list-style-type: decimal">
 <li>create our <code>recipes.ds</code> collection</li>
 <li>load sample data into our <code>recipes.ds</code> collection</li>
-<li>Configure and run our collection as a web service</li>
+<li>Configure and run our collection web service</li>
 </ol>
 </div>
 <div id="part-1.2-creating-our-collection" class="slide section level1">
@@ -269,13 +272,15 @@ class="uri">https://jsonlines.org/</a></li>
 <div id="part-1.2-loading-some-sample-data"
 class="slide section level1">
 <h1>Part 1.2: Loading some sample data</h1>
-<p>Download sample data file <a href="recipes.jsonl">recipes.jsonl</a>
-(see: <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl"
-class="uri">https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl</a>)</p>
-<pre class="shell"><code>cat recipes.jsonl | dataset load recipes.ds</code></pre>
+<p>Download sample data file <a
+href="recipes.jsonl">recipes.jsonl</a></p>
+<pre class="shell"><code>curl -o recipes.jsonl \
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl
+cat recipes.jsonl | dataset load recipes.ds</code></pre>
 <p>On Windows:</p>
-<pre class="pwsh"><code>Get-Content recipes.jsonl | dataset load recipes.ds</code></pre>
+<pre class="pwsh"><code>irm -OutFile recipes.jsonl `
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl
+Get-Content recipes.jsonl | dataset load recipes.ds</code></pre>
 </div>
 <div id="part-1.2-verify-we-loaded-our-data-ok"
 class="slide section level1">
@@ -398,8 +403,8 @@ actions available in the dataset command line tool.</p>
 <li>update (allow objects in a collection to be updated)</li>
 <li>delete (allow objects to be deleted)</li>
 </ul>
-<p>If an permission is not included with a value if true, the it is
-defaults to false.</p>
+<p>If an permission is not included it is defaults to false. The value
+true will enabled it.</p>
 </div>
 <div id="part-1.2-we-need-to-create-our-yaml-configuration-file-4"
 class="slide section level1">
@@ -448,8 +453,8 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href=
 <ul>
 <li>Dataset web service overloads POST to subsume PUT actions of
 REST</li>
-<li>Dataset web service can define success and error redirects for
-create and update</li>
+<li>Dataset web service supports success and error redirects for
+POST</li>
 </ul>
 <div class="sourceCode" id="cb13"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost:8001</span></span>
@@ -471,7 +476,7 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href=
 </div>
 <div id="part-1.2-recipes_api.yaml" class="slide section level1">
 <h1>Part 1.2: recipes_api.yaml</h1>
-<p>YAML allows comments, here is a full blown configuration.</p>
+<p>YAML allows comments, here’s an example.</p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#!/usr/bin/env -S datasetd -debug</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co"># Host and port to listen on</span></span>
@@ -502,10 +507,10 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href=
 <h1>Part 1.2: recipes_api.yaml</h1>
 <p>On macOS and Linux you can cURL the <code>recipes_api.yaml</code>
 using the following statement.</p>
-<pre class="shell"><code>curl -o recipes_api.yaml \\
+<pre class="shell"><code>curl -o recipes_api.yaml \
    https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml</code></pre>
 <p>On Windows</p>
-<pre class="pwsh"><code>irm -OutFile recipes_api.yaml \\
+<pre class="pwsh"><code>irm -OutFile recipes_api.yaml `
    https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml</code></pre>
 </div>
 <div id="part-1.2-starting-and-stopping-the-web-service"

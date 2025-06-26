@@ -7,12 +7,12 @@ abstract: |
 institute: |
   Caltech Library,
   Digital Library Development
-description: T2T3 presentation
+description: workshop presentation
 urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: 2025-06-13
+updateDate: 2025-06-26
 draft: false
 pubDate: 2025-06-12
 place: Caltech Library (Zoom)
@@ -25,7 +25,7 @@ url: "https://caltechlibrary.github.io/t2t3_dataset_web_app/presentation1.html"
 
 # Welcome to "A recipe for applications"
 
-Welcome everyone. This is a talk part 1 of a hands on workshop.
+Welcome everyone. This is a hands on workshop (part 1).
 
 > An approach to building web applications using Dataset
 
@@ -53,12 +53,13 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
+- [cURL](https://curl.se/) (macOS/Linux) or [irm](https://learn.microsoft.com/en-us/powershell/module/?term=irm) (Windows)
 
 ### Install dataset
 
 - See <https://caltechlibrary.github.io/dataset/INSTALL.html>
   - If you have problems you can download the zip files from here <https://github.com/caltechlibrary/dataset/releases>
-- You need to be running the latest v2 release (>= 2.2.7)
+- You need to be running the latest v2 release (>= 2.2.8)
 
 We can start our first iteration of our application once you have these available.
 
@@ -82,7 +83,7 @@ We can start our first iteration of our application once you have these availabl
 
 GOAL: A simple web application that lets us curate a list of recipes.
 
-- Start with the web service (band end)
+- Start with the web service (back end)
 - Finish with the browser  (front end, browser side)
 
 # Part 1.1: What are the parts of our application?
@@ -96,7 +97,7 @@ GOAL: A simple web application that lets us curate a list of recipes.
 
 - A "key", the unique identifier of a recipe (url friendly)
 - A name (human friendly and readable)
-- A list of ingredients and measures (CSV data)
+- A list of ingredients and their quantities (CSV data)
 - A procedure describing the preparation process (text)
 
 # Part 1.1: Basic Strategy
@@ -110,7 +111,7 @@ GOAL: A simple web application that lets us curate a list of recipes.
 
 1. create our `recipes.ds` collection
 2. load sample data into our `recipes.ds` collection
-3. Configure and run our collection as a web service
+3. Configure and run our collection web service
 
 # Part 1.2: creating our collection
 
@@ -138,15 +139,18 @@ dataset init recipes.ds
 # Part 1.2: Loading some sample data
 
 Download sample data file [recipes.jsonl](recipes.jsonl) 
-(see: <https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl>)
 
 ~~~shell
+curl -o recipes.jsonl \
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl
 cat recipes.jsonl | dataset load recipes.ds
 ~~~
 
 On Windows:
 
 ~~~pwsh
+irm -OutFile recipes.jsonl `
+  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes.jsonl
 Get-Content recipes.jsonl | dataset load recipes.ds
 ~~~
 
@@ -260,7 +264,7 @@ available in the dataset command line tool.
 - update (allow objects in a collection to be updated)
 - delete (allow objects to be deleted)
 
-If an permission is not included with a value if true, the it is defaults to false. 
+If an permission is not included it is defaults to false. The value true will enabled it.
 
 # Part 1.2: We need to create our YAML configuration file
 
@@ -305,7 +309,7 @@ collections:
 # Part 1.2: REST and the browser
 
 - Dataset web service overloads POST to subsume PUT actions of REST 
-- Dataset web service can define success and error redirects for create and update
+- Dataset web service supports success and error redirects for POST
 
 ~~~yaml
 host: localhost:8001
@@ -329,7 +333,7 @@ collections:
 
 # Part 1.2: recipes_api.yaml
 
-YAML allows comments, here is a full blown configuration.
+YAML allows comments, here's an example.
 
 ~~~yaml
 #!/usr/bin/env -S datasetd -debug
@@ -363,14 +367,14 @@ collections:
 On macOS and Linux you can cURL the `recipes_api.yaml` using the following statement.
 
 ~~~shell
-curl -o recipes_api.yaml \\
+curl -o recipes_api.yaml \
    https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml
 ~~~
 
 On Windows
 
 ~~~pwsh
-irm -OutFile recipes_api.yaml \\
+irm -OutFile recipes_api.yaml `
    https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml
 ~~~
 
