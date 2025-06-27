@@ -12,7 +12,7 @@ urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: 2025-06-26
+updateDate: 2025-06-27
 draft: true
 pubDate: TBD
 place: Caltech Library (Zoom)
@@ -58,7 +58,7 @@ This workshop is focused on enhancing our application using Web Components.
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/)
-- [Dataset >= 2.2.8](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
+- [Dataset >= 2.3.0](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
 - cURL or irm
 - The YAML, HTML and JavaScript you developed from Part I
 
@@ -704,8 +704,8 @@ async function listRecipes() {
  const data = await getRecipes();
  populateUL(ul, data);
  aToZList.innerHTML = ul.outerHTML;
- // NOTE: we need to render the aToZList render method still.
- // Isnit this a bit ugly?
+ // NOTE: we need to trigger aToZList render method still.
+ // Feel ugly?
  aToZList.render()
 }
 ~~~

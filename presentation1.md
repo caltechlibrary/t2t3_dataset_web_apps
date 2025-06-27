@@ -12,7 +12,7 @@ urlcolor: blue
 linkstyle: bold
 aspectratio: 169
 createDate: 2025-05-29
-updateDate: 2025-06-26
+updateDate: 2025-06-27
 draft: false
 pubDate: 2025-06-12
 place: Caltech Library (Zoom)
@@ -59,7 +59,7 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 
 - See <https://caltechlibrary.github.io/dataset/INSTALL.html>
   - If you have problems you can download the zip files from here <https://github.com/caltechlibrary/dataset/releases>
-- You need to be running the latest v2 release (>= 2.2.8)
+- You need to be running the latest v2 release (>= 2.3.0)
 
 We can start our first iteration of our application once you have these available.
 
