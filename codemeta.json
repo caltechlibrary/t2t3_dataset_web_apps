@@ -43,7 +43,7 @@
     "Terminal Application",
     "Web Browser",
     "Text Editor",
-    "Dataset >= v2.2.8",
+    "Dataset >= v2.3.0",
     "curl (or irm using PowerShell)"
   ],
   "softwareSuggestions": [

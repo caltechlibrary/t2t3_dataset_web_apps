@@ -7,22 +7,12 @@ This is a workshop presentation for the DLD development group at Caltech Library
 - [Part 1](presentation1.md), using Dataset to build a simple web application from HTML, CSS, JavaScript and YAML
 - [Part 2](presentation2.md), Web Components, enhancing the browser experience
 
-## Release Notes
-
-- version: 0.0.8
-- status: draft
-- released: TBD
-
-### Authors
-
-- Doiel, R. S.
-
 ## Software Requirements
 
 - Terminal Application
 - Web Browser
 - Text Editor
-- Dataset &gt;&#x3D; v2.2.8
+- Dataset
 - cURL (irm running Windows/PowerShell)
 
 ## Software Suggestions
