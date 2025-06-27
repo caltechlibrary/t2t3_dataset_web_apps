@@ -931,7 +931,9 @@ Is progressive enhancement still relevant in 2025?
 
 # Thank you for listening
 
-- View presentation: <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
+- View presentations: 
+  - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
+  - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation2.html>
 - View the repository: <https://github.com/caltechlibrary/t2t3_dataset_web_apps>
 - Comment on this presentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
 - Author: R. S. Doiel, <mailto:rsdoiel@caltech.edu>
