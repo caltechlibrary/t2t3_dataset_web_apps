@@ -517,7 +517,9 @@ Improve the user experience with in Part 2 of the workshop, [Dataset & Web Compo
 
 # Thank you for participating
 
-- View presentation: <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
+- View presentations: 
+  - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
+  - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation2.html>
 - View the repository: <https://github.com/caltechlibrary/t2t3_dataset_web_apps>
 - Comment on this presentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
 - Author: R. S. Doiel, <mailto:rsdoiel@caltech.edu>
