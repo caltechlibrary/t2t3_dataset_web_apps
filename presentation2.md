@@ -8,9 +8,8 @@ institute: |
   Caltech Library,
   Digital Library Development
 description: workshop presentation
-urlcolor: blue
-linkstyle: bold
-aspectratio: 169
+slidy-url: .
+css: styles/sea-and-shore.css
 createDate: 2025-05-29
 updateDate: 2025-06-27
 draft: true
