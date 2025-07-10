@@ -78,7 +78,7 @@ It presents the construction process to build a simple recipe collection system.
 - Terminal Application
 - Web Browser
 - Text Editor
-- Dataset &gt;&#x3D; v2.3.0
+- Dataset &gt;&#x3D; v2.3.1
 - curl (or irm using PowerShell)
 
 
@@ -88,6 +88,6 @@ It presents the construction process to build a simple recipe collection system.
 - jq
 - yq
 - htmlq
-- CMTools &gt;&#x3D; 0.0.33
+- CMTools &gt;&#x3D; 0.0.35
 
 

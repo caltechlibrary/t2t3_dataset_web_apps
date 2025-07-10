@@ -59,7 +59,7 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 
 - See <https://caltechlibrary.github.io/dataset/INSTALL.html>
   - If you have problems you can download the zip files from here <https://github.com/caltechlibrary/dataset/releases>
-- You need to be running the latest v2 release (>= 2.3.0)
+- You need to be running the latest v2 release (>= 2.3.1)
 
 We can start our first iteration of our application once you have these available.
 

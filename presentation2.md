@@ -58,7 +58,7 @@ This workshop is focused on enhancing our application using Web Components.
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/)
-- [Dataset >= 2.3.0](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
+- [Dataset >= 2.3.1](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
 - cURL or irm
 - The YAML, HTML and JavaScript you developed from Part I
 
