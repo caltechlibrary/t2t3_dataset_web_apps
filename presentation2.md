@@ -39,7 +39,8 @@ This workshop is focused on enhancing our application using Web Components.
 
 # What we'll do
 
-- Setup up a new static content directory for update our [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api2.yaml "you may retrieve this file with curl or irm")
+- Save our static content directory 
+- Save our [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api2.yaml "you may retrieve this file with curl or irm")
 - Create our first web component, "`<hello-clock></hello-clock>`"
 - Develop an A to Z web component, "`<ul-a-to-z-list></ul-a-to-z-list>`" (for listing our recipes)
 - Use the [`<textarea-csv></textarea-csv>`](https://caltechlibrary.github.io/CL-web-components/textarea-csv.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
