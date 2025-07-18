@@ -1,4 +1,4 @@
-VERSION = $(jq -r .version codemeta.json)
+VERSION = $(shell jq -r .version codemeta.json)
 
 HTML_PAGES = $(shell ls -1 *.md | grep -v 'presentation' | sed -E 's/.md/.html/g')
 
