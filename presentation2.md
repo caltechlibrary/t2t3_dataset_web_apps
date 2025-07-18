@@ -137,8 +137,8 @@ datasetd recipes_api.yaml
 
 # Part 2.2.: What's registration?
 
-- Registration tells the web browser this is a new HTML element type
-  - Web browsers ignores HTML elements they don't understand
+- Registration tells the web browser this is a **new HTML element type**
+  - Web browsers ignore HTML elements they don't understand
 - Registration configures the new element's relationship with HTML parser and render engine
 
 # Part 2.2: The "Hello Clock" Web Component
