@@ -93,8 +93,10 @@ Components" />
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
-    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
-  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    href="./styles/slidy.css" />
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="styles/sea-and-shore.css" />
+  <script src="./scripts/slidy.js"
     charset="utf-8" type="text/javascript"></script>
 </head>
 <body>
@@ -139,10 +141,10 @@ title="you may retrieve this file with curl or irm">recipes_api.yaml</a></li>
 <li>Create our first web component,
 “<code>&lt;hello-clock&gt;&lt;/hello-clock&gt;</code>”</li>
 <li>Develop an A to Z web component,
-“<code>&lt;a-to-z-list&gt;&lt;/a-to-z-list&gt;</code>” (for listing our
-recipes)</li>
+“<code>&lt;ul-a-to-z-list&gt;&lt;/ul-a-to-z-list&gt;</code>” (for
+listing our recipes)</li>
 <li>Use the <a
-href="https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html"><code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></a>
+href="https://caltechlibrary.github.io/CL-web-components/textarea-csv.html"><code>&lt;textarea-csv&gt;&lt;/textarea-csv&gt;</code></a>
 from <a
 href="https://github.com/caltechlibrary/CL-web-components/releases">CL-web-components</a>
 for our ingredient lists</li>
@@ -174,7 +176,7 @@ from Part I</h3>
 Browser</a></li>
 <li><a
 href="https://caltechlibrary.github.io/dataset/INSTALL.html">Dataset
-&gt;= 2.3.1</a> (or latest release)</li>
+&gt;= 2.3.2</a> (or latest release)</li>
 <li>cURL or irm</li>
 <li>The YAML, HTML and JavaScript you developed from Part I</li>
 </ul>
@@ -201,14 +203,14 @@ copy recipes_api.yaml recipes_api1.yaml</code></pre>
 <p>HOME WORK: Make <code>recipes_api1.yaml</code> work. Change the the
 <code>htdocs</code> attribute to point to <code>htdocs1</code>
 directory. Compare version 1 with the results of the workshop. Discuss
-amoung friends.</p>
+among friends.</p>
 </div>
 <div id="part-2.1-starting-up-our-web-service"
 class="slide section level1">
 <h1>Part 2.1: Starting up our web service</h1>
 <ul>
-<li>The web service should work last session,</li>
-<li>We’ll be building on that browser side
+<li>The web service works just like our session</li>
+<li>We’ll be building browser side, updating the htdocs directory
 <ul>
 <li>Ready to dive into Web Components?</li>
 </ul></li>
@@ -221,7 +223,7 @@ class="slide section level1">
 <ul>
 <li>Web Components are a W3C standard to allowing you to extend HTML
 <ul>
-<li>(Web Components inherit, include accessibility features)</li>
+<li>(Web Components inherit, including accessibility features)</li>
 </ul></li>
 <li>A Web Component encapsulates the HTML, CSS and JavaScript use to
 create a new HTML Element
@@ -264,6 +266,38 @@ features)</li>
 <li>Example:
 <code>customElements.define( 'hello-clock', HelloClock );</code></li>
 </ul></li>
+</ul>
+</div>
+<div id="part-2.2-why-extend-html-elements"
+class="slide section level1">
+<h1>Part 2.2: Why extend HTML elements?</h1>
+<ol style="list-style-type: decimal">
+<li>So we don’t have to define everything in JavaScript</li>
+</ol>
+<ul>
+<li>DOM, life cycle, events, etc.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>So we align with existing HTML element expectations</li>
+</ol>
+</div>
+<div id="part-2.2-whats-the-connectedcallback-method"
+class="slide section level1">
+<h1>Part 2.2: What’s the <code>connectedCallback()</code> method?</h1>
+<ul>
+<li>This provides a “hook” into the browser’s render engine and event
+handler</li>
+</ul>
+</div>
+<div id="part-2.2.-whats-registration" class="slide section level1">
+<h1>Part 2.2.: What’s registration?</h1>
+<ul>
+<li>Registration tells the web browser this is a new HTML element type
+<ul>
+<li>Web browsers ignores HTML elements they don’t understand</li>
+</ul></li>
+<li>Registration configures the new element’s relationship with HTML
+parser and render engine</li>
 </ul>
 </div>
 <div id="part-2.2-the-hello-clock-web-component"
@@ -314,7 +348,7 @@ class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Hello Clock Example<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/hello-clock.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/hello-clock.js&quot;</span><span class="ot"> defer</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Hello Clock Example<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
@@ -350,33 +384,33 @@ class="slide section level1">
 <h1>Part 2.3: Building an A to Z list web component</h1>
 <ol style="list-style-type: decimal">
 <li>Create an HTML file for testing,
-<code>htdocs/a-to-z-list.html</code></li>
+<code>htdocs/ul-a-to-z-list.html</code></li>
 <li>Create our Web Component,
-<code>htdocs/modules/a-to-z-list.js</code></li>
+<code>htdocs/modules/ul-a-to-z-list.js</code></li>
 </ol>
 <p>macOS and Linux:</p>
-<pre class="shell"><code>touch htdocs/a-to-z-list.html htdocs/modules/a-to-z-list.js</code></pre>
+<pre class="shell"><code>touch htdocs/ul-a-to-z-list.html htdocs/modules/ul-a-to-z-list.js</code></pre>
 <p>Windows:</p>
-<pre class="pwsh"><code>New-Item -Path htdocs/a-to-z-list.html ; New-Item htdocs/modules/a-to-z-list.js</code></pre>
+<pre class="pwsh"><code>New-Item -Path htdocs/ul-a-to-z-list.html ; New-Item htdocs/modules/ul-a-to-z-list.js</code></pre>
 </div>
 <div id="part-2.3-building-an-a-to-z-list-web-component-2"
 class="slide section level1">
 <h1>Part 2.3: Building an A to Z list web component</h1>
 <p>Here’s the HTML we’ll use for our test page, <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/a-to-z-list.html"
-title="you may retrieve this file using curl or irm">a-to-z-list.html</a>.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/ul-a-to-z-list.html"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list.html</a>.</p>
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en-US&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A to Z List Clock Example<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/a-to-z-list.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/ul-a-to-z-list.js&quot;</span><span class="ot"> defer</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>A to Z List Example<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
 <span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">a-to-z-list</span><span class="dt">&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">ul</span><span class="er">-</span><span class="ot">a-to-z-list</span><span class="dt">&gt;</span></span>
 <span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>            <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Alex<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Betty<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Connor<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>David<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Edwina<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Fiona<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>George<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Harry<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
@@ -385,7 +419,7 @@ class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="
 <span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Terry<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Ulma<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Victorio<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Willamina<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Xavier<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
 <span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>                <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Zoran<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
 <span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>            <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">a-to-z-list</span><span class="dt">&gt;</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>        <span class="dt">&lt;/</span><span class="kw">ul</span><span class="er">-a-to-z-list</span><span class="dt">&gt;</span></span>
 <span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
@@ -393,8 +427,8 @@ class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="
 class="slide section level1">
 <h1>Part 2.3: Building an A to Z list web component</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v0.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v0.js</a>)</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v0.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v0.js</a>)</p>
 <p>Start out with a minimal Class definition and customElement
 definition</p>
 <div class="sourceCode" id="cb10"><pre
@@ -406,18 +440,17 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">connectedCallback</span>() {</span>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  }</span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>}</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
-<p>NOTE: the constructor and that the web component does do any thing
-yet. Open the web page.</p>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;ul-a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
+<p>NOTE: The constructor and callback are empty. Open the web page. Use
+“the inspector” in your browser’s dev tools.</p>
 </div>
 <div id="part-2.3-introducing-shadow-dom" class="slide section level1">
 <h1>Part 2.3: Introducing Shadow DOM</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v1.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v1.js</a>)</p>
-<p>You can build your web component in the Shadow DOM that way you can
-sprinkle it into your document as needed. We need to include that in our
-constructor.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v1.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v1.js</a>)</p>
+<p>You can build your web component using the Shadow DOM. We need to
+include that in our constructor.</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AToZList <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">constructor</span>() {</span>
@@ -428,17 +461,15 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">connectedCallback</span>() {</span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  }</span>
 <span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>}</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
-<p>Reload you web page, what does does it look like?</p>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;ul-a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
+<p>Reload you web page, what does does it look like? What shows up in
+the inspector?</p>
 </div>
 <div id="part-2.3-what-do-we-want-the-callback-to-do"
 class="slide section level1">
 <h1>Part 2.3: What do we want the callback to do?</h1>
-<p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v2.js</a>)</p>
 <p>We use the <code>connectedCallback()</code> method to to call a
-render method. This is what makes our Shadow DOM take control.</p>
+render method. This is what makes our shadow DOM element visible.</p>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AToZList <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">constructor</span>() { <span class="kw">super</span>()<span class="op">;</span> <span class="kw">this</span><span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span> }</span>
@@ -447,25 +478,18 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12
 <span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  <span class="fu">render</span>() {</span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="kw">const</span> template <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;template&#39;</span>)<span class="op">;</span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    template<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`&lt;style&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="vs">        /* Basic styles */</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="vs">        menu { list-style-type: none; padding: 0; }</span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="vs">      &lt;/style&gt;</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="vs">      &lt;menu id=&quot;menu&quot;&gt;&lt;/menu&gt;</span></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="vs">      &lt;div id=&quot;list-container&quot;&gt;This is where our A to List will go&lt;/div&gt;`</span><span class="op">;</span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">shadowRoot</span><span class="op">.</span><span class="fu">appendChild</span>(template<span class="op">.</span><span class="at">content</span><span class="op">.</span><span class="fu">cloneNode</span>(<span class="kw">true</span>))<span class="op">;</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>  }</span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>}</span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
-<p>What happened in our web page?</p>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    template<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">&#39;&lt;!-- Our HTML markup will go here ... --&gt;&#39;</span><span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">shadowRoot</span><span class="op">.</span><span class="fu">appendChild</span>(template<span class="op">.</span><span class="at">content</span><span class="op">.</span><span class="fu">cloneNode</span>(<span class="kw">true</span>))<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>  }</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>}</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;ul-a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
+<p>What happened in our web page? What does the inspector show?</p>
 </div>
-<div id="part-2.3-basic-structure-of-our-component-using-shadow-dom"
-class="slide section level1">
-<h1>Part 2.3: Basic Structure of our component using Shadow DOM</h1>
+<div id="part-2.3-basic-structure" class="slide section level1">
+<h1>Part 2.3: Basic Structure</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v2.js</a>)</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v2.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v2.js</a>)</p>
 <div class="sourceCode" id="cb13"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AToZList <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">constructor</span>() { <span class="kw">super</span>()<span class="op">;</span> <span class="kw">this</span><span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span> }</span>
@@ -484,15 +508,13 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13
 <span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">shadowRoot</span><span class="op">.</span><span class="fu">appendChild</span>(template<span class="op">.</span><span class="at">content</span><span class="op">.</span><span class="fu">cloneNode</span>(<span class="kw">true</span>))<span class="op">;</span></span>
 <span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>  }</span>
 <span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>}</span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;ul-a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
 </div>
 <div id="part-2.3-display-items" class="slide section level1">
 <h1>Part 2.3: Display Items</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v3.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v3.js</a>)</p>
-<p>Objective: Display the list items in the component without any
-categorization.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v3.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v3.js</a>)</p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>  <span class="fu">render</span>() {</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    <span class="kw">const</span> template <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;template&#39;</span>)<span class="op">;</span></span>
@@ -512,15 +534,14 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14
 <span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>      listContainer<span class="op">.</span><span class="fu">appendChild</span>(ulElement<span class="op">.</span><span class="fu">cloneNode</span>(<span class="kw">true</span>))<span class="op">;</span></span>
 <span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>    }</span>
 <span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>  }</span></code></pre></div>
-<p>What happened in our web page?</p>
+<p>What happened in our web page? What shows up in the inspector?</p>
 </div>
-<div id="part-2.3-categorize-items-by-letter"
+<div id="part-2.3-organize-items-by-starting-letter"
 class="slide section level1">
-<h1>Part 2.3: Categorize Items by Letter</h1>
+<h1>Part 2.3: Organize Items by Starting Letter</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v4.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v4.js</a>)</p>
-<p>Objective: Organize items by their starting letter.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v4.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v4.js</a>)</p>
 <div class="sourceCode" id="cb15"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">render</span>() {</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="kw">const</span> template <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;template&#39;</span>)<span class="op">;</span></span>
@@ -565,9 +586,8 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15
 <div id="part-2.3-add-navigation-menu" class="slide section level1">
 <h1>Part 2.3: Add Navigation Menu</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v5.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v5.js</a>)</p>
-<p>Objective: Add a navigation menu to jump to sections by letter.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v5.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v5.js</a>)</p>
 <div class="sourceCode" id="cb16"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">render</span>() {</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="co">// Previous code remains the same until the sections loop but we</span></span>
@@ -586,12 +606,11 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16
 <span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>  })<span class="op">;</span></span>
 <span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="part-2.3-complete-our-section-linking"
-class="slide section level1">
-<h1>Part 2.3: Complete our section linking</h1>
+<div id="part-2.3-linking" class="slide section level1">
+<h1>Part 2.3: Linking</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v6.js</a>)</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v6.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v6.js</a>)</p>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>  <span class="co">// Section linking inside the `Object.keys(sections).forEach(letter =&gt; {` loop</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="kw">const</span> section <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;ul&#39;</span>)<span class="op">;</span></span>
@@ -605,12 +624,11 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>      listContainer<span class="op">.</span><span class="fu">appendChild</span>(section)<span class="op">;</span></span>
 <span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>  })<span class="op">;</span></span></code></pre></div>
 </div>
-<div id="part-2.3-add-back-to-menu-link" class="slide section level1">
-<h1>Part 2.3: Add Back to Menu Link</h1>
+<div id="part-2.3-back-to-menu-link" class="slide section level1">
+<h1>Part 2.3: Back to Menu Link</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v6.js</a>)</p>
-<p>Objective: Implement “Back to Menu” link.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v6.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v6.js</a>)</p>
 <div class="sourceCode" id="cb18"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">render</span>() {</span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="co">// This code goes below the `Object.keys(section).foreach( ...` loop</span></span>
@@ -637,53 +655,52 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18
 <div id="part-2.3-improve-scrolling" class="slide section level1">
 <h1>Part 2.3: Improve Scrolling</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v6.js</a>)</p>
-<p>Objective: Implement smooth scrolling by providing a new method</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v6.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v6.js</a>)</p>
 <div class="sourceCode" id="cb19"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co">// This is a new method, it can go after the render method in our class</span></span>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">scrollToSection</span>(section) {</span>
 <span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="kw">const</span> yOffset <span class="op">=</span> <span class="op">-</span><span class="dv">100</span><span class="op">;</span></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> section<span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">.</span><span class="at">top</span> <span class="op">+</span> <span class="bu">window</span><span class="op">.</span><span class="at">pageYOffset</span> <span class="op">+</span> yOffset<span class="op">;</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="fu">scrollTo</span>({ <span class="dt">top</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">behavior</span><span class="op">:</span> <span class="st">&#39;smooth&#39;</span> })<span class="op">;</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> section<span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">.</span><span class="at">top</span> <span class="op">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>              <span class="bu">window</span><span class="op">.</span><span class="at">pageYOffset</span> <span class="op">+</span> yOffset<span class="op">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="fu">scrollTo</span>({ <span class="dt">top</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">behavior</span><span class="op">:</span> <span class="st">&#39;smooth&#39;</span> })<span class="op">;</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="part-2.3-styling" class="slide section level1">
-<h1>Part 2.3: Styling</h1>
+<div id="part-2.3-style-and-css" class="slide section level1">
+<h1>Part 2.3: Style and CSS</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v7.js"
-title="you may retrieve this file using curl or irm">a-to-z-list_v7.js</a>)</p>
-<p>Objective: Add final styling and conditional rendering based on
-attributes.</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v7.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list_v7.js</a>)</p>
 <div class="sourceCode" id="cb20"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">render</span>() {</span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="kw">const</span> template <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;template&#39;</span>)<span class="op">;</span></span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  template<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="vs">    &lt;style&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="vs">      menu { list-style-type: none; padding: 0; }</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="vs">      menu li { display: inline; margin-right: 10px; }</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="vs">      .letter-section { list-style-type: none; }</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="vs">      .letter-section li { text-decoration: none; font-weight: none; }</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="vs">      .back-to-menu { display: block; margin-top: 20px; }</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="vs">    &lt;/style&gt;</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="vs">    &lt;menu id=&quot;menu&quot;&gt;&lt;/menu&gt;</span></span>
-<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="vs">    &lt;div id=&quot;list-container&quot;&gt;&lt;/div&gt;</span></span>
-<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="fu">hasAttribute</span>(<span class="st">&#39;long&#39;</span>) <span class="op">?</span> <span class="st">&#39;&lt;a class=&quot;back-to-menu&quot; href=&quot;#menu&quot;&gt;Back to Menu&lt;/a&gt;&#39;</span> <span class="op">:</span> <span class="st">&#39;&#39;</span><span class="sc">}</span></span>
-<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a><span class="vs">  `</span><span class="op">;</span></span>
-<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a>  <span class="co">// Rest of the render method remains the same</span></span>
-<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="vs">&lt;style&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="vs">  menu { list-style-type: none; padding: 0; }</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="vs">  menu li { display: inline; margin-right: 10px; }</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="vs">  .letter-section { list-style-type: none; }</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="vs">  .letter-section li { text-decoration: none; font-weight: none; }</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="vs">  .back-to-menu { display: block; margin-top: 20px; }</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="vs">&lt;/style&gt;</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="vs">&lt;menu id=&quot;menu&quot;&gt;&lt;/menu&gt;</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="vs">&lt;div id=&quot;list-container&quot;&gt;&lt;/div&gt; </span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="fu">hasAttribute</span>(<span class="st">&#39;long&#39;</span>) <span class="op">?</span> </span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a>  <span class="st">&#39;&lt;a class=&quot;back-to-menu&quot; href=&quot;#menu&quot;&gt;Back to Menu&lt;/a&gt;&#39;</span> <span class="op">:</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a>  <span class="co">// Rest of the render method remains the same</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="part-2.3-a-final-working-a-to-z-list"
 class="slide section level1">
 <h1>Part 2.3: A final working A to Z list</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list.js"
-title="you may retrieve this file using curl or irm">a-to-z-list.js</a>)</p>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list.js"
+title="you may retrieve this file using curl or irm">ul-a-to-z-list.js</a>)</p>
 <div class="sourceCode" id="cb21"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co">/**</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co"> * a-to-z-list.js, this wraps a standard UL list providing A to Z navigation list</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co"> * ul-a-to-z-list.js, this wraps a standard UL list providing A to Z navigation list</span></span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co"> */</span></span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AToZList <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
 <span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  <span class="fu">constructor</span>() {</span>
@@ -777,34 +794,35 @@ class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21
 <span id="cb21-93"><a href="#cb21-93" tabindex="-1"></a></span>
 <span id="cb21-94"><a href="#cb21-94" tabindex="-1"></a>  <span class="fu">scrollToSection</span>(section) {</span>
 <span id="cb21-95"><a href="#cb21-95" tabindex="-1"></a>    <span class="kw">const</span> yOffset <span class="op">=</span> <span class="op">-</span><span class="dv">100</span><span class="op">;</span></span>
-<span id="cb21-96"><a href="#cb21-96" tabindex="-1"></a>    <span class="kw">const</span> y <span class="op">=</span> section<span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">.</span><span class="at">top</span> <span class="op">+</span> <span class="bu">window</span><span class="op">.</span><span class="at">pageYOffset</span> <span class="op">+</span> yOffset<span class="op">;</span></span>
-<span id="cb21-97"><a href="#cb21-97" tabindex="-1"></a></span>
-<span id="cb21-98"><a href="#cb21-98" tabindex="-1"></a>    <span class="bu">window</span><span class="op">.</span><span class="fu">scrollTo</span>({</span>
-<span id="cb21-99"><a href="#cb21-99" tabindex="-1"></a>      <span class="dt">top</span><span class="op">:</span> y<span class="op">,</span></span>
-<span id="cb21-100"><a href="#cb21-100" tabindex="-1"></a>      <span class="dt">behavior</span><span class="op">:</span> <span class="st">&#39;smooth&#39;</span></span>
-<span id="cb21-101"><a href="#cb21-101" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb21-102"><a href="#cb21-102" tabindex="-1"></a>  }</span>
-<span id="cb21-103"><a href="#cb21-103" tabindex="-1"></a>}</span>
-<span id="cb21-104"><a href="#cb21-104" tabindex="-1"></a></span>
-<span id="cb21-105"><a href="#cb21-105" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
+<span id="cb21-96"><a href="#cb21-96" tabindex="-1"></a>    <span class="kw">const</span> y <span class="op">=</span> section<span class="op">.</span><span class="fu">getBoundingClientRect</span>()<span class="op">.</span><span class="at">top</span> <span class="op">+</span> </span>
+<span id="cb21-97"><a href="#cb21-97" tabindex="-1"></a>                      <span class="bu">window</span><span class="op">.</span><span class="at">pageYOffset</span> <span class="op">+</span> yOffset<span class="op">;</span></span>
+<span id="cb21-98"><a href="#cb21-98" tabindex="-1"></a></span>
+<span id="cb21-99"><a href="#cb21-99" tabindex="-1"></a>    <span class="bu">window</span><span class="op">.</span><span class="fu">scrollTo</span>({</span>
+<span id="cb21-100"><a href="#cb21-100" tabindex="-1"></a>      <span class="dt">top</span><span class="op">:</span> y<span class="op">,</span></span>
+<span id="cb21-101"><a href="#cb21-101" tabindex="-1"></a>      <span class="dt">behavior</span><span class="op">:</span> <span class="st">&#39;smooth&#39;</span></span>
+<span id="cb21-102"><a href="#cb21-102" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb21-103"><a href="#cb21-103" tabindex="-1"></a>  }</span>
+<span id="cb21-104"><a href="#cb21-104" tabindex="-1"></a>}</span>
+<span id="cb21-105"><a href="#cb21-105" tabindex="-1"></a></span>
+<span id="cb21-106"><a href="#cb21-106" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;ul-a-to-z-list&#39;</span><span class="op">,</span> AToZList)<span class="op">;</span></span></code></pre></div>
 </div>
-<div id="part-2.3-youve-created-two-web-components"
+<div id="part-2.3-congratulations-youve-created-two-web-components"
 class="slide section level1">
-<h1>Part 2.3: You’ve created two web components</h1>
+<h1>Part 2.3: Congratulations! You’ve created two web components!</h1>
 <ul>
-<li>The trivial <code>hello-clock</code></li>
-<li>The more complex <code>a-to-z-list</code></li>
+<li><code>&lt;hello-clock&gt;</code> (minimal)</li>
+<li><code>&lt;ul-a-to-z-list&gt;</code> (complex)</li>
 </ul>
-<p>Congratulations! Time to update our application.</p>
+<p>Let’s take a quick break and stretch before moving forward</p>
 </div>
 <div id="part-2.4-using-our-a-to-z-list" class="slide section level1">
 <h1>Part 2.4: Using our A to Z list</h1>
 <ol style="list-style-type: decimal">
 <li>Modify is <code>htdocs/index.html</code></li>
 <li>Wrap the <code>ul</code> list with our
-<code>&lt;a-to-z-list&gt;&lt;/a-to-z-list&gt;</code></li>
+<code>&lt;ul-a-to-z-list&gt;&lt;/ul-a-to-z-list&gt;</code></li>
 <li>Add our component module
-<code>&lt;script type="model" src="modules/a-to-z-list.js"&gt;&lt;/script&gt;</code></li>
+<code>&lt;script type="model" src="modules/ul-a-to-z-list.js" defer&gt;&lt;/script&gt;</code></li>
 <li>Test, what happens on page reload?</li>
 </ol>
 </div>
@@ -862,7 +880,7 @@ Populates the UL lists with the data
 <h1>Part 2.4: Review <code>listRecipes()</code></h1>
 <ul>
 <li>It could get the handle for the
-<code>&lt;a-to-z-list&gt;&lt;/a-to-z-list&gt;</code></li>
+<code>&lt;ul-a-to-z-list&gt;&lt;/ul-a-to-z-list&gt;</code></li>
 <li><code>listRecipes()</code> triggers retrieving the data</li>
 <li>It invokes <code>populateUL()</code> which populates that
 innerHTML!</li>
@@ -874,11 +892,11 @@ innerHTML!</li>
 class="slide section level1">
 <h1>Part 2.4: Taking advantage of inheriting HTML element</h1>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js"
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v2.js"
 title="you may retrieve this file with curl or irm">index_recipes_v2.js</a>)</p>
 <div class="sourceCode" id="cb22"><pre
 class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">listRecipes</span>() {</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a> <span class="kw">const</span> aToZList <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;a-to-z-list&#39;</span>)<span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a> <span class="kw">const</span> aToZList <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;ul-a-to-z-list&#39;</span>)<span class="op">;</span></span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a> <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(aToZList)<span class="op">;</span></span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a> <span class="kw">const</span> ul <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;ul&#39;</span>)<span class="op">;</span></span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a> <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> <span class="fu">getRecipes</span>()<span class="op">;</span></span>
@@ -916,8 +934,8 @@ class="slide section level1">
 <li>Remove our render call from <code>index_recipes.js</code>.</li>
 </ol>
 <p>(source <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v8.js"
-title="you may retrieve this file with curl or irm">a-to-z-list_v8.js</a>)
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v8.js"
+title="you may retrieve this file with curl or irm">ul-a-to-z-list_v8.js</a>)
 (source <a
 href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/index_recipes_v3.js"
 title="you may retrieve this file with curl or irm">index_recipes_v3.js</a>)</p>
@@ -935,16 +953,38 @@ the focus</li>
 <li>The page level JavaScript is about adding behaviors at the page
 level</li>
 <li>Balance the areas of responsibilities</li>
+<li>A style element in a component can function like a style element in
+the page head element
+<ul>
+<li>CSS can be imported</li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
-<div
-id="part-2.5-introducing-csv-textarea-web-component-csv-textareacsv-textarea"
-class="slide section level1">
-<h1>Part 2.5: Introducing CSV Textarea Web Component,
-<code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></h1>
+<div id="part-2.4-things-to-remember" class="slide section level1">
+<h1>Part 2.4: Things to remember</h1>
 <ul>
-<li>What does <code>&lt;csv-textarea&gt;&lt;/csv-textara&gt;</code> do?
+<li>HTML5 provides allot of capability, not everything needs to be a
+component</li>
+<li>Components let us encapsulate structure, behavior of visual
+style</li>
+<li>Components work best when they enhance the symantic structure of
+HTML and the page</li>
+</ul>
+</div>
+<div id="part-2.5-cl-web-components" class="slide section level1">
+<h1>Part 2.5: CL-Web-Components</h1>
+<p><a href="https://github.com/caltechlibrary/CL-Web-Components"
+class="uri">https://github.com/caltechlibrary/CL-Web-Components</a></p>
+<ul>
+<li>A small collection of ready to go web components</li>
+<li>You can use them individually or collectively</li>
+</ul>
+</div>
+<div id="part-2.5-textarea-csv" class="slide section level1">
+<h1>Part 2.5: Textarea CSV</h1>
+<ul>
+<li>What does <code>&lt;textarea-csv&gt;&lt;/csv-textara&gt;</code> do?
 <ul>
 <li>Typing in comma separated values is cumbersome, can me improve
 that?</li>
@@ -955,22 +995,21 @@ for typing in comma delimited data</li>
 </ul></li>
 </ul>
 </div>
-<div
-id="part-2.5-using-the-csv-textarea-web-component-csv-textareacsv-textarea"
+<div id="part-2.5-how-to-using-textarea-csv"
 class="slide section level1">
-<h1>Part 2.5: Using the CSV Textarea Web Component,
-<code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></h1>
+<h1>Part 2.5: How to using Textarea CSV</h1>
+<p>See <a
+href="https://caltechlibrary.github.io/CL-Web-compenents/textarea-csv.html"
+class="uri">https://caltechlibrary.github.io/CL-Web-compenents/textarea-csv.html</a></p>
+</div>
+<div id="part-2.5-using-textarea-csv-in-our-web-form"
+class="slide section level1">
+<h1>Part 2.5: Using Textarea CSV in our web form</h1>
 <p>Next steps</p>
 <ol style="list-style-type: decimal">
-<li>Go to <a
-href="https://github.com/caltechlibrary/CL-web-components">CL-web-components</a></li>
-</ol>
-<ul>
-<li><a
-href="https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js"
-title="you may retrieve this file with curl or irm">csv-textarea.js</a></li>
-</ul>
-<ol start="2" style="list-style-type: decimal">
+<li>Retrieve <a
+href="https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js"
+title="you may retrieve this file with curl or irm">textarea-csv.js</a></li>
 <li>Copy the component into your modules directory</li>
 <li>Update your HTML markup</li>
 <li>Update <code>utils.js</code> by adding a <code>saveRecipe</code>
@@ -978,23 +1017,44 @@ function</li>
 <li>Test</li>
 </ol>
 </div>
-<div id="part-2.5-retrieving-csv-textarae.js"
+<div id="part-2.5-retrieving-textarea-csv.js"
 class="slide section level1">
-<h1>Part 2.5: Retrieving csv-textarae.js</h1>
+<h1>Part 2.5: Retrieving textarea-csv.js</h1>
 <p>On macOS or Linux.</p>
-<pre class="shell"><code>curl -L -o htdocs/modules/csv-textarea.js \
-  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js </code></pre>
+<pre class="shell"><code>curl -L -o htdocs/modules/textarea-csv.js \
+  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js </code></pre>
 <p>On Windows</p>
 <pre class="pwsh"><code>irm `
-  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js `
-  -Outfile ./htdocs/modules/csv-textarea.js</code></pre>
+  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js `
+  -Outfile ./htdocs/modules/textarea-csv.js</code></pre>
 </div>
-<div
-id="part-2.5-using-the-csv-textarea-web-component-csv-textareacsv-textarea-1"
+<div id="part-2.5-move-into-our-modules-directory"
 class="slide section level1">
-<h1>Part 2.5: Using the CSV Textarea Web Component,
-<code>&lt;csv-textarea&gt;&lt;/csv-textarea&gt;</code></h1>
-<p>What happens when I press “save” button?</p>
+<h1>Part 2.5: Move into our modules directory</h1>
+<p>On macOS or Linux.</p>
+<pre class="shell"><code>mv textarea-csv.js htdocs/modules</code></pre>
+<p>On Windows</p>
+<pre class="pwsh"><code>move textarea-csv.js htdocs/modules</code></pre>
+</div>
+<div id="part-2.5-update-your-html-markup" class="slide section level1">
+<h1>Part 2.5: Update your HTML markup</h1>
+<p>Wrap our ingredients <code>textarea</code> in a
+<code>textarea-csv</code>.</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">textarea-csv</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot">          </span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="ot">    title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="ot">    cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="ot"> </span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="ot">    column-headings</span><span class="op">=</span><span class="st">&quot;Ingredients,Units&quot;</span><span class="ot"> debug</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="ot">      title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="ot">      cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">textarea-csv</span><span class="dt">&gt;</span></span></code></pre></div>
+</div>
+<div id="part-2.5-textarea-csv-and-web-forms"
+class="slide section level1">
+<h1>Part 2.5: Textarea CSV and Web Forms</h1>
+<p>What happens when I press “save” button in the web form?</p>
 <ul>
 <li>Does the submit process need change?</li>
 <li>What are the options?
@@ -1004,7 +1064,27 @@ class="slide section level1">
 </ul></li>
 </ul>
 </div>
+<div id="part-2.5-textarea-csv-and-web-forms-1"
+class="slide section level1">
+<h1>Part 2.5: Textarea CSV and Web Forms</h1>
+<p>We’re missing the script element that imports our component.</p>
+<p>Include this in the head element of the page.</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/textarea-csv.js&quot;</span><span class="ot"> defer</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Try submitting the form again. What happens?</p>
+</div>
 <div id="part-2.5-fixing-web-form-submission"
+class="slide section level1">
+<h1>Part 2.5: Fixing web form submission</h1>
+<ul>
+<li>We need an event listener to trigger it
+<ul>
+<li>Which element?</li>
+<li>What event?</li>
+</ul></li>
+</ul>
+</div>
+<div id="part-2.5-fixing-web-form-submission-1"
 class="slide section level1">
 <h1>Part 2.5: Fixing web form submission</h1>
 <p>The <a
@@ -1019,57 +1099,16 @@ a<code>saveRecipe</code> function.</p>
   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js `
   -Output htdocs/modules/utils.js</code></pre>
 </div>
-<div id="part-2.5-fixing-web-form-submission-1"
+<div id="part-2.5-fixing-web-form-submission-2"
 class="slide section level1">
 <h1>Part 2.5: Fixing web form submission</h1>
-<ul>
-<li>We need an event listener to trigger it
-<ul>
-<li>Which element?</li>
-<li>What event?</li>
-</ul></li>
-</ul>
-</div>
-<div id="part-2.5-update-the-head-of-edit_replace.html"
-class="slide section level1">
-<h1>Part 2.5: Update the HEAD of edit_replace.html</h1>
-<p>Include our web component module in the head.</p>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A recipe collection<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;css/style.css&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/csv-textarea.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;modules/edit_recipe.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span></code></pre></div>
-</div>
-<div id="part-2.5-update-the-html-for-edit_recipe.html"
-class="slide section level1">
-<h1>Part 2.5: Update the HTML for edit_recipe.html</h1>
-<p>Wrap our ingredients <code>textarea</code> in a
-<code>csv-textarea</code>.</p>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">csv-textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot">          </span></span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="ot">    title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="ot">    cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="ot"> </span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="ot">    column-headings</span><span class="op">=</span><span class="st">&quot;Ingredients,Units&quot;</span><span class="ot"> debug</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">textarea</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;ingredients&quot;</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="ot">      title</span><span class="op">=</span><span class="st">&quot;ingredient,units (CSV data)&quot;</span><span class="ot"> placeholder</span><span class="op">=</span><span class="st">&quot;flour,2 cups&quot;</span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="ot">      cols</span><span class="op">=</span><span class="st">&quot;60&quot;</span><span class="ot">rows</span><span class="op">=</span><span class="st">&quot;10&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">textarea</span><span class="dt">&gt;</span></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">csv-textarea</span><span class="dt">&gt;</span></span></code></pre></div>
-</div>
-<div id="part-2.5-update-the-html-for-edit_recipe.html-1"
-class="slide section level1">
-<h1>Part 2.5: Update the HTML for edit_recipe.html</h1>
-<p>Add the following at the bottom of the page before the
-<code>&lt;/body&gt;</code>.</p>
-<div class="sourceCode" id="cb29"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;DOMContentLoaded&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Add the following at the page before the to process the
+submission.</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> defer</span><span class="dt">&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  <span class="im">import</span> { saveRecipe } <span class="im">from</span> <span class="st">&#39;./modules/utils.js&#39;</span><span class="op">;</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> saveRecipe)<span class="op">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
 <div id="part-2.5-test-updates" class="slide section level1">
 <h1>Part 2.5: Test updates</h1>
@@ -1143,12 +1182,12 @@ help with Dataset</a></li>
 <h1>Reference: CL-web-components</h1>
 <dl>
 <dt><a
-href="https://github.com/caltechlibrary/CL-web-components/blob/main/csv-textarea.js">csv-textarea</a></dt>
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/textarea-csv.js">textarea-csv</a></dt>
 <dd>
 Wraps a textarea element and presents a editable table of cells
 </dd>
 <dt><a
-href="https://github.com/caltechlibrary/CL-web-components/blob/main/a-to-z-list.js">a-to-z-list</a></dt>
+href="https://github.com/caltechlibrary/CL-web-components/blob/main/ul-a-to-z-list.js">ul-a-to-z-list</a></dt>
 <dd>
 Wraps a UL list and creates an A to Z list
 </dd>

@@ -12,8 +12,8 @@
     }
   ],
   "dateCreated": "2025-05-30",
-  "dateModified": "2025-07-10",
-  "datePublished": "2025-07-10",
+  "dateModified": "2025-07-18",
+  "datePublished": "2025-07-18",
   "description": "The repository contains a presentation introducing web application construction using\nDataset and Web Components. It is intended for the T2T3 series at Caltech Library.\n\nIt presents the construction process to build a simple recipe collection system.",
   "funder": [
     {
@@ -43,7 +43,7 @@
     "Terminal Application",
     "Web Browser",
     "Text Editor",
-    "Dataset >= v2.3.1",
+    "Dataset >= v2.3.2",
     "curl (or irm using PowerShell)"
   ],
   "softwareSuggestions": [
@@ -51,12 +51,13 @@
     "jq",
     "yq",
     "htmlq",
-    "CMTools >= 0.0.35"
+    "CMTools >= 0.0.35",
+    "CL-web-components >= 0.0.12"
   ],
-  "version": "0.0.10",
+  "version": "0.0.11",
   "developmentStatus": "draft",
   "issueTracker": "https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues",
-  "releaseNotes": "Workshop is split into two parts. \n\n1. Build a web application with dataset\n2. Enhance the browser experience with web components.\n\nThis allows easy retrieval with curl (macOS and Linux) or irm (Windows and PowerShell).\n\nMinimum Dataset Version now 2.3.1.",
+  "releaseNotes": "Workshop is split into two parts. \n\n1. Build a web application with dataset\n2. Enhance the browser experience with web components.\n\nThis allows easy retrieval with curl (macOS and Linux) or irm (Windows and PowerShell).\n\nUpdated the example components to conform to our naming conventions used in CL-Web-Components.\n\nMinimum CL-Web-Component version is now 0.0.12.\n\nMinimum Dataset Version now 2.3.2.",
   "copyrightYear": 2025,
   "copyrightHolder": "California Institute of Technology"
 }

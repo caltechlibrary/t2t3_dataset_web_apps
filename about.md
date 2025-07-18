@@ -12,7 +12,7 @@ authors:
 
 
 repository_code: https://github.com/caltechlibrary/t2t3_dataset_web_apps
-version: 0.0.9
+version: 0.0.11
 license_url: https://caltechlibrary.github.io/t2t3_dataset_web_apps/LICENSE
 
 programming_language:
@@ -29,13 +29,13 @@ keywords:
   - web components
   - presentation
 
-date_released: 2025-06-27
+date_released: 2025-07-18
 ---
 
 About this software
 ===================
 
-## t2t3_dataset_web_apps 0.0.9
+## t2t3_dataset_web_apps 0.0.11
 
 Workshop is split into two parts. 
 
@@ -43,6 +43,12 @@ Workshop is split into two parts.
 2. Enhance the browser experience with web components.
 
 This allows easy retrieval with curl (macOS and Linux) or irm (Windows and PowerShell).
+
+Updated the example components to conform to our naming conventions used in CL-Web-Components.
+
+Minimum CL-Web-Component version is now 0.0.12.
+
+Minimum Dataset Version now 2.3.2.
 
 ### Authors
 
@@ -78,7 +84,7 @@ It presents the construction process to build a simple recipe collection system.
 - Terminal Application
 - Web Browser
 - Text Editor
-- Dataset &gt;&#x3D; v2.3.1
+- Dataset &gt;&#x3D; v2.3.2
 - curl (or irm using PowerShell)
 
 
@@ -89,5 +95,6 @@ It presents the construction process to build a simple recipe collection system.
 - yq
 - htmlq
 - CMTools &gt;&#x3D; 0.0.35
+- CL-web-components &gt;&#x3D; 0.0.12
 
 

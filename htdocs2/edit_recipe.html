@@ -3,7 +3,7 @@
   <head>
     <title>A recipe collection</title>
     <link rel="style" href="css/style.css">
-    <script type="module" src="modules/csv-textarea.js"></script>
+    <script type="module" src="modules/textarea-csv.js"></script>
     <script type="module" src="modules/edit_recipe.js"></script>
   </head>
   <body>
@@ -30,12 +30,12 @@
           <!-- NOTE: that web components use a hyphen in their name, that avoids collission with
            standard HTML elements.
 
-           The attributes of the csv-textarea can match the fallback, but add the required 
+           The attributes of the textarea-csv can match the fallback, but add the required 
            "column-headings" attrtibute.
            
            You can also add a "debug"="true" attribute to debug things.
           -->
-          <csv-textarea id="ingredients" name="ingredients"          
+          <textarea-csv id="ingredients" name="ingredients"          
             title="ingredient,units (CSV data)" placeholder="flour,2 cups"
             cols="60"rows="10" 
             column-headings="Ingredients,Units" debug="true">
@@ -43,7 +43,7 @@
               title="ingredient,units (CSV data)" placeholder="flour,2 cups"
               cols="60"rows="10">
             </textarea>
-          </csv-textarea>
+          </textarea-csv>
         </div>
 
         <div>

@@ -8,11 +8,10 @@ institute: |
   Caltech Library,
   Digital Library Development
 description: workshop presentation
-urlcolor: blue
-linkstyle: bold
-aspectratio: 169
+slidy-url: .
+css: styles/sea-and-shore.css
 createDate: 2025-05-29
-updateDate: 2025-06-27
+updateDate: 2025-07-08
 draft: true
 pubDate: TBD
 place: Caltech Library (Zoom)
@@ -42,8 +41,8 @@ This workshop is focused on enhancing our application using Web Components.
 
 - Setup up a new static content directory for update our [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api2.yaml "you may retrieve this file with curl or irm")
 - Create our first web component, "`<hello-clock></hello-clock>`"
-- Develop an A to Z web component, "`<a-to-z-list></a-to-z-list>`" (for listing our recipes)
-- Use the [`<csv-textarea></csv-textarea>`](https://caltechlibrary.github.io/CL-web-components/CSVTextarea.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
+- Develop an A to Z web component, "`<ul-a-to-z-list></ul-a-to-z-list>`" (for listing our recipes)
+- Use the [`<textarea-csv></textarea-csv>`](https://caltechlibrary.github.io/CL-web-components/textarea-csv.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
 
 # Workshop: "A recipe for applications"
 
@@ -58,7 +57,7 @@ This workshop is focused on enhancing our application using Web Components.
 - Terminal application
 - [Text Editor](https://vscodium.com/)
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/)
-- [Dataset >= 2.3.1](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
+- [Dataset >= 2.3.2](https://caltechlibrary.github.io/dataset/INSTALL.html) (or latest release)
 - cURL or irm
 - The YAML, HTML and JavaScript you developed from Part I
 
@@ -88,12 +87,12 @@ copy recipes_api.yaml recipes_api1.yaml
 HOME WORK: Make `recipes_api1.yaml` work. Change the
 the `htdocs` attribute to point to `htdocs1` directory.
 Compare version 1 with the results of the workshop.
-Discuss amoung friends.
+Discuss among friends.
 
 # Part 2.1: Starting up our web service
 
-- The web service should work last session, 
-- We'll be building on that browser side
+- The web service works just like our session
+- We'll be building browser side, updating the htdocs directory
   - Ready to dive into Web Components?
 
 ~~~shell
@@ -103,7 +102,7 @@ datasetd recipes_api.yaml
 # Part 2.2: The "What" of Web Components
 
 - Web Components are a W3C standard to allowing you to extend HTML
-  - (Web Components inherit, include accessibility features)
+  - (Web Components inherit, including accessibility features)
 - A Web Component encapsulates the HTML, CSS and JavaScript use to create a new HTML Element
   - (They encourage sensible code re-use)
 - Web Components are re-usable blocks of structure, function and presentation
@@ -124,6 +123,22 @@ datasetd recipes_api.yaml
 - The class contains a `connectedCallback()` method
 - The component is "registered" using the `customElements.define()` method
   - Example: `customElements.define( 'hello-clock', HelloClock );`
+
+# Part 2.2: Why extend HTML elements?
+
+1. So we don't have to define everything in JavaScript
+  - DOM, life cycle, events, etc.
+2. So we align with existing HTML element expectations
+
+# Part 2.2: What's the `connectedCallback()` method?
+
+- This provides a "hook" into the browser's render engine and event handler
+
+# Part 2.2.: What's registration?
+
+- Registration tells the web browser this is a new HTML element type
+  - Web browsers ignores HTML elements they don't understand
+- Registration configures the new element's relationship with HTML parser and render engine
 
 # Part 2.2: The "Hello Clock" Web Component
 
@@ -166,7 +181,7 @@ customElements.define( 'hello-clock', HelloClock );
     <head>
         <title>Hello Clock Example</title>
         <link rel="style" href="css/style.css">
-        <script type="module" src="modules/hello-clock.js"></script>
+        <script type="module" src="modules/hello-clock.js" defer></script>
     </head>
     <body>
         <h1>Hello Clock Example</h1>
@@ -195,24 +210,24 @@ A: Wraps a standard UL list providing A to Z navigation.
 
 # Part 2.3: Building an A to Z list web component
 
-1. Create an HTML file for testing, `htdocs/a-to-z-list.html`
-2. Create our Web Component, `htdocs/modules/a-to-z-list.js`
+1. Create an HTML file for testing, `htdocs/ul-a-to-z-list.html`
+2. Create our Web Component, `htdocs/modules/ul-a-to-z-list.js`
 
 macOS and Linux:
 
 ~~~shell
-touch htdocs/a-to-z-list.html htdocs/modules/a-to-z-list.js
+touch htdocs/ul-a-to-z-list.html htdocs/modules/ul-a-to-z-list.js
 ~~~
 
 Windows:
 
 ~~~pwsh
-New-Item -Path htdocs/a-to-z-list.html ; New-Item htdocs/modules/a-to-z-list.js
+New-Item -Path htdocs/ul-a-to-z-list.html ; New-Item htdocs/modules/ul-a-to-z-list.js
 ~~~
 
 # Part 2.3: Building an A to Z list web component
 
-Here's the HTML we'll use for our test page, [a-to-z-list.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/a-to-z-list.html "you may retrieve this file using curl or irm").
+Here's the HTML we'll use for our test page, [ul-a-to-z-list.html](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/ul-a-to-z-list.html "you may retrieve this file using curl or irm").
 
 ~~~html
 <!DOCTYPE html>
@@ -220,12 +235,12 @@ Here's the HTML we'll use for our test page, [a-to-z-list.html](https://raw.gith
     <head>
         <title>A to Z List Clock Example</title>
         <link rel="style" href="css/style.css">
-        <script type="module" src="modules/a-to-z-list.js"></script>
+        <script type="module" src="modules/ul-a-to-z-list.js" defer></script>
     </head>
     <body>
         <h1>A to Z List Example</h1>
 
-        <a-to-z-list>
+        <ul-a-to-z-list>
             <ul>
                 <li>Alex</li> <li>Betty</li> <li>Connor</li> <li>David</li>
                 <li>Edwina</li> <li>Fiona</li> <li>George</li> <li>Harry</li>
@@ -234,14 +249,14 @@ Here's the HTML we'll use for our test page, [a-to-z-list.html](https://raw.gith
                 <li>Terry</li> <li>Ulma</li> <li>Victorio</li> <li>Willamina</li> <li>Xavier</li>
                 <li>Zoran</li>
             </ul>
-        </a-to-z-list>
+        </ul-a-to-z-list>
     </body>
 </html>
 ~~~
 
 # Part 2.3: Building an A to Z list web component
 
-(source [a-to-z-list_v0.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v0.js "you may retrieve this file using curl or irm"))
+(source [ul-a-to-z-list_v0.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v0.js "you may retrieve this file using curl or irm"))
 
 Start out with a minimal Class definition and customElement definition
 
@@ -254,16 +269,16 @@ export class AToZList extends HTMLElement {
   connectedCallback() {
   }
 }
-customElements.define('a-to-z-list', AToZList);
+customElements.define('ul-a-to-z-list', AToZList);
 ~~~
 
-NOTE: the constructor and that the web component does do any thing yet. Open the web page.
+NOTE: The constructor and callback are empty. Open the web page. Use "the inspector" in your browser's dev tools.
 
 # Part 2.3: Introducing Shadow DOM
 
-(source [a-to-z-list_v1.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v1.js "you may retrieve this file using curl or irm"))
+(source [ul-a-to-z-list_v1.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v1.js "you may retrieve this file using curl or irm"))
 
-You can build your web component in the Shadow DOM that way you can sprinkle it into your document as needed. We need to include that in our constructor.
+You can build your web component using the Shadow DOM. We need to include that in our constructor.
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -275,16 +290,14 @@ export class AToZList extends HTMLElement {
   connectedCallback() {
   }
 }
-customElements.define('a-to-z-list', AToZList);
+customElements.define('ul-a-to-z-list', AToZList);
 ~~~
 
-Reload you web page, what does does it look like?
+Reload you web page, what does does it look like? What shows up in the inspector?
 
 # Part 2.3: What do we want the callback to do? 
 
-(source [a-to-z-list_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file using curl or irm"))
-
-We use the `connectedCallback()` method to to call a render method. This is what makes our Shadow DOM take control.
+We use the `connectedCallback()` method to to call a render method. This is what makes our shadow DOM element visible.
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -294,24 +307,18 @@ export class AToZList extends HTMLElement {
 
   render() {
     const template = document.createElement('template');
-    template.innerHTML = `<style>
-        /* Basic styles */
-        menu { list-style-type: none; padding: 0; }
-      </style>
-      <menu id="menu"></menu>
-      <div id="list-container">This is where our A to List will go</div>`;
-
+    template.innerHTML = '<!-- Our HTML markup will go here ... -->';
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
-customElements.define('a-to-z-list', AToZList);
+customElements.define('ul-a-to-z-list', AToZList);
 ~~~
 
-What happened in our web page?
+What happened in our web page? What does the inspector show?
 
-# Part 2.3: Basic Structure of our component using Shadow DOM
+# Part 2.3: Basic Structure
 
-(source [a-to-z-list_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file using curl or irm"))
+(source [ul-a-to-z-list_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v2.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 export class AToZList extends HTMLElement {
@@ -331,14 +338,12 @@ export class AToZList extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 }
-customElements.define('a-to-z-list', AToZList);
+customElements.define('ul-a-to-z-list', AToZList);
 ~~~
 
 # Part 2.3: Display Items
 
-(source [a-to-z-list_v3.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v3.js "you may retrieve this file using curl or irm"))
-
-Objective: Display the list items in the component without any categorization.
+(source [ul-a-to-z-list_v3.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v3.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
   render() {
@@ -361,13 +366,11 @@ Objective: Display the list items in the component without any categorization.
   }
 ~~~
 
-What happened in our web page?
+What happened in our web page? What shows up in the inspector?
 
-# Part 2.3: Categorize Items by Letter
+# Part 2.3: Organize Items by Starting Letter
 
-(source [a-to-z-list_v4.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v4.js "you may retrieve this file using curl or irm"))
-
-Objective: Organize items by their starting letter.
+(source [ul-a-to-z-list_v4.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v4.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 render() {
@@ -413,9 +416,7 @@ render() {
 
 # Part 2.3: Add Navigation Menu
 
-(source [a-to-z-list_v5.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v5.js "you may retrieve this file using curl or irm"))
-
-Objective: Add a navigation menu to jump to sections by letter.
+(source [ul-a-to-z-list_v5.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v5.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 render() {
@@ -436,9 +437,9 @@ render() {
 }
 ~~~
 
-# Part 2.3: Complete our section linking
+# Part 2.3: Linking
 
-(source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
+(source [ul-a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
   // Section linking inside the `Object.keys(sections).forEach(letter => {` loop
@@ -454,11 +455,9 @@ render() {
   });
 ~~~
 
-# Part 2.3: Add Back to Menu Link
+# Part 2.3: Back to Menu Link
 
-(source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
-
-Objective: Implement "Back to Menu" link.
+(source [ul-a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 render() {
@@ -484,44 +483,41 @@ render() {
 }
 ~~~
 
-
 # Part 2.3: Improve Scrolling
 
-(source [a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
-
-Objective: Implement smooth scrolling by providing a new method
+(source [ul-a-to-z-list_v6.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v6.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 // This is a new method, it can go after the render method in our class
 scrollToSection(section) {
   const yOffset = -100;
-  const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  const y = section.getBoundingClientRect().top +
+              window.pageYOffset + yOffset;
 
   window.scrollTo({ top: y, behavior: 'smooth' });
 }
 ~~~
 
-# Part 2.3: Styling
+# Part 2.3: Style and CSS
 
-(source [a-to-z-list_v7.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v7.js "you may retrieve this file using curl or irm"))
-
-Objective: Add final styling and conditional rendering based on attributes.
+(source [ul-a-to-z-list_v7.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v7.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 render() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <style>
-      menu { list-style-type: none; padding: 0; }
-      menu li { display: inline; margin-right: 10px; }
-      .letter-section { list-style-type: none; }
-      .letter-section li { text-decoration: none; font-weight: none; }
-      .back-to-menu { display: block; margin-top: 20px; }
-    </style>
-    <menu id="menu"></menu>
-    <div id="list-container"></div>
-    ${this.hasAttribute('long') ? '<a class="back-to-menu" href="#menu">Back to Menu</a>' : ''}
-  `;
+<style>
+  menu { list-style-type: none; padding: 0; }
+  menu li { display: inline; margin-right: 10px; }
+  .letter-section { list-style-type: none; }
+  .letter-section li { text-decoration: none; font-weight: none; }
+  .back-to-menu { display: block; margin-top: 20px; }
+</style>
+<menu id="menu"></menu>
+<div id="list-container"></div> 
+${this.hasAttribute('long') ? 
+  '<a class="back-to-menu" href="#menu">Back to Menu</a>' : ''
+}`;
 
   // Rest of the render method remains the same
 }
@@ -529,11 +525,11 @@ render() {
 
 # Part 2.3: A final working A to Z list
 
-(source [a-to-z-list.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list.js "you may retrieve this file using curl or irm"))
+(source [ul-a-to-z-list.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list.js "you may retrieve this file using curl or irm"))
 
 ~~~JavaScript
 /**
- * a-to-z-list.js, this wraps a standard UL list providing A to Z navigation list
+ * ul-a-to-z-list.js, this wraps a standard UL list providing A to Z navigation list
  */
 export class AToZList extends HTMLElement {
   constructor() {
@@ -627,7 +623,8 @@ export class AToZList extends HTMLElement {
 
   scrollToSection(section) {
     const yOffset = -100;
-    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    const y = section.getBoundingClientRect().top + 
+                      window.pageYOffset + yOffset;
 
     window.scrollTo({
       top: y,
@@ -636,21 +633,21 @@ export class AToZList extends HTMLElement {
   }
 }
 
-customElements.define('a-to-z-list', AToZList);
+customElements.define('ul-a-to-z-list', AToZList);
 ~~~
 
-# Part 2.3: You've created two web components
+# Part 2.3: Congratulations! You've created two web components!
 
-- The trivial `hello-clock`
-- The more complex `a-to-z-list`
+- `<hello-clock>` (minimal)
+- `<ul-a-to-z-list>` (complex)
 
-Congratulations! Time to update our application.
+Let's take a quick break and stretch before moving forward
 
 # Part 2.4: Using our A to Z list
 
 1. Modify is `htdocs/index.html`
-2. Wrap the `ul` list with our `<a-to-z-list></a-to-z-list>`
-3. Add our component module `<script type="model" src="modules/a-to-z-list.js"></script>`
+2. Wrap the `ul` list with our `<ul-a-to-z-list></ul-a-to-z-list>`
+3. Add our component module `<script type="model" src="modules/ul-a-to-z-list.js" defer></script>`
 4. Test, what happens on page reload?
 
 # Part 2.4: **Integrating** the A to Z list
@@ -686,7 +683,7 @@ Congratulations! Time to update our application.
 
 # Part 2.4: Review `listRecipes()`
 
-- It could get the handle for the `<a-to-z-list></a-to-z-list>`
+- It could get the handle for the `<ul-a-to-z-list></ul-a-to-z-list>`
 - `listRecipes()` triggers retrieving the data
 - It invokes `populateUL()` which populates that innerHTML!
 
@@ -694,11 +691,11 @@ Congratulations! Time to update our application.
 
 # Part 2.4: Taking advantage of inheriting HTML element
 
-(source [index_recipes_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v2.js "you may retrieve this file with curl or irm"))
+(source [index_recipes_v2.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v2.js "you may retrieve this file with curl or irm"))
 
 ~~~JavaScript
 async function listRecipes() {
- const aToZList = document.querySelector('a-to-z-list');
+ const aToZList = document.querySelector('ul-a-to-z-list');
  console.log(aToZList);
  const ul = document.createElement('ul');
  const data = await getRecipes();
@@ -728,7 +725,7 @@ What does the updates look like?
 1. Update our component to use a mutation observer
 2. Remove our render call from `index_recipes.js`.
 
-(source [a-to-z-list_v8.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/a-to-z-list_v8.js "you may retrieve this file with curl or irm"))
+(source [ul-a-to-z-list_v8.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/ul-a-to-z-list_v8.js "you may retrieve this file with curl or irm"))
 (source [index_recipes_v3.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/index_recipes_v3.js "you may retrieve this file with curl or irm"))
 
 # Part 2.4: Lessons learned
@@ -738,50 +735,116 @@ What does the updates look like?
   - The JavaScript defining a web component extends HTML, that should be the focus
   - The page level JavaScript is about adding behaviors at the page level
   - Balance the areas of responsibilities
+  - A style element in a component can function like a style element in the page head element
+    - CSS can be imported
 
-# Part 2.5: Introducing CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
+# Part 2.4: Things to remember
 
-- What does `<csv-textarea></csv-textara>` do?
+- HTML5 provides allot of capability, not everything needs to be a component
+- Components let us encapsulate structure, behavior of visual style
+- Components work best when they enhance the symantic structure of HTML and the page
+
+# Part 2.5: CL-Web-Components
+
+<https://github.com/caltechlibrary/CL-Web-Components>
+
+- A small collection of ready to go web components
+- You can use them individually or collectively
+
+# Part 2.5: Textarea CSV
+
+- What does `<textarea-csv></csv-textara>` do?
   - Typing in comma separated values is cumbersome, can me improve that?
   - The web component presents a table view based on the CSV content in the wrapped textarea
   - If the web browser has JavaScript disabled the textarea still works for typing in comma delimited data
 
-# Part 2.5: Using the CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
+# Part 2.5: How to using Textarea CSV
+
+See <https://caltechlibrary.github.io/CL-Web-compenents/textarea-csv.html>
+
+# Part 2.5: Using Textarea CSV in our web form
 
 Next steps
 
-1. Go to [CL-web-components](https://github.com/caltechlibrary/CL-web-components) 
-  - [csv-textarea.js](https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js "you may retrieve this file with curl or irm")
+1. Retrieve [textarea-csv.js](https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js "you may retrieve this file with curl or irm")
 2. Copy the component into your modules directory
 3. Update your HTML markup
 4. Update `utils.js` by adding a `saveRecipe` function
 5. Test
 
-# Part 2.5: Retrieving csv-textarae.js
+# Part 2.5: Retrieving textarea-csv.js
 
 On macOS or Linux.
 
 ~~~shell
-curl -L -o htdocs/modules/csv-textarea.js \
-  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js 
+curl -L -o htdocs/modules/textarea-csv.js \
+  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js 
 ~~~
 
 On Windows
 
 ~~~pwsh
 irm `
-  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/csv-textarea.js `
-  -Outfile ./htdocs/modules/csv-textarea.js
+  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js `
+  -Outfile ./htdocs/modules/textarea-csv.js
 ~~~
 
-# Part 2.5: Using the CSV Textarea Web Component, `<csv-textarea></csv-textarea>`
+# Part 2.5: Move into our modules directory
 
-What happens when I press "save" button?
+On macOS or Linux.
+
+~~~shell
+mv textarea-csv.js htdocs/modules
+~~~
+
+On Windows
+
+~~~pwsh
+move textarea-csv.js htdocs/modules
+~~~
+
+# Part 2.5: Update your HTML markup
+
+Wrap our ingredients `textarea`  in a `textarea-csv`.
+
+~~~html
+  <textarea-csv id="ingredients" name="ingredients"          
+    title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+    cols="60"rows="10" 
+    column-headings="Ingredients,Units" debug="true">
+    <textarea id="ingredients" name="ingredients"
+      title="ingredient,units (CSV data)" placeholder="flour,2 cups"
+      cols="60"rows="10">
+    </textarea>
+  </textarea-csv>
+~~~
+
+# Part 2.5: Textarea CSV and Web Forms
+
+What happens when I press "save" button in the web form?
 
 - Does the submit process need change? 
 - What are the options?
   - submit as a URL encoded document?
   - submit as JSON encoded document?
+
+# Part 2.5: Textarea CSV and Web Forms
+
+We're missing the script element that imports our component.
+
+Include this in the head element of the page.
+
+~~~html
+<script type="module" src="modules/textarea-csv.js" defer></script>
+~~~
+
+Try submitting the form again. What happens?
+
+# Part 2.5: Fixing web form submission
+
+- We need an event listener to trigger it
+  - Which element?
+  - What event?
 
 # Part 2.5: Fixing web form submission
 
@@ -804,49 +867,12 @@ irm `
 
 # Part 2.5: Fixing web form submission
 
-- We need an event listener to trigger it
-  - Which element?
-  - What event?
-
-# Part 2.5: Update the HEAD of edit_replace.html
-
-Include our web component module in the head.
-
-~~~html
-  <head>
-    <title>A recipe collection</title>
-    <link rel="style" href="css/style.css">
-    <script type="module" src="modules/csv-textarea.js"></script>
-    <script type="module" src="modules/edit_recipe.js"></script>
-  </head>
-~~~
-
-# Part 2.5: Update the HTML for edit_recipe.html
-
-Wrap our ingredients `textarea`  in a `csv-textarea`.
-
-~~~html
-  <csv-textarea id="ingredients" name="ingredients"          
-    title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-    cols="60"rows="10" 
-    column-headings="Ingredients,Units" debug="true">
-    <textarea id="ingredients" name="ingredients"
-      title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-      cols="60"rows="10">
-    </textarea>
-  </csv-textarea>
-~~~
-
-# Part 2.5: Update the HTML for edit_recipe.html
-
-Add the following at the bottom of the page before the `</body>`.
+Add the following at the page before the to process the submission.
 
 ~~~HTML
-<script type="module">
+<script type="module" defer>
   import { saveRecipe } from './modules/utils.js';
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.addEventListener('submit', saveRecipe);
-  });
+  const form = document.addEventListener('submit', saveRecipe);
 </script>
 ~~~
 
@@ -895,10 +921,10 @@ Is progressive enhancement still relevant in 2025?
 
 # Reference: CL-web-components
 
-[csv-textarea](https://github.com/caltechlibrary/CL-web-components/blob/main/csv-textarea.js)
+[textarea-csv](https://github.com/caltechlibrary/CL-web-components/blob/main/textarea-csv.js)
 : Wraps a textarea element and presents a editable table of cells
 
-[a-to-z-list](https://github.com/caltechlibrary/CL-web-components/blob/main/a-to-z-list.js)
+[ul-a-to-z-list](https://github.com/caltechlibrary/CL-web-components/blob/main/ul-a-to-z-list.js)
 : Wraps a UL list and creates an A to Z list
 
 [sortable-table](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable-table.js)

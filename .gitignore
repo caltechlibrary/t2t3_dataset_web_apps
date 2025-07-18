@@ -7,7 +7,7 @@ workshop/
 *.ds
 # Ignore the following for part2 of workshop
 htdocs/a-to-z-list.html
-htdocs/modules/a-to-z-list.js
+htdocs/modules/ul-a-to-z-list.js
 htdocs/edit_recipe.html
-htdocs/modules/csv-textarea.js
+htdocs/modules/textarea-csv.js
 htdocs/modules/utils.js
