@@ -35,6 +35,8 @@ Welcome everyone. This is a hands on workshop (part 1).
 - We'll build a web application for managing a list of recipes
 - Work with HTML, a little JavaScript, JSON and YAML
 
+# Workshop: Dataset & HTML
+
 ## What we'll learn
 
 - How to create a JSON API using a YAML file and an embedded SQL SELECT statement
@@ -54,13 +56,18 @@ Download the presentation zip file at <https://github.com/caltechlibrary/t2t3_da
 - [Web Browser](https://www.mozilla.org/en-US/firefox/new/) (I'm assuming Firefox for this tutorial)
 - [cURL](https://curl.se/) (macOS/Linux) or [irm](https://learn.microsoft.com/en-us/powershell/module/?term=irm) (Windows)
 
+# Getting started
+
 ### Install dataset
 
 - See <https://caltechlibrary.github.io/dataset/INSTALL.html>
   - If you have problems you can download the zip files from here <https://github.com/caltechlibrary/dataset/releases>
 - You need to be running the latest v2 release (>= 2.3.2)
 
+NOTE: [INSTALL NOTES macOS](https://caltechlibrary.github.io/dataset/INSTALL_NOTES_macOS.html) & [INSTALL NOTES Windows](https://caltechlibrary.github.io/dataset/INSTALL_NOTES_Windows.html)
+
 We can start our first iteration of our application once you have these available.
+
 
 # Wait, what is Dataset?
 

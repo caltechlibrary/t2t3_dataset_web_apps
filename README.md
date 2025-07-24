@@ -24,6 +24,12 @@ This is a workshop presentation for the DLD development group at Caltech Library
 Uses: - datasetd
 - web browser with JavaScript enabled
 
+## Software installation
+
+- [dataset install](https://caltechlibrary.github.io/dataset/INSTALL.html)
+  - [macOS NOTES](https://caltechlibrary.github.io/dataset/INSTALL_NOTES_macOS.html)
+  - [Windows NOTES](https://caltechlibrary.github.io/dataset/INSTALL_NOTES_Windows.html)
+
 ## Related resources
 
 - [Getting Help, Improving the Workshop or Reporting bugs](https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues)
