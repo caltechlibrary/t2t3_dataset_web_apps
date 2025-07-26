@@ -6,6 +6,7 @@ This is a workshop presentation for the DLD development group at Caltech Library
 
 - [Part 1](presentation1.md), using Dataset to build a simple web application from HTML, CSS, JavaScript and YAML
 - [Part 2](presentation2.md), Web Components, enhancing the browser experience
+- [Part 3](presentation3.md), Using CL-web-components
 
 ## Software Requirements
 
@@ -20,9 +21,6 @@ This is a workshop presentation for the DLD development group at Caltech Library
 - jq
 - yq
 - htmlq
-
-Uses: - datasetd
-- web browser with JavaScript enabled
 
 ## Software installation
 

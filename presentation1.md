@@ -225,7 +225,7 @@ NOTE: Dataset web service can host many collections at the same time.
 
 YAML is a superset of JSON that is easy to read and easy to type.
 
-1. Create a file, using your text editor called [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml)
+1. Create a file, using your text editor called [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api.yaml)
 2. Type in `host: localhost:8001`
 
 ~~~yaml
@@ -324,7 +324,7 @@ collections:
   - dataset: recipes
     keys: true
     create: true
-    # Create redirectos do double duty as a POST also supports update.
+    # Create redirects do double duty as a POST also supports update.
     create_success: http://localhost:8001/display_recipe.html
     create_error: http://localhost:8001/edit_recipe.html
     update: true
@@ -374,14 +374,14 @@ On macOS and Linux you can cURL the `recipes_api.yaml` using the following state
 
 ~~~shell
 curl -o recipes_api.yaml \
-   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api.yaml
 ~~~
 
 On Windows
 
 ~~~pwsh
 irm -OutFile recipes_api.yaml `
-   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api.yaml
 ~~~
 
 # Part 1.2: Starting and stopping the web service
@@ -526,6 +526,7 @@ Improve the user experience with in Part 2 of the workshop, [Dataset & Web Compo
 - View presentations: 
   - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
   - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation2.html>
+  - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation3.html>
 - View the repository: <https://github.com/caltechlibrary/t2t3_dataset_web_apps>
 - Comment on this presentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
 - Author: R. S. Doiel, <mailto:rsdoiel@caltech.edu>

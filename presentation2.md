@@ -11,7 +11,7 @@ description: workshop presentation
 slidy-url: .
 css: styles/sea-and-shore.css
 createDate: 2025-05-29
-updateDate: 2025-07-08
+updateDate: 2025-07-25
 draft: true
 pubDate: TBD
 place: Caltech Library (Zoom)
@@ -43,7 +43,6 @@ This workshop is focused on enhancing our application using Web Components.
 - Save our [recipes_api.yaml](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api2.yaml "you may retrieve this file with curl or irm")
 - Create our first web component, "`<hello-clock></hello-clock>`"
 - Develop an A to Z web component, "`<ul-a-to-z-list></ul-a-to-z-list>`" (for listing our recipes)
-- Use the [`<textarea-csv></textarea-csv>`](https://caltechlibrary.github.io/CL-web-components/textarea-csv.html) from [CL-web-components](https://github.com/caltechlibrary/CL-web-components/releases) for our ingredient lists
 
 # Workshop: "A recipe for applications"
 
@@ -165,7 +164,8 @@ class HelloClock extends HTMLElement {
     // Get the current time as an object
     const d = new Date();
     // Update the inner text to include our time string
-    this.textContent = `${this.textContent} ${d.toTimeString()}`.trim();
+    const message = this.innerHTML.trim();
+    this.textContent = `${message} ${d.toTimeString()}`;
   }
 }
 // This is how the browsers learns to use the new HTML element.
@@ -181,7 +181,7 @@ customElements.define( 'hello-clock', HelloClock );
 <html lang="en-US">
     <head>
         <title>Hello Clock Example</title>
-        <link rel="style" href="css/style.css">
+        <link rel="stylesheet" href="css/style.css">
         <script type="module" src="modules/hello-clock.js" defer></script>
     </head>
     <body>
@@ -235,7 +235,7 @@ Here's the HTML we'll use for our test page, [ul-a-to-z-list.html](https://raw.g
 <html lang="en-US">
     <head>
         <title>A to Z List Clock Example</title>
-        <link rel="style" href="css/style.css">
+        <link rel="stylesheet" href="css/style.css">
         <script type="module" src="modules/ul-a-to-z-list.js" defer></script>
     </head>
     <body>
@@ -648,7 +648,7 @@ Let's take a quick break and stretch before moving forward
 
 1. Modify is `htdocs/index.html`
 2. Wrap the `ul` list with our `<ul-a-to-z-list></ul-a-to-z-list>`
-3. Add our component module `<script type="model" src="modules/ul-a-to-z-list.js" defer></script>`
+3. Add our component module `<script type="module" src="modules/ul-a-to-z-list.js" defer></script>`
 4. Test, what happens on page reload?
 
 # Part 2.4: **Integrating** the A to Z list
@@ -670,7 +670,7 @@ Let's take a quick break and stretch before moving forward
   - Is an increase in complexity worth supporting the common case?
   - Do we drop the common case for unique element and build in a index_recipes function?
 
-**Before picking a path review our existing codebase against our constraints**
+**Before picking a path review our existing code base against our constraints**
 
 # Part 2.4: Think about the innerHTML, look at `index_recipes.js`
 
@@ -743,195 +743,13 @@ What does the updates look like?
 
 - HTML5 provides allot of capability, not everything needs to be a component
 - Components let us encapsulate structure, behavior of visual style
-- Components work best when they enhance the symantic structure of HTML and the page
-
-# Part 2.5: CL-Web-Components
-
-<https://github.com/caltechlibrary/CL-Web-Components>
-
-- A small collection of ready to go web components
-- You can use them individually or collectively
-
-# Part 2.5: Textarea CSV
-
-- What does `<textarea-csv></csv-textara>` do?
-  - Typing in comma separated values is cumbersome, can me improve that?
-  - The web component presents a table view based on the CSV content in the wrapped textarea
-  - If the web browser has JavaScript disabled the textarea still works for typing in comma delimited data
-
-# Part 2.5: How to using Textarea CSV
-
-See <https://caltechlibrary.github.io/CL-Web-compenents/textarea-csv.html>
-
-# Part 2.5: Using Textarea CSV in our web form
-
-Next steps
-
-1. Retrieve [textarea-csv.js](https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js "you may retrieve this file with curl or irm")
-2. Copy the component into your modules directory
-3. Update your HTML markup
-4. Update `utils.js` by adding a `saveRecipe` function
-5. Test
-
-# Part 2.5: Retrieving textarea-csv.js
-
-On macOS or Linux.
-
-~~~shell
-curl -L -o htdocs/modules/textarea-csv.js \
-  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js 
-~~~
-
-On Windows
-
-~~~pwsh
-irm `
-  https://raw.githubusercontent.com/caltechlibrary/CL-web-components/refs/heads/main/textarea-csv.js `
-  -Outfile ./htdocs/modules/textarea-csv.js
-~~~
-
-# Part 2.5: Move into our modules directory
-
-On macOS or Linux.
-
-~~~shell
-mv textarea-csv.js htdocs/modules
-~~~
-
-On Windows
-
-~~~pwsh
-move textarea-csv.js htdocs/modules
-~~~
-
-# Part 2.5: Update your HTML markup
-
-Wrap our ingredients `textarea`  in a `textarea-csv`.
-
-~~~html
-  <textarea-csv id="ingredients" name="ingredients"          
-    title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-    cols="60"rows="10" 
-    column-headings="Ingredients,Units" debug="true">
-    <textarea id="ingredients" name="ingredients"
-      title="ingredient,units (CSV data)" placeholder="flour,2 cups"
-      cols="60"rows="10">
-    </textarea>
-  </textarea-csv>
-~~~
-
-# Part 2.5: Textarea CSV and Web Forms
-
-What happens when I press "save" button in the web form?
-
-- Does the submit process need change? 
-- What are the options?
-  - submit as a URL encoded document?
-  - submit as JSON encoded document?
-
-# Part 2.5: Textarea CSV and Web Forms
-
-We're missing the script element that imports our component.
-
-Include this in the head element of the page.
-
-~~~html
-<script type="module" src="modules/textarea-csv.js" defer></script>
-~~~
-
-Try submitting the form again. What happens?
-
-# Part 2.5: Fixing web form submission
-
-- We need an event listener to trigger it
-  - Which element?
-  - What event?
-
-# Part 2.5: Fixing web form submission
-
-The [utils.js](https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js "you may retrieve this file using curl or irm") needs a`saveRecipe` function.
-
-macOS and Linux
-
-~~~shell
-curl -L -o htdocs/modules/utils.js \
-  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js
-~~~
-
-Windows
-
-~~~pwsh
-irm `
-  https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/htdocs2/modules/utils.js `
-  -Output htdocs/modules/utils.js
-~~~
-
-# Part 2.5: Fixing web form submission
-
-Add the following at the page before the to process the submission.
-
-~~~HTML
-<script type="module" defer>
-  import { saveRecipe } from './modules/utils.js';
-  const form = document.addEventListener('submit', saveRecipe);
-</script>
-~~~
-
-# Part 2.5: Test updates
-
-- What issues do you find?
-- How could we improve this?
-
-# Part 3: Exploring further, browser side
-
-- The traditional division of responsibilities in the browser is
-  - HTML for structured data markup
-  - CSS for visual design and layout
-  - JavaScript to orchestrate behaviors
-
-Do web components contradict the division of responsibilities?
-
-Is it OK to require JavaScript in a web page?
-
-Is progressive enhancement still relevant in 2025?
-
-# Part 3: Exploring further, server side
-
-- Our application pushed processing browser side
-  - When is this a good idea?
-  - When is this an bad idea?
-- Could our web app be used to render a static public site?
-  - How would that be done?
-- What if the web service needs to be public facing?
-
-# Part 3: What I've learned
-
-- Build with the grain of the web
-  - Building blocks are HTML, CSS, JavaScript, Web Components and HTTP protocol
-- Take advantage of localhost
-- Target production by building in layers
-  - access control: front end web service (Apache+Shibboleth, NginX+Shibboleth)
-  - data validation: middle ware (localhost: Go, TypeScript or Python)
-  - object storage: Dataset (localhost)
+- Components work best when they enhance the semantic structure of HTML and the page
 
 # Reference: Dataset
 
 - [Dataset Project](https://caltechlibrary.github.io/dataset)
 - [Dataset Repository](https://github.com/caltechlibrary/dataset)
 - [Getting help with Dataset](https://github.com/caltechlibrary/dataset/issues)
-
-# Reference: CL-web-components
-
-[textarea-csv](https://github.com/caltechlibrary/CL-web-components/blob/main/textarea-csv.js)
-: Wraps a textarea element and presents a editable table of cells
-
-[ul-a-to-z-list](https://github.com/caltechlibrary/CL-web-components/blob/main/ul-a-to-z-list.js)
-: Wraps a UL list and creates an A to Z list
-
-[sortable-table](https://github.com/caltechlibrary/CL-web-components/blob/main/sortable-table.js)
-: Wraps an HTML table making it sort-able and filterable on a column
-
-- Getting help with CL-web-components, <https://github.com/caltechlibrary/CL-web-components/issues>.
 
 # Reference: Web Components
 
@@ -961,6 +779,7 @@ Is progressive enhancement still relevant in 2025?
 - View presentations: 
   - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1.html>
   - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation2.html>
+  - <https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation3.html>
 - View the repository: <https://github.com/caltechlibrary/t2t3_dataset_web_apps>
 - Comment on this presentation: <https://github.com/caltechlibrary/t2t3_dataset_web_apps/issues>
 - Author: R. S. Doiel, <mailto:rsdoiel@caltech.edu>

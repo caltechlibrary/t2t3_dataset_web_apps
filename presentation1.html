@@ -370,7 +370,7 @@ class="slide section level1">
 <p>YAML is a superset of JSON that is easy to read and easy to type.</p>
 <ol style="list-style-type: decimal">
 <li>Create a file, using your text editor called <a
-href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml">recipes_api.yaml</a></li>
+href="https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api.yaml">recipes_api.yaml</a></li>
 <li>Type in <code>host: localhost:8001</code></li>
 </ol>
 <div class="sourceCode" id="cb8"><pre
@@ -476,7 +476,7 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href=
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">dataset</span><span class="kw">:</span><span class="at"> recipes</span></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="at">    </span><span class="fu">keys</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="at">    </span><span class="fu">create</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">    # Create redirectos do double duty as a POST also supports update.</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">    # Create redirects do double duty as a POST also supports update.</span></span>
 <span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="at">    </span><span class="fu">create_success</span><span class="kw">:</span><span class="at"> http://localhost:8001/display_recipe.html</span></span>
 <span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="at">    </span><span class="fu">create_error</span><span class="kw">:</span><span class="at"> http://localhost:8001/edit_recipe.html</span></span>
 <span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="at">    </span><span class="fu">update</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
@@ -521,10 +521,10 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href=
 <p>On macOS and Linux you can cURL the <code>recipes_api.yaml</code>
 using the following statement.</p>
 <pre class="shell"><code>curl -o recipes_api.yaml \
-   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml</code></pre>
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api.yaml</code></pre>
 <p>On Windows</p>
 <pre class="pwsh"><code>irm -OutFile recipes_api.yaml `
-   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api1.yaml</code></pre>
+   https://raw.githubusercontent.com/caltechlibrary/t2t3_dataset_web_apps/refs/heads/main/recipes_api.yaml</code></pre>
 </div>
 <div id="part-1.2-starting-and-stopping-the-web-service"
 class="slide section level1">
@@ -740,6 +740,9 @@ class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation1
 <li><a
 href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation2.html"
 class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation2.html</a></li>
+<li><a
+href="https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation3.html"
+class="uri">https://caltechlibrary.github.io/t2t3_dataset_web_apps/presentation3.html</a></li>
 </ul></li>
 <li>View the repository: <a
 href="https://github.com/caltechlibrary/t2t3_dataset_web_apps"
